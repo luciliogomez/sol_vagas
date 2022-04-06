@@ -18,6 +18,8 @@ class Vaga{
     private $data_limite;
     private $estado;
     private $cidade;
+    private $id_empresa;
+    
     public function setId($id)
     {
         $this->id = $id;
@@ -116,6 +118,15 @@ class Vaga{
         return $this->estado;
     }
 
+    public function setIdEmpresa($id)
+    {
+        $this->id_empresa = $id;
+    }
+    public function getIdEmpresa()
+    {
+        return $this->id_empresa;
+    }
+
 
     public function read()
     {
@@ -156,7 +167,8 @@ class Vaga{
 
     public function create()
     {
-        $query = "INSERT INTO vaga (nome,email,senha) VALUES (:nome,:email,:senha)";
+        $query = "INSERT INTO vaga (titulo,formato,modalidade,cidade,salario_min,salario_max,
+        descricao,habilidades,anos_de_experiencia,educacao,data_limite,estado,id_empresa) VALUES (:nome,:email,:senha)";
 
         $stmt = Conexao::getInstance()->prepare($query);
         $stmt->bindParam(":nome",$this->getNome());
