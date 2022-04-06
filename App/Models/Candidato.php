@@ -158,7 +158,8 @@ class Candidato{
     public function read()
     {
         $query = "SELECT id,nome,email,cidade,titulo,resumo,
-        habilidades,cv,estado,foto,telefone,area,ingles FROM candidato";
+        habilidades,cv,estado,foto,telefone,area,ingles 
+        FROM candidato";
 
         $stmt = Conexao::getInstance()->prepare($query);
         $stmt->execute();
@@ -175,7 +176,8 @@ class Candidato{
     public function load($id)
     {
         $query = "SELECT id,nome,email,cidade,titulo,resumo,
-        habilidades,cv,estado,foto,telefone,area,ingles FROM candidato WHERE id =:id";
+        habilidades,cv,estado,foto,telefone,area,ingles 
+        FROM candidato WHERE id =:id";
 
         $stmt = Conexao::getInstance()->prepare($query);
         $stmt->bindParam("id",$id);
@@ -212,8 +214,11 @@ class Candidato{
 
     public function update()
     {
-        $query = "UPDATE candidato SET nome = :nome, email = :email, cidade = :cidade, titulo = :titulo,resumo = :resumo,
-        habilidades = :habilidades, cv = :cv, estado = :estado,foto = :foto, telefone = :telefone, area = :area, ingles = :ingles WHERE id = :id";
+        $query = "UPDATE candidato SET nome = :nome, email = :email, 
+        cidade = :cidade, titulo = :titulo,resumo = :resumo,
+        habilidades = :habilidades, cv = :cv, estado = :estado,
+        foto = :foto, telefone = :telefone, area = :area, ingles = :ingles 
+        WHERE id = :id";
 
         $stmt = Conexao::getInstance()->prepare($query);
         $stmt->bindParam(":nome",$this->getNome());
@@ -228,6 +233,7 @@ class Candidato{
         $stmt->bindParam(":estado",$this->getEstado());
         $stmt->bindParam(":telefone",$this->getTelefone());
         $stmt->bindParam(":ingles",$this->getNivelIngles());
+        $stmt->bindParam(":id",$this->getId());
         $stmt->execute();
         if($stmt->rowCount()>=1){
 

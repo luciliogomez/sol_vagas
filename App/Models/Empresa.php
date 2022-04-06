@@ -122,7 +122,8 @@ class Empresa{
     public function load($id)
     {
         $query = "SELECT id,nome,email,cidade,descricao,
-        logotipo,telefone,ano FROM empresa WHERE id = :id";
+        logotipo,telefone,ano FROM empresa 
+        WHERE id = :id";
 
         $stmt = Conexao::getInstance()->prepare($query);
         $stmt->bindParam(":id",$id);
@@ -139,7 +140,8 @@ class Empresa{
 
     public function create()
     {
-        $query = "INSERT INTO empresa (nome,email,senha) VALUES (:nome,:email,:senha)";
+        $query = "INSERT INTO empresa (nome,email,senha) 
+        VALUES (:nome,:email,:senha)";
 
         $stmt = Conexao::getInstance()->prepare($query);
         $stmt->bindParam(":nome",$this->getNome());
@@ -158,7 +160,8 @@ class Empresa{
     public function update()
     {
         $query = "UPDATE empresa SET nome = :nome, email = :email, cidade = :cidade,
-        logotipo = :foto, telefone = :telefone, ano = :ano,descricao = :descricao WHERE id = :id";
+        logotipo = :foto, telefone = :telefone, ano = :ano,descricao = :descricao 
+        WHERE id = :id";
 
         $stmt = Conexao::getInstance()->prepare($query);
         $stmt->bindParam(":nome",$this->getNome());
@@ -169,6 +172,7 @@ class Empresa{
         $stmt->bindParam(":ano",$this->getAnoFundacao());
         $stmt->bindParam(":descricao",$this->getDescricao());
         $stmt->bindParam(":cidade",$this->getCidade());
+        $stmt->bindParam(":id",$this->getId());
         $stmt->execute();
         if($stmt->rowCount()>=1){
 
