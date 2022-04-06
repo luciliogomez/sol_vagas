@@ -130,14 +130,13 @@ class Vaga{
 
     public function read()
     {
-        $query = "SELECT id,nome,email,cidade,titulo,resumo,
-        habilidades,cv,estado,foto,telefone,area,ingles FROM candidato";
+        $query = "SELECT * FROM vaga";
 
         $stmt = Conexao::getInstance()->prepare($query);
         $stmt->execute();
         if($stmt->rowCount()>0){
 
-            return $stmt->fetchAll(\PDO::FETCH_CLASS,Candidato::class);
+            return $stmt->fetchAll(\PDO::FETCH_CLASS,Vaga::class);
         
         }else{
 
@@ -147,15 +146,16 @@ class Vaga{
     }
     public function load($id)
     {
-        $query = "SELECT id,nome,email,cidade,titulo,resumo,
-        habilidades,cv,estado,foto,telefone,area,ingles FROM candidato WHERE id =:id";
+        $query = "SELECT id,titulo,formato,modalidade,cidade,salario_min,salario_max,
+        descricao,habilidades,anos_de_experiencia,educacao,data_limite,estado,id_empresa 
+        FROM vaga WHERE id =:id";
 
         $stmt = Conexao::getInstance()->prepare($query);
         $stmt->bindParam("id",$id);
         $stmt->execute();
         if($stmt->rowCount()>=1){
 
-            return $stmt->fetchObject(Candidato::class);
+            return $stmt->fetchObject(Vaga::class);
         
         }else{
 
@@ -199,22 +199,29 @@ class Vaga{
 
     public function update()
     {
-        $query = "UPDATE candidato SET nome = :nome, email = :email, cidade = :cidade, titulo = :titulo,resumo = :resumo,
-        habilidades = :habilidades, cv = :cv, estado = :estado,foto = :foto, telefone = :telefone, area = :area, ingles = :ingles WHERE id = :id";
+        $query = "UPDATE vaga SET titulo = :titulo,formato = :formato,
+        modalidade = :modalidade,cidade = :cidade,salario_min = :salario_min,
+        salario_max = :salario_max,descricao = :descricao,habilidades = :habilidades,
+        anos_de_experiencia = :anos_de_experiencia,educacao = :educacao,
+        data_limite = :data_limite,estado = :estado,id_empresa = :id_empresa 
+        WHERE id = :id";
 
         $stmt = Conexao::getInstance()->prepare($query);
-        $stmt->bindParam(":nome",$this->getNome());
-        $stmt->bindParam(":email",$this->getEmail());
-        $stmt->bindParam(":cidade",$this->getCidade());
-        $stmt->bindParam(":foto",$this->getFoto());
-        $stmt->bindParam(":resumo",$this->getResumo());
         $stmt->bindParam(":titulo",$this->getTitulo());
+        $stmt->bindParam(":formato",$this->getFormato());
+        $stmt->bindParam(":modalidade",$this->getModalidade());
+        $stmt->bindParam(":cidade",$this->getCidade());
+        $stmt->bindParam(":salario_min",$this->getSalarioMin());
+        $stmt->bindParam(":salario_max",$this->getSalarioMax());
+        $stmt->bindParam(":descricao",$this->getDescricao());
         $stmt->bindParam(":habilidades",$this->getHabilidades());
-        $stmt->bindParam(":cv",$this->getCv());
-        $stmt->bindParam(":area",$this->getArea());
+        $stmt->bindParam(":anos_de_experiencia",$this->getAnos());
+        $stmt->bindParam(":educacao",$this->getEducacao());
+        $stmt->bindParam(":data_limite",$this->getDataLimite());
         $stmt->bindParam(":estado",$this->getEstado());
-        $stmt->bindParam(":telefone",$this->getTelefone());
-        $stmt->bindParam(":ingles",$this->getNivelIngles());
+        $stmt->bindParam(":id_empresa",$this->getIdEmpresa());
+        $stmt->bindParam(":id",$this->getId());
+        
         $stmt->execute();
         if($stmt->rowCount()>=1){
 
