@@ -1,0 +1,174 @@
+html,body{
+    height: 100%;
+}
+
+.all{
+    height: inherit;
+}
+
+.all .navigation{
+height: inherit;
+background-color: rgb(2, 70, 109);
+margin: 0;
+/* width: 40px; */
+}
+
+.all .content{
+    background-color: rgb(242, 245, 245);
+    height: inherit;
+    padding: 5px;
+}
+.main-content{
+    width: 100%;
+    min-height: 400px;
+}
+.top-content{
+    padding: 15px 10px;
+    margin-bottom: 5px;
+    font-weight: bold   ;
+}
+.content-description{
+    margin: 0;
+    padding: 15px 30px;
+    border-top: 5px solid dodgerblue;
+    border-radius: 5px 5px 0 0;
+}
+
+.content-description h4{
+    font-size: 1.5em;
+    margin: 0;
+}
+.content-description h5{
+    font-size: 1.3em;
+    margin: 0;
+}
+.content-body{
+    padding: 15px 30px;
+}
+.content-body .card{
+    padding: 2px 4px;
+    
+}
+.navigation .logo{
+    padding: 10px 0;
+    border-bottom: 1px solid rgb(255, 255, 255);
+    margin:0px;
+    /* background-color: rebeccapurple; */
+    width: 100%;
+}
+.navigation{
+    padding: 0;
+    margin: 0px;
+    position: fixed;
+}
+
+.navigation .logo span{
+    font-size: 1.6em;
+}
+
+.navigation .logo span i{
+    margin-right: 5px;
+}
+
+.list-group{
+    display: flex;
+    flex-direction: column;
+}
+.list-group a{
+    /* display: block; */
+    width: 100%;
+    padding: 10px 20px;
+}
+
+.list-group.hover a:hover{
+    transition: 0.5s;
+    background-color: #055b66 !important;
+}
+.tabela{
+    overflow: scroll;
+}
+.tabela .btn-floating i{
+    font-size: 1.1rem;
+}
+
+.message h4{
+    padding: 10px !important;
+    /* color: red; */
+}
+
+.form-horizontal-one-line{
+    /* display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center; */
+}
+.btn-buscar{
+    margin-top: 2%;
+}
+span.label{
+    color: gray;
+    margin: 0;
+    font-size: 0.8em;
+    /* border: 1px solid red; */
+    position: absolute;
+    top: 0;
+    left: 10;
+    /* margin-bottom: 10px; */
+}
+
+
+.fade-out{
+    font-size: larger;
+    margin-top: 10px;
+    font-weight: bolder;
+    animation: fadingout 5s ;
+    animation-iteration-count: 1;
+    
+}
+
+
+@keyframes fadingout {
+    0%{
+        opacity: 1;
+    }   
+    50%{
+        opacity: 1;
+    }
+    90%{
+        opacity: 0.9;
+    }
+    92%{
+        opacity: 0;
+    }
+    100%{
+        opacity: 0;
+        display: none;
+    }
+}
+
+
+
+/* TABELA */
+
+td, th {
+    /* background-color: #055b66 !important; */
+    padding: 8px 5px;
+    display: table-cell;
+    text-align: left;
+    vertical-align: middle;
+    border-radius: 2px;
+  }
+
+
+.pagination li a {
+    color: #444;
+    display: inline-block;
+    font-size: 1rem;
+    padding: 0 10px;
+    line-height: 30px;
+  }
+
+
+.pagination li i {
+    font-size: 1.5rem;
+  }
