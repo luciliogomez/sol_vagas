@@ -19,7 +19,7 @@ class Vaga{
     private $estado;
     private $cidade;
     private $id_empresa;
-    
+
     public function setId($id)
     {
         $this->id = $id;
@@ -168,12 +168,25 @@ class Vaga{
     public function create()
     {
         $query = "INSERT INTO vaga (titulo,formato,modalidade,cidade,salario_min,salario_max,
-        descricao,habilidades,anos_de_experiencia,educacao,data_limite,estado,id_empresa) VALUES (:nome,:email,:senha)";
+        descricao,habilidades,anos_de_experiencia,educacao,data_limite,estado,id_empresa) 
+        VALUES (:titulo,:formato,:modalidade,:cidade,:salario_min,:salario_max,
+        :descricao,:habilidades,:anos_de_experiencia,:educacao,:data_limite,:estado,:id_empresa)";
 
         $stmt = Conexao::getInstance()->prepare($query);
-        $stmt->bindParam(":nome",$this->getNome());
-        $stmt->bindParam(":email",$this->getEmail());
-        $stmt->bindParam(":senha",$this->getSenha());
+        $stmt->bindParam(":titulo",$this->getTitulo());
+        $stmt->bindParam(":formato",$this->getFormato());
+        $stmt->bindParam(":modalidade",$this->getModalidade());
+        $stmt->bindParam(":cidade",$this->getCidade());
+        $stmt->bindParam(":salario_min",$this->getSalarioMin());
+        $stmt->bindParam(":salario_max",$this->getSalarioMax());
+        $stmt->bindParam(":descricao",$this->getDescricao());
+        $stmt->bindParam(":habilidades",$this->getHabilidades());
+        $stmt->bindParam(":anos_de_experiencia",$this->getAnos());
+        $stmt->bindParam(":educacao",$this->getEducacao());
+        $stmt->bindParam(":data_limite",$this->getDataLimite());
+        $stmt->bindParam(":estado",$this->getEstado());
+        $stmt->bindParam(":id_empresa",$this->getIdEmpresa());
+        
         $stmt->execute();
         if($stmt->rowCount()>=1){
 
