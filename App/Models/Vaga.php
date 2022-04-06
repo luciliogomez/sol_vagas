@@ -156,7 +156,7 @@ class Vaga{
 
     public function create()
     {
-        $query = "INSERT INTO candidato (:nome,:email,:senha) VALUES ()";
+        $query = "INSERT INTO vaga (:nome,:email,:senha) VALUES ()";
 
         $stmt = Conexao::getInstance()->prepare($query);
         $stmt->bindParam(":nome",$this->getNome());

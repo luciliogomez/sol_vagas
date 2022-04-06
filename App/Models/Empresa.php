@@ -139,7 +139,7 @@ class Empresa{
 
     public function create()
     {
-        $query = "INSERT INTO empresa (:nome,:email,:senha) VALUES ()";
+        $query = "INSERT INTO empresa (nome,email,senha) VALUES (:nome,:email,:senha)";
 
         $stmt = Conexao::getInstance()->prepare($query);
         $stmt->bindParam(":nome",$this->getNome());
