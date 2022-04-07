@@ -1,5 +1,6 @@
 <?php
 
+use App\Controllers\Pages\Candidato;
 use App\Http\Response;
 use App\Controllers\Pages\Home;
 use App\Controllers\Pages\Vaga;
@@ -28,7 +29,7 @@ $router->get("/vagas/{id}/ver",[
 
 $router->get("/vagas/{id}/aplicar",[
     "middlewares"=>[
-        "candidato-acess"
+        "candidato-access"
     ],
     function(){
         return new Response(200,Home::index());
@@ -39,8 +40,8 @@ $router->get("/candidatos/login",[
     "middlewares" => [
         "require-logout"
     ],
-    function(){
-        return new Response(200,"Login");
+    function($request){
+        return new Response(200,Candidato::getLogin($request));
     }
 ]);
 $router->get("/empresas/{id}/perfil",[

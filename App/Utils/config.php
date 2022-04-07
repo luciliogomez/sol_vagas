@@ -35,7 +35,7 @@ $view::setFolders([
 
 MiddlewareQueue::setMap([
     "admin-access" => App\Http\Middlewares\AdminAccess::class,
-    "candidato-acess" => App\Http\Middlewares\CandidatoAccess::class,
+    "candidato-access" => App\Http\Middlewares\CandidatoAccess::class,
     "require-logout" => App\Http\Middlewares\RequireLogout::class
 ]);
 
