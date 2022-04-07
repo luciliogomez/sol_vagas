@@ -16,7 +16,7 @@
         </div>
         <nav >
             <ul class="flex-row-end">
-                <li><a href="vagas.html">Vagas</a></li>
+                <li><a href="<?=URL?>/vagas">Vagas</a></li>
                 <li><a href="login_empresa.html">Sou Empresa</a></li>
                 <li class="active"><a href="#">Login</a></li>
             </ul>

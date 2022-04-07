@@ -1,1 +1,1 @@
-<li class="waves-effect <?= $active ?>"><a href="<?= $link ?>"><?= $item ?></a></li>
+<a href="<?= $link ?>" class="item <?= $active ?>"><?= $item ?></a>

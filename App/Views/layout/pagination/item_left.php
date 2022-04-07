@@ -1,5 +1,3 @@
-<li class="waves-effect  <?=$disabled?>">
-<a href="<?=$link?>">
-<i class="fa fa-chevron-left fa-3x"></i>
+<a href="<?=$link?>" class="prev <?=$disabled?>">
+    <i class="fa fa-chevron-left"></i>
 </a>
-</li>

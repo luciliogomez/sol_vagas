@@ -1,6 +1,5 @@
-
-<ul class="pagination center">
+<div class="pagination ">
     <?= $left?>
       <?=$links?>
-    <?=$right?>
-  </ul>
+    <?=$right?>  
+</div>

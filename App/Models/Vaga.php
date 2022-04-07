@@ -13,12 +13,13 @@ class Vaga{
     private $salario_max;
     private $descricao;
     private $habilidades;
-    private $anos_de_experiencia;
+    private $ano_de_experiencia;
     private $educacao;
     private $data_limite;
     private $estado;
     private $cidade;
     private $id_empresa;
+    private $empresa;
 
     public function setId($id)
     {
@@ -59,7 +60,7 @@ class Vaga{
 
     public function setAnos($anos)
     {
-        $this->anos_de_experiencia = $anos;
+        $this->ano_de_experiencia = $anos;
     }
     public function getId()
     {
@@ -67,7 +68,7 @@ class Vaga{
     }
     public function getAnos()
     {
-        return $this->anos_de_experiencia;
+        return $this->ano_de_experiencia;
     }
     public function getDescricao()
     {
@@ -126,11 +127,19 @@ class Vaga{
     {
         return $this->id_empresa;
     }
-
-
-    public function read()
+    public function getEmpresa()
     {
-        $query = "SELECT * FROM vaga";
+        return $this->empresa;
+    }
+
+
+    public function read($limit = null)
+    {
+        $limit = (strlen($limit))? "limit ".$limit:"";
+
+        $query = "SELECT V.id,V.titulo,V.formato,V.modalidade,V.cidade,V.salario_min,V.salario_max,
+        V.descricao,V.habilidades,V.ano_de_experiencia,V.educacao,V.data_limite,V.estado,V.id_empresa,E.nome as empresa FROM `vaga` V
+        INNER JOIN empresa E ON (V.id_empresa = E.id) ORDER BY id DESC ".$limit;
 
         $stmt = Conexao::getInstance()->prepare($query);
         $stmt->execute();
@@ -146,9 +155,9 @@ class Vaga{
     }
     public function load($id)
     {
-        $query = "SELECT id,titulo,formato,modalidade,cidade,salario_min,salario_max,
-        descricao,habilidades,anos_de_experiencia,educacao,data_limite,estado,id_empresa 
-        FROM vaga WHERE id =:id";
+        $query = "SELECT V.id,V.titulo,V.formato,V.modalidade,V.cidade,V.salario_min,V.salario_max,
+        V.descricao,V.habilidades,V.ano_de_experiencia,V.educacao,V.data_limite,V.estado,V.id_empresa,E.nome as empresa FROM `vaga` V
+        INNER JOIN empresa E ON (V.id_empresa = E.id) WHERE V.id = :id";
 
         $stmt = Conexao::getInstance()->prepare($query);
         $stmt->bindParam("id",$id);

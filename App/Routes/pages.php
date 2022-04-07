@@ -2,8 +2,7 @@
 
 use App\Http\Response;
 use App\Controllers\Pages\Home;
-
-
+use App\Controllers\Pages\Vaga;
 
 $router->get("/",[
     function(){
@@ -13,8 +12,8 @@ $router->get("/",[
 
 
 $router->get("/vagas",[
-    function(){
-        return new Response(200,Home::index());
+    function($request){
+        return new Response(200,Vaga::index($request));
     }
 ]);
 
@@ -26,8 +25,8 @@ $router->get("/vagas/publicar",[
 
 
 $router->get("/vagas/{id}/ver",[
-    function(){
-        return new Response(200,Home::index());
+    function($request,$id){
+        return new Response(200,Vaga::getVaga($request,$id));
     }
 ]);
 
