@@ -130,4 +130,11 @@ class Router{
         return end($xUri);
     }
 
+    public function redirect($uri)
+    {
+        $uri = $this->url.$uri;
+        header("Location: ".$uri);
+        exit;
+    }
+
 }

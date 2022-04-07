@@ -17,11 +17,6 @@ $router->get("/vagas",[
     }
 ]);
 
-$router->get("/vagas/publicar",[
-    function(){
-        return new Response(200,Home::index());
-    }
-]);
 
 
 $router->get("/vagas/{id}/ver",[
@@ -32,11 +27,22 @@ $router->get("/vagas/{id}/ver",[
 
 
 $router->get("/vagas/{id}/aplicar",[
+    "middlewares"=>[
+        "candidato-acess"
+    ],
     function(){
         return new Response(200,Home::index());
     }
 ]);
 
+$router->get("/candidatos/login",[
+    "middlewares" => [
+        "require-logout"
+    ],
+    function(){
+        return new Response(200,"Login");
+    }
+]);
 $router->get("/empresas/{id}/perfil",[
     function(){
         return new Response(200,Home::index());
@@ -50,6 +56,11 @@ $router->get("/empresas/{id}/editar",[
 ]);
 
 
+$router->get("/vagas/publicar",[
+    function(){
+        return new Response(200,Home::index());
+    }
+]);
 $router->get("/candidatos/{id}/perfil",[
     "middlewares" => [
         "admin-access"
