@@ -173,6 +173,7 @@ class Candidato{
         
         }
     }
+
     public function load($id)
     {
         $query = "SELECT id,nome,email,cidade,titulo,resumo,
@@ -181,6 +182,26 @@ class Candidato{
 
         $stmt = Conexao::getInstance()->prepare($query);
         $stmt->bindParam("id",$id);
+        $stmt->execute();
+        if($stmt->rowCount()>=1){
+
+            return $stmt->fetchObject(Candidato::class);
+        
+        }else{
+
+            return [];
+        
+        }
+    }
+
+    public function loadByEmail($email)
+    {
+        $query = "SELECT id,nome,email,cidade,titulo,resumo,
+        habilidades,cv,estado,foto,telefone,area,ingles,senha 
+        FROM candidato WHERE email =:email";
+
+        $stmt = Conexao::getInstance()->prepare($query);
+        $stmt->bindParam(":email",$email);
         $stmt->execute();
         if($stmt->rowCount()>=1){
 

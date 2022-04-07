@@ -12,7 +12,7 @@
                 </div>
                 <div class="formulario">
                     <h4 class="description">Faça Login</h4>
-                    <form action="dashboard.html" method="post">
+                    <form  method="post">
                         <div class="form-input">
                             <label for="email">Email</label>
                             <input type="email" name="email" id="" placeholder="email@example.com">
@@ -21,8 +21,11 @@
                             <label for="senha">Senha</label>
                             <input type="password" name="senha" id="" placeholder="**********">
                         </div>
-                        <div class="form-input">
+                        <div class="form-input mb-0">
                             <input type="submit" class="btn btn-medium" value="Entrar">
+                        </div>
+                        <div class="form-input mt-0">
+                            <?=$status?>
                         </div>
                         <div>
                             <p class="text-center">Não tem uma conta? <a href="cadastro.html" class="text-blue">Cadastra-se</a></p>

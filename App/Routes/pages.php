@@ -36,6 +36,7 @@ $router->get("/vagas/{id}/aplicar",[
     }
 ]);
 
+// [GET]
 $router->get("/candidatos/login",[
     "middlewares" => [
         "require-logout"
@@ -44,6 +45,19 @@ $router->get("/candidatos/login",[
         return new Response(200,Candidato::getLogin($request));
     }
 ]);
+
+// [POST]
+$router->post("/candidatos/login",[
+    "middlewares" => [
+        "require-logout"
+    ],
+    function($request){
+        return new Response(200,Candidato::setLogin($request));
+    }
+]);
+
+
+
 $router->get("/empresas/{id}/perfil",[
     function(){
         return new Response(200,Home::index());
