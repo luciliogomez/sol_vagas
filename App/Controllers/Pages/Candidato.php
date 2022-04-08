@@ -39,7 +39,7 @@ class Candidato extends PagesBaseController{
                 $_SESSION['usuario']["id"] = $candidato->getId();
                 $_SESSION['usuario']["nome"] = $candidato->getNome();
                 $_SESSION['usuario']["email"] = $candidato->getEmail();
-                $_SESSION['usuario']["tipo"] = "candidato";
+                $_SESSION['usuario']["tipo"] = "candidatos";
                 $_SESSION['usuario']["foto"] = $candidato->getFoto();
   
                 $request->getRouter()->redirect("/candidatos/{$candidato->getId()}/dashboard");
@@ -72,6 +72,26 @@ class Candidato extends PagesBaseController{
             throw new Exception("PAGINA NAO ENCONTRADA",404);
         }
     }
+    
+    public static function getPerfil($request,$id)
+    {
+        $model = new ModelsCandidato();
+        try{
+            $candidato = $model->load($id);
+            if(!($candidato instanceof ModelsCandidato)){
+                throw new Exception("PAGINA NAO ENCONTRADA",404);
+            }
+            return View::render("candidatos::perfil",[
+                "candidato" => $candidato
+            ]);
+
+        }catch(Exception $ex)
+        {   
+            throw new Exception("PAGINA NAO ENCONTRADA",404);
+        }
+    }
+
+
     public static function getStatus($request)
     {
         $queryParams = $request->getQueryParams();

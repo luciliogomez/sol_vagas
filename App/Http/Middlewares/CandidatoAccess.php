@@ -5,7 +5,7 @@ class CandidatoAccess{
 
     public function handle($request,$next)
     {
-        if( !isset($_SESSION["usuario"]) ||( isset($_SESSION["usuario"]) && ($_SESSION['usuario']["tipo"]!="candidato") ) ){
+        if( !isset($_SESSION["usuario"]) ||( isset($_SESSION["usuario"]) && ($_SESSION['usuario']["tipo"]!="candidatos") ) ){
            
             $request->getRouter()->redirect("/candidatos/login");
         }

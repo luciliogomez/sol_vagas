@@ -4,11 +4,11 @@
 
 <div class="dashboard container">
             <div class="wellcome">
-                <h4 class="text-center text-blue" >Bem Vindo, Lucilio Gomes</h4>
+                <h4 class="text-center text-blue" >Bem Vindo, <?=$_SESSION['usuario']['nome'] ?></h4>
             </div>
 
             <div class="cards flex-row-space-between">
-                <a href="perfil.html" class="card-link">
+                <a href="<?=URL?>/candidatos/<?=$_SESSION['usuario']['id'] ?>/perfil" class="card-link">
                     <div class="card flex-row-start" >
                         <div class="card-image">
                             <figure>

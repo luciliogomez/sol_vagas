@@ -66,6 +66,14 @@ $router->get("/candidatos/{id}/dashboard",[
 ]);
 
 
+$router->get("/candidatos/{id}/perfil",[
+    "middlewares" => [
+    ],
+    function($request,$id){
+        return new Response(200,Candidato::getPerfil($request,$id));
+    }
+]);
+
 $router->get("/empresas/{id}/perfil",[
     function(){
         return new Response(200,Home::index());
@@ -82,14 +90,6 @@ $router->get("/empresas/{id}/editar",[
 $router->get("/vagas/publicar",[
     function(){
         return new Response(200,Home::index());
-    }
-]);
-$router->get("/candidatos/{id}/perfil",[
-    "middlewares" => [
-        "admin-access"
-    ],
-    function($id){
-        return new Response(200,"Candidato - ".$id);
     }
 ]);
 

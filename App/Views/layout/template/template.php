@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Home</title>
+    <title><?=$title?></title>
     <link rel="stylesheet" href="<?=URL?>/resources/assets/font-awesome/css/font-awesome.min.css">
     <link rel="stylesheet" href="<?=URL?>/resources/assets/style.css">
 </head>
@@ -17,8 +17,13 @@
         <nav >
             <ul class="flex-row-end">
                 <li><a href="<?=URL?>/vagas">Vagas</a></li>
+                <?php if(!isset($_SESSION['usuario'])):?>
                 <li><a href="login_empresa.html">Sou Empresa</a></li>
-                <li class="active"><a href="#">Login</a></li>
+                <li class="active"><a href="<?=URL?>/candidatos/login">Login</a></li>
+                <?php else: ?>
+                    <li class="active rad-1">
+                        <a href="<?=URL?>/<?=$_SESSION['usuario']["tipo"];?>/<?=$_SESSION['usuario']["id"];?>/dashboard"><i class="fa fa-user "></i> <?=first($_SESSION['usuario']["nome"]);?></a></li>
+                <?php endif; ?>
             </ul>
         </nav>
     </header>
