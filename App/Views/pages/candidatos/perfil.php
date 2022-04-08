@@ -96,13 +96,9 @@
                 <div class="section habilidades">
                     <h3 class="title">HABILIDADES</h3>
                     <div class="section-content">
-                        <ul>
-                            <li>Forte em tomadas de decisoes</li>
-                            <li>Desenvolvimento Web</li>
-                            <li>HTML CSS JavaScript</li>
-                            <li>PHP</li>
-                            <li>API REST</li>
-                        </ul>
+                        <p class="mb-2">
+                            <?=$candidato->getHabilidades()?>
+                        </p>
                         <form action="#" method="post" class="flex-row-start ">
                             <div class="form-input">
                                 <input type="text" name="skill" placeholder="Nova Habilidade" id="">
