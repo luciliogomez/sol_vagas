@@ -1,4 +1,5 @@
 <?php
+session_start();
 require __DIR__."/vendor/autoload.php";
 require __DIR__."/App/Utils/config.php";
 use App\Controllers\Pages\Home;

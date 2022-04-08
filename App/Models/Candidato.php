@@ -189,7 +189,7 @@ class Candidato{
         
         }else{
 
-            return [];
+            return null;
         
         }
     }
@@ -209,7 +209,7 @@ class Candidato{
         
         }else{
 
-            return [];
+            return null;
         
         }
     }

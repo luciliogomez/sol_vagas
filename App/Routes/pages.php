@@ -56,6 +56,14 @@ $router->post("/candidatos/login",[
     }
 ]);
 
+$router->get("/candidatos/{id}/dashboard",[
+    "middlewares" => [
+        "candidato-access"
+    ],
+    function($request,$id){
+        return new Response(200,Candidato::getDashboard($request,$id));
+    }
+]);
 
 
 $router->get("/empresas/{id}/perfil",[
