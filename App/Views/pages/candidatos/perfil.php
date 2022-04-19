@@ -50,7 +50,7 @@
                             </div>
                             <div class="text flex-column-start ">
                                 <h3>Status Actual</h3>
-                                <h2><?=$candidato->getEstado()?></h2>
+                                <h2><?= translate_estado($candidato->getEstado()); ?></h2>
                             </div>  
                         </div>
                         <div class="info flex-row-space-between">
@@ -99,12 +99,12 @@
                         <p class="mb-2">
                             <?=$candidato->getHabilidades()?>
                         </p>
-                        <form action="#" method="post" class="flex-row-start ">
+                        <!-- <form action="#" method="post" class="flex-row-start ">
                             <div class="form-input">
                                 <input type="text" name="skill" placeholder="Nova Habilidade" id="">
                             </div>
                             <button type="submit" class="btn">Adicionar</button>
-                        </form>
+                        </form> -->
                     </div>
                 </div>
 

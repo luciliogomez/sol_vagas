@@ -1,4 +1,6 @@
-<?= $this->layout("template::template");?>
+<?= $this->layout("template::template",[
+    'title' => $_SESSION['usuario']['nome'] 
+]);?>
 
 
 

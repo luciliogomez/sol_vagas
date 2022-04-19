@@ -1,4 +1,6 @@
-<?php $this->layout("template::template"); ?>
+<?php $this->layout("template::template",[
+    'title' => "Vagas"
+]); ?>
 
 <section class="container search flex-column-center">
             <h3>Pesquise a sua Vaga</h3>
