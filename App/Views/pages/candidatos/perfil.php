@@ -6,7 +6,11 @@
             <div class="basic-info">
                 <div class="picture">
                     <figure>
-                        <img src="img/6.jpg" alt="">
+                        <?php if($candidato->getFoto() == NULL):?>
+                            <img src="<?=ASSETS?>/img/user.png" alt="">
+                        <?php else:?>
+                            <img src="img/6.jpg" alt="">
+                        <?php endif;?>
                     </figure>
                 </div>
                 <div class="presentation">

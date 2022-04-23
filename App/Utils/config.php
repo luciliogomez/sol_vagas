@@ -5,7 +5,7 @@ use App\Utils\View;
 use App\Http\Middlewares\Queue as MiddlewareQueue;
 
 // BASE URL
-define("URL","http://localhost/jobfinder");
+define("URL","http://localhost/solvagas");
 
 define("ASSETS",URL."/resources/assets");
 

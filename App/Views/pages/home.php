@@ -1,5 +1,5 @@
 <?php $this->layout("template::template",[
-
+    "title" => "SOLVAGAS - Vagas de emprego"
 ]);?>
 <section class="banner container section flex-row-space-between all-screen">
     <div class="text">
