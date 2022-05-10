@@ -74,6 +74,26 @@ $router->get("/candidatos/{id}/perfil",[
     }
 ]);
 
+$router->get("/candidatos/{id}/perfil/editar",[
+    "middlewares" => [
+        "admin-access"
+    ],
+    function($request,$id){
+        return new Response(200,Candidato::getEditPerfil($request,$id));
+    }
+]);
+
+
+$router->post("/candidatos/{id}/perfil/editar",[
+    "middlewares" => [
+        "admin-access"
+    ],
+    function($request,$id){
+        return new Response(200,Candidato::setEditPerfil($request,$id));
+    }
+]);
+
+
 $router->get("/empresas/{id}/perfil",[
     function(){
         return new Response(200,Home::index());
@@ -93,14 +113,7 @@ $router->get("/vagas/publicar",[
     }
 ]);
 
-$router->get("/candidatos/{id}/editar",[
-    "middlewares" => [
-        "admin-access"
-    ],
-    function($id){
-        return new Response(200,"Candidato - ".$id);
-    }
-]);
+
 
 
 $router->get("/candidaturas",[

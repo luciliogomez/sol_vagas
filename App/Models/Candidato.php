@@ -236,31 +236,49 @@ class Candidato{
     public function update()
     {
         $query = "UPDATE candidato SET nome = :nome, email = :email, 
-        cidade = :cidade, titulo = :titulo,resumo = :resumo,
+        cidade = :cidade, titulo = :titulo, resumo = :resumo,
         habilidades = :habilidades, cv = :cv, estado = :estado,
         foto = :foto, telefone = :telefone, area = :area, ingles = :ingles 
         WHERE id = :id";
 
+        $nome = $this->getNome();
+        $email = ($this->getEmail());
+        $cidade = $this->getCidade();
+        $estado = $this->getEstado();
+        $ingles = $this->getNivelIngles();
+        $telefone = $this->getTelefone();
+        $resumo = $this->getResumo();
+        $foto = $this->getFoto();
+        $skills = $this->getHabilidades();
+        $area = $this->getArea();
+        $cv = $this->getCv();
+        $titulo = $this->getTitulo();
+        $id = $this->getId();
+      
         $stmt = Conexao::getInstance()->prepare($query);
-        $stmt->bindParam(":nome",$this->getNome());
-        $stmt->bindParam(":email",$this->getEmail());
-        $stmt->bindParam(":cidade",$this->getCidade());
-        $stmt->bindParam(":foto",$this->getFoto());
-        $stmt->bindParam(":resumo",$this->getResumo());
-        $stmt->bindParam(":titulo",$this->getTitulo());
-        $stmt->bindParam(":habilidades",$this->getHabilidades());
-        $stmt->bindParam(":cv",$this->getCv());
-        $stmt->bindParam(":area",$this->getArea());
-        $stmt->bindParam(":estado",$this->getEstado());
-        $stmt->bindParam(":telefone",$this->getTelefone());
-        $stmt->bindParam(":ingles",$this->getNivelIngles());
-        $stmt->bindParam(":id",$this->getId());
+        $stmt->bindParam(":nome",$nome);
+        $stmt->bindParam(":email",$email);
+        $stmt->bindParam(":cidade",$cidade);
+        $stmt->bindParam(":foto",$foto);
+        $stmt->bindParam(":resumo",$resumo);
+        $stmt->bindParam(":titulo",$titulo);
+        $stmt->bindParam(":habilidades",$skills);
+        $stmt->bindParam(":cv",$cv);
+        $stmt->bindParam(":area",$area);
+        $stmt->bindParam(":estado",$estado);
+        $stmt->bindParam(":telefone",$telefone);
+        $stmt->bindParam(":ingles",$ingles);
+        $stmt->bindParam(":id",$id);
         $stmt->execute();
-        if($stmt->rowCount()>=1){
+        if($stmt->rowCount()>0){
 
             return true;
         
         }else{
+            echo "<pre>";
+print_r($stmt->rowCount());
+echo "</pre>";
+exit;
             return false;
         }
     }

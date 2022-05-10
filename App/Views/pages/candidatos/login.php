@@ -1,4 +1,6 @@
-<?= $this->layout("template::template");?>
+<?= $this->layout("template::template",[
+    'title' => "Iniciar Seção"
+]);?>
 
         <div class="login container">
             <div class="content  flex-row-space-between">

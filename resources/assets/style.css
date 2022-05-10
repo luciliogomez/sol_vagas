@@ -563,7 +563,7 @@ header nav ul li.active a:hover{
 }
 .last .articles .art article .top{
     width: 100%;
-    padding: 5%10% ;
+    padding: 5% 10% ;
     border-bottom: 1px dotted grey;
     height: 20vh;
 }
@@ -580,7 +580,7 @@ header nav ul li.active a:hover{
 }
 
 .last .articles .art article .middle{
-    padding: 1%10% ;
+    padding: 1% 10% ;
 }
 
 
@@ -1017,7 +1017,7 @@ footer .footer-bottom a {
 
 .login .content .formulario{
     width: 40%;
-    padding: 2%0%;
+    padding: 2% 0%;
 }
 
 .login .content .formulario .description{
@@ -1412,8 +1412,8 @@ margin-top: 5%;
 }
 
 .edicao .section .picture{
-    width: 150px;
-    height: 150px;
+    width: 125px;
+    height: 125px;
     border: 1px solid grey;
     margin-bottom: 1%;
     border-radius: 4px;
@@ -1423,12 +1423,12 @@ margin-top: 5%;
 }
 
 .edicao .section .img{
-    width: 150px;
-    height: 150px;
+    width: 125px;
+    height: 125px;
 }
 
 .edicao .section i{
-    font-size: 5em;
+    font-size: 4em;
     color: rgb(131, 128, 128);
 }
 .edicao .section div{
@@ -1442,7 +1442,7 @@ margin-top: 5%;
 
 
 .candidaturas{
-    padding:2%2%;
+    padding:2% 2%;
 }
 
 .candidaturas h2{

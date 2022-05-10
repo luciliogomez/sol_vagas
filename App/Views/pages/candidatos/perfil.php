@@ -19,7 +19,7 @@
                 </div>
                 <?php if($_SESSION['usuario']['id'] == $candidato->getId()):?>
                 <div class="links flex-column-start">
-                    <a href="<?=URL?>/candidatos/<?=$candidato->getId()?>/editar" class="btn">Editar meu perfil</a>
+                    <a href="<?=URL?>/candidatos/<?=$candidato->getId()?>/perfil/editar" class="btn">Editar meu perfil</a>
                     <a href="<?=URL?>/candidatos/<?=$candidato->getId()?>/dashboard" class="btn">Voltar ao dashboard</a>
                 </div>
                 <?php endif;?>
