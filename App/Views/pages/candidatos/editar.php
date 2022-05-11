@@ -12,8 +12,11 @@
 
                 <div class="section flex-column-start w-100">
                     <figure class="picture ">
-                        <!-- <img src="" alt=""> -->
-                        <i class="fa fa-user" ></i>
+                        <?php if(!isset($foto)):?>
+                            <i class="fa fa-user" ></i>
+                        <?php else:?>
+                            <img src="<?=URL."/uploads/".$foto?>" alt="">
+                        <?php endif;?>
                     </figure>
                     <div class="w-30">
                         <div class="form-input">

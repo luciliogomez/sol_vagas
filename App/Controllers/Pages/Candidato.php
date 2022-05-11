@@ -108,7 +108,7 @@ class Candidato extends PagesBaseController{
                 'estado'=>$candidato->getEstado(),
                 'ingles'=>$candidato->getNivelIngles(),
                 'cidade'=>$candidato->getCidade(),
-                'foto'=>'',
+                'foto'=>$candidato->getFoto(),
                 'status' => self::getStatus($request)
             ]);
 
@@ -138,6 +138,21 @@ class Candidato extends PagesBaseController{
             ]);
         }
 
+        if(uploaded_foto() && !is_valid_foto()){
+            return View::render("candidatos::editar",[
+                "nome" => $postVars['nome'],
+                'email' =>$postVars['email'],
+                'titulo'=>$postVars['titulo'],
+                'resumo'=>$postVars['resumo'],
+                'telefone'=>$postVars['telefone'],
+                'estado'=>$postVars['estado'],
+                'ingles'=>$postVars['ingles'],
+                'cidade'=>$postVars['cidade'],
+                'foto'=>'',
+                'status' => Alert::getError("Formato da Imagem Invalido")
+            ]);
+        }
+
         $nome = filter_var($postVars['nome'],FILTER_SANITIZE_SPECIAL_CHARS);
         $email =  filter_var($postVars['email'],FILTER_SANITIZE_EMAIL);
         $titulo =  filter_var($postVars['titulo'],FILTER_SANITIZE_SPECIAL_CHARS);
@@ -146,8 +161,10 @@ class Candidato extends PagesBaseController{
         $cidade =  filter_var($postVars['cidade'],FILTER_SANITIZE_SPECIAL_CHARS);
         $estado = $postVars['estado'];
         $ingles = $postVars['ingles'];
-        //$foto = $postVars['foto'];
+        $foto = get_uploaded_foto();
         
+        
+
         $model = new ModelsCandidato();
         $model->setNome($nome);
         $model->setEmail($email);
@@ -158,7 +175,8 @@ class Candidato extends PagesBaseController{
         $model->setEstado($estado);
         $model->setNivelIngles($ingles);
         $model->setId($id);
-        //$model->setFoto($foto);
+        $model->setFoto($foto);
+
         
         try{
             if(($model->update())){

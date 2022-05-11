@@ -7,7 +7,11 @@ use App\Http\Middlewares\Queue as MiddlewareQueue;
 // BASE URL
 define("URL","http://localhost/solvagas");
 
+define('BASE_DIR',"/opt/lampp/htdocs/solvagas" );
+
 define("ASSETS",URL."/resources/assets");
+
+define("UPLOADS",BASE_DIR."/uploads");
 
 //DATABASE CONFIGURATIONS
 define("HOST","localhost");

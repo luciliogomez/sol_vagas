@@ -1422,9 +1422,10 @@ margin-top: 5%;
     justify-content: center;
 }
 
-.edicao .section .img{
-    width: 125px;
-    height: 125px;
+.edicao .section .picture img{
+    width: 123px !important;
+    height: 123px !important;
+    border-radius: 4px;
 }
 
 .edicao .section i{

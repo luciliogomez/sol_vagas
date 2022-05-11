@@ -1,5 +1,5 @@
 <?= $this->layout("template::template",[
-    'title' => "Iniciar Seção"
+    'title' => "Iniciar Sessão"
 ]);?>
 
         <div class="login container">

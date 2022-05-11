@@ -9,7 +9,7 @@
                         <?php if($candidato->getFoto() == NULL):?>
                             <img src="<?=ASSETS?>/img/user.png" alt="">
                         <?php else:?>
-                            <img src="img/6.jpg" alt="">
+                            <img src="<?=URL."/uploads/".$candidato->getFoto()?>" alt="">
                         <?php endif;?>
                     </figure>
                 </div>
@@ -24,6 +24,7 @@
                 </div>
                 <?php endif;?>
                 <div class="contacts flex-column-start">
+                <span><i class="fa fa-map-marker"></i> <?=$candidato->getCidade()?> </span>
                     <span><i class="fa fa-envelope"></i> <?=$candidato->getEmail()?></span>
                     <span><i class="fa fa-phone"></i> <?=$candidato->getTelefone()?></span>
                     <span><i class="fa fa-linkedin"></i> <a href="#">Perfil do Linkedin</a></span>
