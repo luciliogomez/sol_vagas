@@ -115,6 +115,27 @@ $router->post("/candidatos/{id}/formacao/adicionar",[
 ]);
 
 
+$router->get("/candidatos/{id}/cursos/adicionar",[
+    "middlewares" => [
+        "admin-access",
+        "candidato-access"
+    ],
+    function($request,$id){
+        return new Response(200,Candidato::getAdicionarCurso($request,$id));
+    }
+]);
+
+$router->post("/candidatos/{id}/cursos/adicionar",[
+    "middlewares" => [
+        "admin-access",
+        "candidato-access"
+    ],
+    function($request,$id){
+        return new Response(200,Candidato::setAdicionarCurso($request,$id));
+    }
+]);
+
+
 // EMPRESAS ROUTES
 $router->get("/empresas/{id}/perfil",[
     function(){

@@ -144,22 +144,27 @@
                 <div class="section cursos">
                     <h3 class="title">CURSOS PROFISSIONAIS</h3>
                     <div class="section-content">
-
+                        <?php foreach($cursos as $curso): ?>
                         <div class="course">
                             <p>
-                                <span>Nome do Curso: </span> Desenvolvimento Web Completo
+                                <span>Nome do Curso: </span> <?=$curso['nome']?>
                             </p>
                             <p>
-                                <span>Escola: </span> Tech School
+                                <span>Escola: </span> <?=$curso['escola']?>
                             </p>
                             <p>
                                 <span>Data de Conclusão: </span>
-                                Mar-2020
+                                <?=$curso['data_conclusao']?>
+                            </p>
+                            <p>
+                                <span>Certificado: </span>
+                                <a href="<?=URL."/uploads/".$curso['certificado']?>"  target="_blank">Ver</a>
                             </p>
                         </div>
+                        <?php endforeach; ?>
 
                     </div>
-                    <a href="add_curso.html" class="btn">+</a>
+                    <a href="<?=URL?>/candidatos/<?=$candidato->getId()?>/cursos/adicionar" class="btn">+</a>
                 </div>
             </div>
         </div>

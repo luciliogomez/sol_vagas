@@ -83,7 +83,8 @@ class Candidato extends PagesBaseController{
             }
             return View::render("candidatos::perfil",[
                 "candidato" => $candidato,
-                'formacoes' => $candidato->getFormacoes($id)
+                'formacoes' => $candidato->getFormacoes($id),
+                "cursos"    => $candidato->getCursos($id)
             ]);
 
         }catch(Exception $ex)
@@ -271,6 +272,84 @@ class Candidato extends PagesBaseController{
 
     }
 
+    public static function getAdicionarCurso($request,$id)
+    {
+        $model = new ModelsCandidato();
+        try{
+            $candidato = $model->load($id);
+            if(!($candidato instanceof ModelsCandidato)){
+                throw new Exception("PAGINA NAO ENCONTRADA",404);
+            }
+            return View::render("candidatos::add_curso",[
+                "id" => $id,
+                "nome" => '',"escola"=>'',"conclusao"=>'',
+                "status"=> self::getStatus($request)
+            ]);
+
+        }catch(Exception $ex)
+        {   
+            throw new Exception("PAGINA NAO ENCONTRADA",404);
+        }
+    }
+
+    public static function setAdicionarCurso($request,$id)
+    {
+        $postVars = $request->getPostVars();
+
+        $nome = filter_var($postVars['nome'],FILTER_SANITIZE_SPECIAL_CHARS);
+        $data = filter_var($postVars['conclusao'],FILTER_SANITIZE_SPECIAL_CHARS);
+        $escola = filter_var($postVars['escola'],FILTER_SANITIZE_SPECIAL_CHARS);
+        
+        if(empty($nome) || empty($data) || empty($escola)){
+            return View::render("candidatos::add_curso",[
+                "nome" => $nome,"escola"=>$escola,"conclusao"=>$data,
+                "status"=>Alert::getError("Preencha os campos obrigatórios!")
+            ]);
+        }
+        if(uploaded_file("certificado") && !is_valid_file("certificado")){
+            return View::render("candidatos::add_curso",[
+                "nome" => $nome,"escola"=>$escola,"conclusao"=>$data,
+                "status"=>Alert::getError("Formato de arquivo nao permitido!")
+            ]);
+        }
+        $certificado = get_uploaded_file("certificado");
+        if($certificado == null){
+            return View::render("candidatos::add_curso",[
+                "nome" => $nome,"escola"=>$escola,"conclusao"=>$data,
+                "status"=>Alert::getError("Falha ao carregar arquivo!")
+            ]);
+        }
+
+        $model = new ModelsCandidato();
+        try{
+            $candidato = $model->load($id);
+            if(!($candidato instanceof ModelsCandidato)){
+                throw new Exception("PAGINA NAO ENCONTRADA",404);
+            }
+
+            if($candidato->addCurso($nome,$escola,$certificado,$data,$id)){
+                $request->getRouter()->redirect("/candidatos/{$id}/cursos/adicionar?status=updated");
+            }else{
+                return View::render("candidatos::add_curso",[
+                    "id" => $id,
+                    "nome" => $nome,
+                    "conclusao" => $data,
+                    "escola"=> $escola,
+                    "status"=> "Ocorreu um Erro ao Cadastrar Curso"
+                ]);
+            }
+            
+
+        }catch(Exception $ex)
+        {   
+            echo "<pre>";
+            print_r($ex->getMessage());
+            echo "</pre>";
+            exit;
+            throw new Exception("PAGINA NAO ENCONTRADA",404);
+        }
+
+    }
     public static function getStatus($request)
     {
         $queryParams = $request->getQueryParams();

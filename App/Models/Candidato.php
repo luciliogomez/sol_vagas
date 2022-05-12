@@ -301,6 +301,24 @@ exit;
         }       
     }
 
+    public function getCursos($id)
+    {
+        $query = "SELECT * FROM curso WHERE id_user =:id_user";
+
+        $stmt = Conexao::getInstance()->prepare($query);
+        $stmt->bindParam(":id_user",$id);
+        $stmt->execute();
+        if($stmt->rowCount()>=1){
+
+            return $stmt->fetchAll(\PDO::FETCH_ASSOC);
+        
+        }else{
+
+            return [];
+        
+        }       
+    }
+
 
     public function addFormacao($nivel,$curso,$escola,$inicio,$fim,$id_user)
     {
@@ -316,9 +334,29 @@ exit;
         $stmt->bindParam(":user",$id_user);
         $stmt->execute();
         if($stmt->rowCount()>=1){
-            return Conexao::getInstance()->lastInsertId();
+            return true;
         }else{
-            return null;
+            return false;
+        }
+    }
+
+
+    public function addCurso($nome,$escola,$certificado,$data,$id_user)
+    {
+        $query = "INSERT INTO curso (nome,escola,data_conclusao,certificado,id_user) 
+        VALUES (:nome,:escola,:data_conclusao,:certificado,:user)";
+
+        $stmt = Conexao::getInstance()->prepare($query);
+        $stmt->bindParam(":nome",$nome);
+        $stmt->bindParam(":escola",$escola);
+        $stmt->bindParam(":data_conclusao",$data);
+        $stmt->bindParam(":certificado",$certificado);
+        $stmt->bindParam(":user",$id_user);
+        $stmt->execute();
+        if($stmt->rowCount()>=1){
+            return true;
+        }else{
+            return false;
         }
     }
 
