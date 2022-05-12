@@ -82,14 +82,16 @@ class Candidato extends PagesBaseController{
                 throw new Exception("PAGINA NAO ENCONTRADA",404);
             }
             return View::render("candidatos::perfil",[
-                "candidato" => $candidato
+                "candidato" => $candidato,
+                'formacoes' => $candidato->getFormacoes($id)
             ]);
 
         }catch(Exception $ex)
         {   
-            throw new Exception("PAGINA NAO ENCONTRADA",404);
+            throw new Exception("PAGINA NAO ENCONTRADA :".$ex->getMessage(),404);
         }
     }
+
 
     public static function getEditPerfil($request,$id)
     {
@@ -133,7 +135,7 @@ class Candidato extends PagesBaseController{
                 'estado'=>$postVars['estado'],
                 'ingles'=>$postVars['ingles'],
                 'cidade'=>$postVars['cidade'],
-                'foto'=>'',
+                'foto'=>$postVars['old_foto'],
                 'status' => Alert::getError("Preencha os campos obrigatórios")
             ]);
         }
@@ -148,7 +150,7 @@ class Candidato extends PagesBaseController{
                 'estado'=>$postVars['estado'],
                 'ingles'=>$postVars['ingles'],
                 'cidade'=>$postVars['cidade'],
-                'foto'=>'',
+                'foto'=>$postVars['old_foto'],
                 'status' => Alert::getError("Formato da Imagem Invalido")
             ]);
         }
@@ -161,7 +163,11 @@ class Candidato extends PagesBaseController{
         $cidade =  filter_var($postVars['cidade'],FILTER_SANITIZE_SPECIAL_CHARS);
         $estado = $postVars['estado'];
         $ingles = $postVars['ingles'];
-        $foto = get_uploaded_foto();
+        if(!uploaded_foto()){
+            $foto = $postVars['old_foto'];
+        }else{
+            $foto = get_uploaded_foto();
+        }
         
         
 
@@ -194,6 +200,76 @@ class Candidato extends PagesBaseController{
         }
     }
 
+
+
+    public static function getAdicionarFormacao($request,$id)
+    {
+        $model = new ModelsCandidato();
+        try{
+            $candidato = $model->load($id);
+            if(!($candidato instanceof ModelsCandidato)){
+                throw new Exception("PAGINA NAO ENCONTRADA",404);
+            }
+            return View::render("candidatos::add_formacao",[
+                "id" => $id,
+                "curso" => '',"escola"=>'',"inicio"=>'',"fim"=>'',
+                "status"=> self::getStatus($request)
+            ]);
+
+        }catch(Exception $ex)
+        {   
+            throw new Exception("PAGINA NAO ENCONTRADA",404);
+        }
+    }
+
+    public static function setAdicionarFormacao($request,$id)
+    {
+        $postVars = $request->getPostVars();
+
+        $curso = filter_var($postVars['curso'],FILTER_SANITIZE_SPECIAL_CHARS);
+        $nivel = filter_var($postVars['nivel'],FILTER_SANITIZE_SPECIAL_CHARS);
+        $escola = filter_var($postVars['escola'],FILTER_SANITIZE_SPECIAL_CHARS);
+        $incio = filter_var($postVars['inicio'],FILTER_SANITIZE_SPECIAL_CHARS);
+        $fim = filter_var($postVars['fim'],FILTER_SANITIZE_SPECIAL_CHARS);
+
+        if(empty($curso) || empty($nivel) || empty($escola)){
+            return View::render("candidatos::add_formacao",[
+                "curso" => $curso,"escola"=>$escola,"inicio"=>$incio,"fim"=>$fim
+            ]);
+        }
+
+        $model = new ModelsCandidato();
+        try{
+            $candidato = $model->load($id);
+            if(!($candidato instanceof ModelsCandidato)){
+                throw new Exception("PAGINA NAO ENCONTRADA",404);
+            }
+
+            if($candidato->addFormacao($nivel,$curso,$escola,$incio,$fim,$id)){
+                $request->getRouter()->redirect("/candidatos/{$id}/formacao/adicionar?status=updated");
+            }else{
+                return View::render("candidatos::add_formacao",[
+                    "id" => $id,
+                    "curso" => $curso,
+                    "nivel" => $nivel,
+                    "escola"=> $escola,
+                    "inicio"=>$incio,
+                    "fim"   => $fim,
+                    "status"=> "Ocorreu um Erro ao Cadastrar Formação"
+                ]);
+            }
+            
+
+        }catch(Exception $ex)
+        {   
+            echo "<pre>";
+            print_r($ex->getMessage());
+            echo "</pre>";
+            exit;
+            throw new Exception("PAGINA NAO ENCONTRADA",404);
+        }
+
+    }
 
     public static function getStatus($request)
     {

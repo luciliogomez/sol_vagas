@@ -18,6 +18,8 @@
                             <img src="<?=URL."/uploads/".$foto?>" alt="">
                         <?php endif;?>
                     </figure>
+
+                    <input type="hidden" name="old_foto" value="<?=$foto?>">
                     <div class="w-30">
                         <div class="form-input">
                             <label for="foto">Escolha sua Foto</label>

@@ -76,26 +76,27 @@
                 <div class="section cursos">
                     <h3 class="title">Formação Acadêmica</h3>
                     <div class="section-content">
-
+                    
+                    <?php foreach($formacoes as $formacao): ?>
                         <div class="course">
                             <p>
-                                <span>Nivel: </span> Licenciatura
+                                <span>Nivel: </span> <?=strtoupper($formacao['nivel'])?>
                             </p>
                             <p>
-                                <span>Curso: </span> Engenheiro de Informatica
+                                <span>Curso: </span> <?=$formacao['curso']?>
                             </p>
                             <p>
-                                <span>Escola: </span> Universidade Pontifera
+                                <span>Escola: </span><?=$formacao['escola']?>
                             </p>
                             <p>
                                 <span>Data: </span>
-                                Mar-2020 - Presente
+                                <?=date("M-Y",strtotime($formacao['inicio']))?> --> <?=date("M-Y",strtotime($formacao['fim']))?>
                             </p>
                         </div>
-
+                    <?php endforeach; ?>
                     </div>
 
-                    <a href="add_formacao.html" class="btn">+</a>
+                    <a href="<?=URL?>/candidatos/<?=$candidato->getId()?>/formacao/adicionar" class="btn">+</a>
                 </div>
                 <!--  -->
                 <div class="section habilidades">

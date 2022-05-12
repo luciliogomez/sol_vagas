@@ -37,7 +37,7 @@
     function get_uploaded_foto()
     {
         $file = $_FILES['foto']['tmp_name'];
-        $new_name = uniqid("sv"). date("u");
+        $new_name = uniqid("sv"). date("His");
         if(move_uploaded_file($file,UPLOADS."/".$new_name)){
             return $new_name;
         }

@@ -283,4 +283,44 @@ exit;
         }
     }
 
+    public function getFormacoes($id)
+    {
+        $query = "SELECT * FROM formacao WHERE id_user =:id_user";
+
+        $stmt = Conexao::getInstance()->prepare($query);
+        $stmt->bindParam(":id_user",$id);
+        $stmt->execute();
+        if($stmt->rowCount()>=1){
+
+            return $stmt->fetchAll(\PDO::FETCH_ASSOC);
+        
+        }else{
+
+            return [];
+        
+        }       
+    }
+
+
+    public function addFormacao($nivel,$curso,$escola,$inicio,$fim,$id_user)
+    {
+        $query = "INSERT INTO formacao (nivel,curso,escola,inicio,fim,id_user) 
+        VALUES (:nivel,:curso,:escola,:inicio,:fim,:user)";
+
+        $stmt = Conexao::getInstance()->prepare($query);
+        $stmt->bindParam(":nivel",$nivel);
+        $stmt->bindParam(":curso",$curso);
+        $stmt->bindParam(":escola",$escola);
+        $stmt->bindParam(":inicio",$inicio);
+        $stmt->bindParam(":fim",$fim);
+        $stmt->bindParam(":user",$id_user);
+        $stmt->execute();
+        if($stmt->rowCount()>=1){
+            return Conexao::getInstance()->lastInsertId();
+        }else{
+            return null;
+        }
+    }
+
+
 }

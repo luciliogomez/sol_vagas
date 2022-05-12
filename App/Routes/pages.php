@@ -94,6 +94,28 @@ $router->post("/candidatos/{id}/perfil/editar",[
 ]);
 
 
+$router->get("/candidatos/{id}/formacao/adicionar",[
+    "middlewares" => [
+        "admin-access",
+        "candidato-access"
+    ],
+    function($request,$id){
+        return new Response(200,Candidato::getAdicionarFormacao($request,$id));
+    }
+]);
+
+$router->post("/candidatos/{id}/formacao/adicionar",[
+    "middlewares" => [
+        "admin-access",
+        "candidato-access"
+    ],
+    function($request,$id){
+        return new Response(200,Candidato::setAdicionarFormacao($request,$id));
+    }
+]);
+
+
+// EMPRESAS ROUTES
 $router->get("/empresas/{id}/perfil",[
     function(){
         return new Response(200,Home::index());
