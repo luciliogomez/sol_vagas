@@ -16,13 +16,18 @@
         </div>
         <nav >
             <ul class="flex-row-end">
+                <li><a href="<?=URL?>">Home</a></li>
                 <li><a href="<?=URL?>/vagas">Vagas</a></li>
                 <?php if(!isset($_SESSION['usuario'])):?>
                 <li><a href="login_empresa.html">Sou Empresa</a></li>
                 <li class="active"><a href="<?=URL?>/candidatos/login">Login</a></li>
                 <?php else: ?>
                     <li class="active rad-1">
-                        <a href="<?=URL?>/<?=$_SESSION['usuario']["tipo"];?>/<?=$_SESSION['usuario']["id"];?>/dashboard"><i class="fa fa-user "></i> <?=first($_SESSION['usuario']["nome"]);?></a></li>
+                        <a href="<?=URL?>/<?=$_SESSION['usuario']["tipo"];?>/<?=$_SESSION['usuario']["id"];?>/dashboard"><i class="fa fa-user "></i> <?=first($_SESSION['usuario']["nome"]);?></a>
+                    </li>
+                    <li class="active  rad-1">
+                        <a href="<?=URL?>/logout" class="red text-white">Sair <i class="fa fa-arrow-right "></i></a>
+                    </li>
                 <?php endif; ?>
             </ul>
         </nav>

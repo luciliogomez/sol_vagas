@@ -319,6 +319,24 @@ exit;
         }       
     }
 
+    public function getExperiencias($id)
+    {
+        $query = "SELECT * FROM experiencia WHERE id_user =:id_user";
+
+        $stmt = Conexao::getInstance()->prepare($query);
+        $stmt->bindParam(":id_user",$id);
+        $stmt->execute();
+        if($stmt->rowCount()>=1){
+
+            return $stmt->fetchAll(\PDO::FETCH_ASSOC);
+        
+        }else{
+
+            return [];
+        
+        }       
+    }
+
 
     public function addFormacao($nivel,$curso,$escola,$inicio,$fim,$id_user)
     {
@@ -360,5 +378,24 @@ exit;
         }
     }
 
+    public function addExperiencia($cargo,$empresa,$descricao,$inicio,$fim,$id_user)
+    {
+        $query = "INSERT INTO experiencia (cargo,empresa,inicio,fim,descricao,id_user) 
+        VALUES (:cargo,:empresa,:inicio,:fim,:descricao,:user)";
+
+        $stmt = Conexao::getInstance()->prepare($query);
+        $stmt->bindParam(":cargo",$cargo);
+        $stmt->bindParam(":empresa",$empresa);
+        $stmt->bindParam(":inicio",$inicio);
+        $stmt->bindParam(":fim",$fim);
+        $stmt->bindParam(":descricao",$descricao);
+        $stmt->bindParam(":user",$id_user);
+        $stmt->execute();
+        if($stmt->rowCount()>=1){
+            return true;
+        }else{
+            return false;
+        }
+    }
 
 }

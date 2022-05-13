@@ -15,4 +15,14 @@ class Home{
             "vagas" => $vagas
         ]) ;
     }
+
+    public static function logout($request)
+    {
+        unset($_SESSION['usuario']);
+        session_unset();
+        session_destroy();
+
+        $request->getRouter()->redirect("/");
+
+    }
 }

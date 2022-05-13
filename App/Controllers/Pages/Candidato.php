@@ -84,7 +84,8 @@ class Candidato extends PagesBaseController{
             return View::render("candidatos::perfil",[
                 "candidato" => $candidato,
                 'formacoes' => $candidato->getFormacoes($id),
-                "cursos"    => $candidato->getCursos($id)
+                "cursos"    => $candidato->getCursos($id),
+                "experiencias"=>$candidato->getExperiencias($id)
             ]);
 
         }catch(Exception $ex)
@@ -336,6 +337,75 @@ class Candidato extends PagesBaseController{
                     "conclusao" => $data,
                     "escola"=> $escola,
                     "status"=> "Ocorreu um Erro ao Cadastrar Curso"
+                ]);
+            }
+            
+
+        }catch(Exception $ex)
+        {   
+            echo "<pre>";
+            print_r($ex->getMessage());
+            echo "</pre>";
+            exit;
+            throw new Exception("PAGINA NAO ENCONTRADA",404);
+        }
+
+    }
+
+    public static function getAdicionarExperiencia($request,$id)
+    {
+        $model = new ModelsCandidato();
+        try{
+            $candidato = $model->load($id);
+            if(!($candidato instanceof ModelsCandidato)){
+                throw new Exception("PAGINA NAO ENCONTRADA",404);
+            }
+            return View::render("candidatos::add_experiencia",[
+                "id" => $id,
+                "cargo" => '',"empresa"=>'',"descricao"=>'',"inicio"=>'',"fim"=>'',
+                "status"=> self::getStatus($request)
+            ]);
+
+        }catch(Exception $ex)
+        {   
+            throw new Exception("PAGINA NAO ENCONTRADA",404);
+        }
+    }
+
+    public static function setAdicionarExperiencia($request,$id)
+    {
+        $postVars = $request->getPostVars();
+
+        $cargo = filter_var($postVars['cargo'],FILTER_SANITIZE_SPECIAL_CHARS);
+        $empresa = filter_var($postVars['empresa'],FILTER_SANITIZE_SPECIAL_CHARS);
+        $descricao = filter_var($postVars['descricao'],FILTER_SANITIZE_SPECIAL_CHARS);
+        $inicio = filter_var($postVars['inicio'],FILTER_SANITIZE_SPECIAL_CHARS);
+        $fim = filter_var($postVars['fim'],FILTER_SANITIZE_SPECIAL_CHARS);
+
+        if(empty($cargo) || empty($empresa) || empty($descricao) || empty($inicio)){
+            return View::render("candidatos::add_formacao",[
+                "cargo" => $cargo,"empresa"=>$empresa,"dscricao"=>$descricao,"inicio"=>$inicio,"fim"=>$fim
+            ]);
+        }
+
+        $model = new ModelsCandidato();
+        try{
+            $candidato = $model->load($id);
+            if(!($candidato instanceof ModelsCandidato)){
+                throw new Exception("PAGINA NAO ENCONTRADA",404);
+            }
+
+            if($candidato->addExperiencia($cargo,$empresa,$descricao,$inicio,$fim,$id)){
+                $request->getRouter()->redirect("/candidatos/{$id}/experiencia/adicionar?status=updated");
+            }else{
+                return View::render("candidatos::add_experiencia",[
+                    "id" => $id,
+                    "cargo" => $cargo,
+                    "empresa" => $empresa,
+                    "descricao"=> $descricao,
+                    "inicio"=>$inicio,
+                    "fim"   => $fim,
+                    "status"=> "Ocorreu um Erro ao Cadastrar Formação"
                 ]);
             }
             

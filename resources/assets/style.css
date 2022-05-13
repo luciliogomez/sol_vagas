@@ -451,7 +451,7 @@ header nav ul li a{
     border-radius: 5px;
 }
 header nav ul li a:hover{
-    color: black;
+    color: black ;
     transition: 0.3s;
 }
 

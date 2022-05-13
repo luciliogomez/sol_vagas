@@ -46,6 +46,18 @@ $router->get("/candidatos/login",[
     }
 ]);
 
+
+// [GET]
+$router->get("/logout",[
+    "middlewares" => [
+        "require-login"
+    ],
+    function($request){
+        return new Response(200,Home::logout($request));
+    }
+]);
+
+
 // [POST]
 $router->post("/candidatos/login",[
     "middlewares" => [
@@ -76,7 +88,8 @@ $router->get("/candidatos/{id}/perfil",[
 
 $router->get("/candidatos/{id}/perfil/editar",[
     "middlewares" => [
-        "admin-access"
+        "admin-access",
+        "candidato-access"
     ],
     function($request,$id){
         return new Response(200,Candidato::getEditPerfil($request,$id));
@@ -86,7 +99,8 @@ $router->get("/candidatos/{id}/perfil/editar",[
 
 $router->post("/candidatos/{id}/perfil/editar",[
     "middlewares" => [
-        "admin-access"
+        "admin-access",
+        "candidato-access"
     ],
     function($request,$id){
         return new Response(200,Candidato::setEditPerfil($request,$id));
@@ -132,6 +146,26 @@ $router->post("/candidatos/{id}/cursos/adicionar",[
     ],
     function($request,$id){
         return new Response(200,Candidato::setAdicionarCurso($request,$id));
+    }
+]);
+
+$router->get("/candidatos/{id}/experiencia/adicionar",[
+    "middlewares" => [
+        "admin-access",
+        "candidato-access"
+    ],
+    function($request,$id){
+        return new Response(200,Candidato::getAdicionarExperiencia($request,$id));
+    }
+]);
+
+$router->post("/candidatos/{id}/experiencia/adicionar",[
+    "middlewares" => [
+        "admin-access",
+        "candidato-access"
+    ],
+    function($request,$id){
+        return new Response(200,Candidato::setAdicionarExperiencia($request,$id));
     }
 ]);
 

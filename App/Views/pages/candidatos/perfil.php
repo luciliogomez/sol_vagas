@@ -119,26 +119,28 @@
                     <h3 class="title">EXPERIÊNCIAS PROFISSIONAIS</h3>
                     <div class="section-content">
 
+                    <?php foreach($experiencias as $experiencia): ?>
                         <div class="experiency">
                             <p>
-                                <span>Cargo: </span> Estagiario
+                                <span>Cargo: </span> <?=$experiencia['cargo']?>
                             </p>
                             <p>
-                                <span>Empresa: </span> Samba Tech Soluções
+                                <span>Empresa: </span> <?=$experiencia['empresa']?>
                             </p>
                             <p>
                                 <span>Duração: </span>
-                                Oct-2019 -> Mar-2020
+                                <?=$experiencia['inicio']?> -> <?=$experiencia['fim']?>
                             </p>
                             <p>
                                 <span>Descrição: </span>
-                                Desenvolvedor de software
+                                <?=$experiencia['descricao']?>
                             </p>
                         </div>
-                        <a href="add_experiency.html" class="btn">+</a>
+                        <?php endforeach;?>
+                        <a href="<?=URL?>/candidatos/<?=$candidato->getId()?>/experiencia/adicionar" class="btn">+</a>
                     </div>
                 
-                
+                    
                 </div>
                 <!--  -->
                 <div class="section cursos">
