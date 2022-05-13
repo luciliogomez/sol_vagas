@@ -68,6 +68,7 @@ $router->post("/candidatos/login",[
     }
 ]);
 
+//[GET]
 $router->get("/candidatos/{id}/dashboard",[
     "middlewares" => [
         "candidato-access"
@@ -78,6 +79,7 @@ $router->get("/candidatos/{id}/dashboard",[
 ]);
 
 
+//[GET]
 $router->get("/candidatos/{id}/perfil",[
     "middlewares" => [
     ],
@@ -129,6 +131,40 @@ $router->post("/candidatos/{id}/formacao/adicionar",[
 ]);
 
 
+
+$router->get("/candidatos/{id}/formacao/{id_formacao}/editar",[
+    "middlewares" => [
+        "admin-access",
+        "candidato-access"
+    ],
+    function($request,$id,$id_formacao){
+        return new Response(200,Candidato::getEditarFormacao($request,$id,$id_formacao));
+    }
+]);
+
+$router->post("/candidatos/{id}/formacao/{id_formacao}/editar",[
+    "middlewares" => [
+        "admin-access",
+        "candidato-access"
+    ],
+    function($request,$id,$id_formacao){
+        return new Response(200,Candidato::setEditarFormacao($request,$id,$id_formacao));
+    }
+]);
+
+
+
+$router->get("/candidatos/{id}/formacao/{id_formacao}/eliminar",[
+    "middlewares" => [
+        "admin-access",
+        "candidato-access"
+    ],
+    function($request,$id,$id_formacao){
+        return new Response(200,Candidato::getEliminarFormacao($request,$id,$id_formacao));
+    }
+]);
+
+// CURSOS PROFISSIONAIS
 $router->get("/candidatos/{id}/cursos/adicionar",[
     "middlewares" => [
         "admin-access",

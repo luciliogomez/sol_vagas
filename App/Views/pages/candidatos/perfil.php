@@ -78,20 +78,25 @@
                     <div class="section-content">
                     
                     <?php foreach($formacoes as $formacao): ?>
-                        <div class="course">
-                            <p>
-                                <span>Nivel: </span> <?=strtoupper($formacao['nivel'])?>
-                            </p>
-                            <p>
-                                <span>Curso: </span> <?=$formacao['curso']?>
-                            </p>
-                            <p>
-                                <span>Escola: </span><?=$formacao['escola']?>
-                            </p>
-                            <p>
-                                <span>Data: </span>
-                                <?=date("M-Y",strtotime($formacao['inicio']))?> --> <?=date("M-Y",strtotime($formacao['fim']))?>
-                            </p>
+                        <div class="course flex-row-space-between">
+                            <div>
+                                <p>
+                                    <span>Nivel: </span> <?=strtoupper($formacao['nivel'])?>
+                                </p>
+                                <p>
+                                    <span>Curso: </span> <?=$formacao['curso']?>
+                                </p>
+                                <p>
+                                    <span>Escola: </span><?=$formacao['escola']?>
+                                </p>
+                                <p>
+                                    <span>Data: </span>
+                                    <?=date("M-Y",strtotime($formacao['inicio']))?> --> <?=date("M-Y",strtotime($formacao['fim']))?>
+                                </p>
+                            </div>
+                            <div class="w-20">
+                                <a href="<?=URL?>/candidatos/<?=$candidato->getId()?>/formacao/<?=$formacao['id']?>/editar" class="btn btn-small">Editar</a>
+                            </div>
                         </div>
                     <?php endforeach; ?>
                     </div>
@@ -147,7 +152,7 @@
                     <h3 class="title">CURSOS PROFISSIONAIS</h3>
                     <div class="section-content">
                         <?php foreach($cursos as $curso): ?>
-                        <div class="course">
+                        <div class="course ">
                             <p>
                                 <span>Nome do Curso: </span> <?=$curso['nome']?>
                             </p>

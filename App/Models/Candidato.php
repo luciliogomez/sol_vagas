@@ -283,24 +283,30 @@ exit;
         }
     }
 
-    public function getFormacoes($id)
+    public function getFormacoes($id,$id_formacao = null)
     {
-        $query = "SELECT * FROM formacao WHERE id_user =:id_user";
+        $filter_one = isset($id_formacao) ? " AND id = {$id_formacao} ": "";
+
+        $query = "SELECT * FROM formacao WHERE id_user =:id_user ".$filter_one;
 
         $stmt = Conexao::getInstance()->prepare($query);
         $stmt->bindParam(":id_user",$id);
         $stmt->execute();
         if($stmt->rowCount()>=1){
 
-            return $stmt->fetchAll(\PDO::FETCH_ASSOC);
-        
+            return ( (isset($id_formacao))
+                ?($stmt->fetch(\PDO::FETCH_ASSOC) )
+                :($stmt->fetchAll(\PDO::FETCH_ASSOC) ) 
+            );
         }else{
 
-            return [];
-        
+            return ( (isset($id_formacao))
+                ?null
+                :[] 
+            );
         }       
     }
-
+    
     public function getCursos($id)
     {
         $query = "SELECT * FROM curso WHERE id_user =:id_user";
@@ -350,6 +356,40 @@ exit;
         $stmt->bindParam(":inicio",$inicio);
         $stmt->bindParam(":fim",$fim);
         $stmt->bindParam(":user",$id_user);
+        $stmt->execute();
+        if($stmt->rowCount()>=1){
+            return true;
+        }else{
+            return false;
+        }
+    }
+
+    public function updateFormacao($nivel,$curso,$escola,$inicio,$fim,$id_formacao)
+    {
+        $query = "UPDATE formacao SET nivel=:nivel,curso=:curso,escola=:escola,inicio=:inicio,fim=:fim 
+        WHERE id=:id_formacao";
+
+        $stmt = Conexao::getInstance()->prepare($query);
+        $stmt->bindParam(":nivel",$nivel);
+        $stmt->bindParam(":curso",$curso);
+        $stmt->bindParam(":escola",$escola);
+        $stmt->bindParam(":inicio",$inicio);
+        $stmt->bindParam(":fim",$fim);
+        $stmt->bindParam(":id_formacao",$id_formacao);
+        $stmt->execute();
+        if($stmt->rowCount()>=1){
+            return true;
+        }else{
+            return false;
+        }
+    }
+
+    public function deleteFormacao($id_formacao)
+    {
+        $query = "DELETE FROM formacao WHERE id=:id_formacao";
+
+        $stmt = Conexao::getInstance()->prepare($query);
+        $stmt->bindParam(":id_formacao",$id_formacao);
         $stmt->execute();
         if($stmt->rowCount()>=1){
             return true;

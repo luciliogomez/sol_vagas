@@ -6,7 +6,7 @@
     <!-- CONTENT -->
 
     <div class="edicao container">
-            
+    <a href="<?=URL?>/candidatos/<?=$id?>/perfil" class="btn mb-2"><-</a>
             <form class="flex-column-start" action="" method="post" enctype="multipart/form-data">
                 <h3 class="title">Sobre Você</h3>
 

@@ -104,6 +104,7 @@ class Candidato extends PagesBaseController{
                 throw new Exception("PAGINA NAO ENCONTRADA",404);
             }
             return View::render("candidatos::editar",[
+                "id" => $id,
                 "nome" => $candidato->getNome(),
                 'email' =>$candidato->getEmail(),
                 'titulo'=>$candidato->getTitulo(),
@@ -223,6 +224,7 @@ class Candidato extends PagesBaseController{
             throw new Exception("PAGINA NAO ENCONTRADA",404);
         }
     }
+    
 
     public static function setAdicionarFormacao($request,$id)
     {
@@ -271,6 +273,114 @@ class Candidato extends PagesBaseController{
             throw new Exception("PAGINA NAO ENCONTRADA",404);
         }
 
+    }
+
+    public static function getEditarFormacao($request,$id,$id_formacao)
+    {
+        $model = new ModelsCandidato();
+        try{
+            $candidato = $model->load($id);
+            if(!($candidato instanceof ModelsCandidato)){
+                throw new Exception("PAGINA NAO ENCONTRADA",404);
+            }
+            $formacao = $candidato->getFormacoes($id,$id_formacao);
+            if($formacao == null){
+                throw new Exception("PAGINA NAO ENCONTRADA",404);
+            }
+            return View::render("candidatos::edit_formacao",[
+                "id" => $id,
+                "id_formacao" => $id_formacao,
+                "curso" => $formacao['curso'],"escola"=>$formacao['escola'],
+                "nivel"=>$formacao['nivel'],"inicio"=>$formacao['inicio'],"fim"=>$formacao['fim'],
+                "status"=> self::getStatus($request)
+            ]);
+
+        }catch(Exception $ex)
+        {   
+            throw new Exception("PAGINA NAO ENCONTRADA",404);
+        }
+    }
+
+    public static function setEditarFormacao($request,$id,$id_formacao)
+    {
+        $postVars = $request->getPostVars();
+
+        $curso = filter_var($postVars['curso'],FILTER_SANITIZE_SPECIAL_CHARS);
+        $nivel = filter_var($postVars['nivel'],FILTER_SANITIZE_SPECIAL_CHARS);
+        $escola = filter_var($postVars['escola'],FILTER_SANITIZE_SPECIAL_CHARS);
+        $incio = filter_var($postVars['inicio'],FILTER_SANITIZE_SPECIAL_CHARS);
+        $fim = filter_var($postVars['fim'],FILTER_SANITIZE_SPECIAL_CHARS);
+        
+
+        if(empty($curso) || empty($nivel) || empty($escola)){
+            return View::render("candidatos::add_formacao",[
+                "curso" => $curso,"escola"=>$escola,"inicio"=>$incio,"fim"=>$fim
+            ]);
+        }
+
+        $model = new ModelsCandidato();
+        try{
+            $candidato = $model->load($id);
+            if(!($candidato instanceof ModelsCandidato)){
+                throw new Exception("PAGINA NAO ENCONTRADA",404);
+            }
+
+            if($candidato->updateFormacao($nivel,$curso,$escola,$incio,$fim,$id_formacao)){
+                $request->getRouter()->redirect("/candidatos/{$id}/formacao/{$id_formacao}/editar?status=updated");
+            }else{
+                return View::render("candidatos::edit_formacao",[
+                    "id" => $id,
+                    "curso" => $curso,
+                    "nivel" => $nivel,
+                    "escola"=> $escola,
+                    "inicio"=>$incio,
+                    "fim"   => $fim,
+                    "status"=> "Ocorreu um Erro ao Actualizar Formação"
+                ]);
+            }
+            
+
+        }catch(Exception $ex)
+        {   
+            echo "<pre>";
+            print_r($ex->getMessage());
+            echo "</pre>";
+            exit;
+            throw new Exception("PAGINA NAO ENCONTRADA",404);
+        }
+
+    }
+
+    public static function getEliminarFormacao($request,$id,$id_formacao)
+    {
+        $model = new ModelsCandidato();
+        try{
+            $candidato = $model->load($id);
+            if(!($candidato instanceof ModelsCandidato)){
+                throw new Exception("PAGINA NAO ENCONTRADA",404);
+            }
+            $formacao = $candidato->getFormacoes($id,$id_formacao);
+            if($formacao == null){
+                throw new Exception("PAGINA NAO ENCONTRADA",404);
+            }
+            if($model->deleteFormacao($id_formacao)){
+                $request->getRouter()->redirect("/candidatos/{$id}/perfil");
+            }else{
+                return View::render("candidatos::edit_formacao",[
+                    "id" => $id,
+                    "curso" => $formacao['curso'],
+                    "nivel" => $formacao['nivel'],
+                    "escola"=> $formacao['escola'],
+                    "inicio"=>$formacao['inicio'],
+                    "fim"   => $formacao['fim'],
+                    "status"=> "Ocorreu um Erro ao Eliminar Formação"
+                ]);
+            }
+
+        }catch(Exception $ex)
+        {   
+            throw new Exception("PAGINA NAO ENCONTRADA",404);
+        }
     }
 
     public static function getAdicionarCurso($request,$id)
