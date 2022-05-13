@@ -90,8 +90,9 @@ $router->get("/candidatos/{id}/perfil",[
 
 $router->get("/candidatos/{id}/perfil/editar",[
     "middlewares" => [
-        "admin-access",
-        "candidato-access"
+        "require-login",
+        "candidato-access",
+        "candidato-private-access"
     ],
     function($request,$id){
         return new Response(200,Candidato::getEditPerfil($request,$id));
