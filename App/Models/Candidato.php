@@ -332,20 +332,27 @@ exit;
         }       
     }
 
-    public function getExperiencias($id)
+    public function getExperiencias($id,$id_experiencia=null)
     {
-        $query = "SELECT * FROM experiencia WHERE id_user =:id_user";
+        $filter_one = isset($id_experiencia) ? " AND id = {$id_experiencia} ": "";
+        $query = "SELECT * FROM experiencia WHERE id_user =:id_user ".$filter_one;
 
         $stmt = Conexao::getInstance()->prepare($query);
         $stmt->bindParam(":id_user",$id);
         $stmt->execute();
         if($stmt->rowCount()>=1){
 
-            return $stmt->fetchAll(\PDO::FETCH_ASSOC);
+            return ( (isset($id_experiencia))
+                ?($stmt->fetch(\PDO::FETCH_ASSOC) )
+                :($stmt->fetchAll(\PDO::FETCH_ASSOC) ) 
+            );
         
         }else{
 
-            return [];
+            return ( (isset($id_experiencia))
+            ?null
+            :[] 
+        );
         
         }       
     }
@@ -477,5 +484,40 @@ exit;
             return false;
         }
     }
+
+    public function updateExperiencia($cargo,$empresa,$descricao,$inicio,$fim,$id_experiencia)
+    {
+        $query = "UPDATE experiencia SET cargo=:cargo,empresa=:empresa,descricao=:descricao,inicio=:inicio,fim=:fim 
+        WHERE id=:id_experiencia";
+
+        $stmt = Conexao::getInstance()->prepare($query);
+        $stmt->bindParam(":cargo",$cargo);
+        $stmt->bindParam(":empresa",$empresa);
+        $stmt->bindParam(":descricao",$descricao);
+        $stmt->bindParam(":inicio",$inicio);
+        $stmt->bindParam(":fim",$fim);
+        $stmt->bindParam(":id_experiencia",$id_experiencia);
+        $stmt->execute();
+        if($stmt->rowCount()>=1){
+            return true;
+        }else{
+            return false;
+        }
+    }
+
+    public function deleteExperiencia($id_experiencia)
+    {
+        $query = "DELETE FROM experiencia WHERE id=:id_experiencia";
+
+        $stmt = Conexao::getInstance()->prepare($query);
+        $stmt->bindParam(":id_experiencia",$id_experiencia);
+        $stmt->execute();
+        if($stmt->rowCount()>=1){
+            return true;
+        }else{
+            return false;
+        }
+    }
+
 
 }

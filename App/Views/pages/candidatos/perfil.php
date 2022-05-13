@@ -125,7 +125,8 @@
                     <div class="section-content">
 
                     <?php foreach($experiencias as $experiencia): ?>
-                        <div class="experiency">
+                        <div class="experiency flex-row-space-between">
+                            <div class="w-70">
                             <p>
                                 <span>Cargo: </span> <?=$experiencia['cargo']?>
                             </p>
@@ -140,6 +141,10 @@
                                 <span>Descrição: </span>
                                 <?=$experiencia['descricao']?>
                             </p>
+                            </div>
+                            <div class="w-20">
+                                <a href="<?=URL?>/candidatos/<?=$candidato->getId()?>/experiencia/<?=$experiencia['id']?>/editar" class="btn btn-small">Editar</a>
+                            </div>
                         </div>
                         <?php endforeach;?>
                         <a href="<?=URL?>/candidatos/<?=$candidato->getId()?>/experiencia/adicionar" class="btn">+</a>

@@ -313,7 +313,7 @@ class Candidato extends PagesBaseController{
         
 
         if(empty($curso) || empty($nivel) || empty($escola)){
-            return View::render("candidatos::add_formacao",[
+            return View::render("candidatos::edit_formacao",[
                 "curso" => $curso,"escola"=>$escola,"inicio"=>$incio,"fim"=>$fim
             ]);
         }
@@ -619,7 +619,7 @@ class Candidato extends PagesBaseController{
         $fim = filter_var($postVars['fim'],FILTER_SANITIZE_SPECIAL_CHARS);
 
         if(empty($cargo) || empty($empresa) || empty($descricao) || empty($inicio)){
-            return View::render("candidatos::add_formacao",[
+            return View::render("candidatos::add_experiencia",[
                 "cargo" => $cargo,"empresa"=>$empresa,"dscricao"=>$descricao,"inicio"=>$inicio,"fim"=>$fim
             ]);
         }
@@ -656,6 +656,119 @@ class Candidato extends PagesBaseController{
         }
 
     }
+
+
+    public static function getEditarExperiencia($request,$id,$id_experiencia)
+    {
+        $model = new ModelsCandidato();
+        try{
+            $candidato = $model->load($id);
+            if(!($candidato instanceof ModelsCandidato)){
+                throw new Exception("PAGINA NAO ENCONTRADA",404);
+            }
+            $experiencia = $candidato->getExperiencias($id,$id_experiencia);
+            if($experiencia == null){
+                throw new Exception("PAGINA NAO ENCONTRADA",404);
+            }
+            return View::render("candidatos::edit_experiencia",[
+                "id" => $id,
+                "id_experiencia" => $id_experiencia,
+                "cargo" => $experiencia['cargo'],"empresa"=>$experiencia['empresa'],
+                "descricao" => $experiencia['descricao'],
+                "inicio"=>$experiencia['inicio'],"fim"=>$experiencia['fim'],
+                "status"=> self::getStatus($request)
+            ]);
+
+        }catch(Exception $ex)
+        {   
+            throw new Exception("PAGINA NAO ENCONTRADA",404);
+        }
+    }
+
+    public static function setEditarExperiencia($request,$id,$id_experiencia)
+    {
+        $postVars = $request->getPostVars();
+
+        $cargo = filter_var($postVars['cargo'],FILTER_SANITIZE_SPECIAL_CHARS);
+        $empresa = filter_var($postVars['empresa'],FILTER_SANITIZE_SPECIAL_CHARS);
+        $descricao = filter_var($postVars['descricao'],FILTER_SANITIZE_SPECIAL_CHARS);
+        $inicio = filter_var($postVars['inicio'],FILTER_SANITIZE_SPECIAL_CHARS);
+        $fim = filter_var($postVars['fim'],FILTER_SANITIZE_SPECIAL_CHARS);
+        
+
+        if(empty($cargo) || empty($empresa) || empty($inicio) || empty($descricao)){
+            return View::render("candidatos::edit_experiencia",[
+                "curso" => $cargo,"empresa"=>$empresa,"inicio"=>$inicio,"fim"=>$fim,
+                "descricao"=>$descricao,
+                "status"=>Alert::getError("Preencha os campos obrigatorios")
+            ]);
+        }
+
+        $model = new ModelsCandidato();
+        try{
+            $candidato = $model->load($id);
+            if(!($candidato instanceof ModelsCandidato)){
+                throw new Exception("PAGINA NAO ENCONTRADA",404);
+            }
+
+            if($candidato->updateExperiencia($cargo,$empresa,$descricao,$inicio,$fim,$id_experiencia)){
+                $request->getRouter()->redirect("/candidatos/{$id}/experiencia/{$id_experiencia}/editar?status=updated");
+            }else{
+                return View::render("candidatos::edit_experiencia",[
+                    "id" => $id,
+                    "cargo" => $cargo,
+                    "empresa" => $empresa,
+                    "descricao"=> $descricao,
+                    "inicio"=>$inicio,
+                    "fim"   => $fim,
+                    "status"=> Alert::getError("Ocorreu um Erro ao Actualizar Experiencia")
+                ]);
+            }
+            
+
+        }catch(Exception $ex)
+        {   
+            echo "<pre>";
+            print_r($ex->getMessage());
+            echo "</pre>";
+            exit;
+            throw new Exception("PAGINA NAO ENCONTRADA",404);
+        }
+
+    }
+
+    public static function getEliminarExperiencia($request,$id,$id_experiencia)
+    {
+        $model = new ModelsCandidato();
+        try{
+            $candidato = $model->load($id);
+            if(!($candidato instanceof ModelsCandidato)){
+                throw new Exception("PAGINA NAO ENCONTRADA",404);
+            }
+            $experiencia = $candidato->getExperiencias($id,$id_experiencia);
+            if($experiencia == null){
+                throw new Exception("PAGINA NAO ENCONTRADA",404);
+            }
+            if($model->deleteExperiencia($id_experiencia)){
+                $request->getRouter()->redirect("/candidatos/{$id}/perfil");
+            }else{
+                return View::render("candidatos::edit_experiencia",[
+                    "id" => $id,
+                    "cargo" => $experiencia['cargo'],
+                    "empresa" => $experiencia['empresa'],
+                    "descricao"=>$experiencia['descricao'],
+                    "inicio"=>$experiencia['inicio'],
+                    "fim"   => $experiencia['fim'],
+                    "status"=> Alert::getError("Ocorreu um Erro ao Eliminar Experiencia")
+                ]);
+            }
+
+        }catch(Exception $ex)
+        {   
+            throw new Exception("PAGINA NAO ENCONTRADA",404);
+        }
+    }
+
     public static function getStatus($request)
     {
         $queryParams = $request->getQueryParams();

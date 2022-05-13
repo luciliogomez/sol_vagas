@@ -220,6 +220,8 @@ $router->get("/candidatos/{id}/curso/{id_curso}/eliminar",[
 ]);
 
 
+//  EXPERIENCIAS
+
 $router->get("/candidatos/{id}/experiencia/adicionar",[
     "middlewares" => [
         "admin-access",
@@ -239,6 +241,41 @@ $router->post("/candidatos/{id}/experiencia/adicionar",[
         return new Response(200,Candidato::setAdicionarExperiencia($request,$id));
     }
 ]);
+
+
+$router->get("/candidatos/{id}/experiencia/{id_experiencia}/editar",[
+    "middlewares" => [
+        "admin-access",
+        "candidato-access"
+    ],
+    function($request,$id,$id_experiencia){
+        return new Response(200,Candidato::getEditarExperiencia($request,$id,$id_experiencia));
+    }
+]);
+
+$router->post("/candidatos/{id}/experiencia/{id_experiencia}/editar",[
+    "middlewares" => [
+        "admin-access",
+        "candidato-access"
+    ],
+    function($request,$id,$id_experiencia){
+        return new Response(200,Candidato::setEditarExperiencia($request,$id,$id_experiencia));
+    }
+]);
+
+
+
+$router->get("/candidatos/{id}/experiencia/{id_experiencia}/eliminar",[
+    "middlewares" => [
+        "admin-access",
+        "candidato-access"
+    ],
+    function($request,$id,$id_experiencia){
+        return new Response(200,Candidato::getEliminarExperiencia($request,$id,$id_experiencia));
+    }
+]);
+
+
 
 
 // EMPRESAS ROUTES
