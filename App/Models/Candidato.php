@@ -307,20 +307,27 @@ exit;
         }       
     }
     
-    public function getCursos($id)
+    public function getCursos($id,$id_curso=null)
     {
-        $query = "SELECT * FROM curso WHERE id_user =:id_user";
+        $filter_one = isset($id_curso) ? " AND id = {$id_curso} ": "";
+        $query = "SELECT * FROM curso WHERE id_user =:id_user " .$filter_one;
 
         $stmt = Conexao::getInstance()->prepare($query);
         $stmt->bindParam(":id_user",$id);
         $stmt->execute();
         if($stmt->rowCount()>=1){
 
-            return $stmt->fetchAll(\PDO::FETCH_ASSOC);
+            return ( (isset($id_curso))
+                ?($stmt->fetch(\PDO::FETCH_ASSOC) )
+                :($stmt->fetchAll(\PDO::FETCH_ASSOC) ) 
+            );
         
         }else{
 
-            return [];
+            return ( (isset($id_curso))
+                ?null
+                :[] 
+            );
         
         }       
     }
@@ -410,6 +417,39 @@ exit;
         $stmt->bindParam(":data_conclusao",$data);
         $stmt->bindParam(":certificado",$certificado);
         $stmt->bindParam(":user",$id_user);
+        $stmt->execute();
+        if($stmt->rowCount()>=1){
+            return true;
+        }else{
+            return false;
+        }
+    }
+
+    public function updateCurso($nome,$escola,$certificado,$data,$id_curso)
+    {
+        $query = "UPDATE curso SET nome=:nome,certificado=:certificado,escola=:escola,data_conclusao=:data_conclusao 
+        WHERE id=:id_curso";
+
+        $stmt = Conexao::getInstance()->prepare($query);
+        $stmt->bindParam(":nome",$nome);
+        $stmt->bindParam(":escola",$escola);
+        $stmt->bindParam(":data_conclusao",$data);
+        $stmt->bindParam(":certificado",$certificado);
+        $stmt->bindParam(":id_curso",$id_curso);
+        $stmt->execute();
+        if($stmt->rowCount()>=1){
+            return true;
+        }else{
+            return false;
+        }
+    }
+
+    public function deleteCurso($id_curso)
+    {
+        $query = "DELETE FROM curso WHERE id=:id_curso";
+
+        $stmt = Conexao::getInstance()->prepare($query);
+        $stmt->bindParam(":id_curso",$id_curso);
         $stmt->execute();
         if($stmt->rowCount()>=1){
             return true;

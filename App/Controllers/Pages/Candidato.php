@@ -462,6 +462,132 @@ class Candidato extends PagesBaseController{
 
     }
 
+
+    public static function getEditarCurso($request,$id,$id_curso)
+    {
+        $model = new ModelsCandidato();
+        try{
+            $candidato = $model->load($id);
+            if(!($candidato instanceof ModelsCandidato)){
+                throw new Exception("PAGINA NAO ENCONTRADA",404);
+            }
+            $curso = $candidato->getCursos($id,$id_curso);
+            if($curso == null){
+                throw new Exception("PAGINA NAO ENCONTRADA",404);
+            }
+            return View::render("candidatos::edit_curso",[
+                "id" => $id,
+                "id_curso" => $id_curso,
+                "nome" => $curso['nome'],"escola"=>$curso['escola'],
+                "certificado"=>$curso['certificado'],"conclusao"=>$curso['data_conclusao'],
+                "status"=> self::getStatus($request)
+            ]);
+
+        }catch(Exception $ex)
+        {   
+            throw new Exception("PAGINA NAO ENCONTRADA",404);
+        }
+    }
+
+    public static function setEditarCurso($request,$id,$id_curso)
+    {
+        $postVars = $request->getPostVars();
+        
+        $nome = filter_var($postVars['nome'],FILTER_SANITIZE_SPECIAL_CHARS);
+        $escola = filter_var($postVars['escola'],FILTER_SANITIZE_SPECIAL_CHARS);
+        $fim = filter_var($postVars['conclusao'],FILTER_SANITIZE_SPECIAL_CHARS);
+        
+        $model = new ModelsCandidato();
+        $curso = $model->getCursos($id,$id_curso);
+
+        if(empty($nome) || empty($escola) || empty($fim)){
+            return View::render("candidatos::edit_curso",[
+                "nome" => $nome,"escola"=>$escola,"conclusao"=>$fim,
+                "status" => Alert::getError("Preencha os campos obrigatorios")
+            ]);
+        }
+        if(uploaded_file("certificado") && !is_valid_file("certificado")){
+            return View::render("candidatos::edit_curso",[
+                "nome" => $nome,"escola"=>$escola,"conclusao"=>$fim,
+                "status"=>Alert::getError("Formato de arquivo nao permitido!")
+            ]);
+        }
+        $certificado = uploaded_file("certificado")?get_uploaded_file("certificado"):$curso['certificado'];
+        if(uploaded_file("certificado") && $certificado == null){
+            return View::render("candidatos::edit_curso",[
+                "nome" => $nome,"escola"=>$escola,"conclusao"=>$fim,
+                "status"=>Alert::getError("Falha ao carregar arquivo!")
+            ]);
+        }
+
+        try{
+            $candidato = $model->load($id);
+            if(!($candidato instanceof ModelsCandidato)){
+                throw new Exception("PAGINA NAO ENCONTRADA",404);
+            }
+
+            if($candidato->updateCurso($nome,$escola,$certificado,$fim,$id_curso)){
+                $request->getRouter()->redirect("/candidatos/{$id}/curso/{$id_curso}/editar?status=updated");
+            }else{
+                echo "<pre>";
+            print_r($certificado);
+            echo "</pre>";
+            exit;
+                return View::render("candidatos::edit_curso",[
+                    "id" => $id,
+                    "nome" => $nome,
+                    "certificado" => $certificado,
+                    "escola"=> $escola,
+                    "conclusao"   => $fim,
+                    "status"=> Alert::getError("Ocorreu um Erro ao Actualizar Curso")
+                ]);
+            }
+        }catch(Exception $ex)
+        {   
+            echo "<pre>";
+            print_r($ex->getMessage());
+            echo "</pre>";
+            exit;
+            throw new Exception("PAGINA NAO ENCONTRADA",404);
+        }
+
+    }
+
+    public static function getEliminarCurso($request,$id,$id_curso)
+    {
+        $model = new ModelsCandidato();
+        try{
+            $candidato = $model->load($id);
+            if(!($candidato instanceof ModelsCandidato)){
+                throw new Exception("PAGINA NAO ENCONTRADA",404);
+            }
+            $curso = $candidato->getCursos($id,$id_curso);
+            if($curso == null){
+                throw new Exception("PAGINA NAO ENCONTRADA",404);
+            }
+            if($model->deleteCurso($id_curso)){
+                $request->getRouter()->redirect("/candidatos/{$id}/perfil");
+            }else{
+                return View::render("candidatos::edit_curso",[
+                    "id" => $id,
+                    "certificado" => $curso['certificado'],
+                    "nome" => $curso['nome'],
+                    "escola"=> $curso['escola'],
+                    "conclusao"   => $curso['data_conclusao'],
+                    "status"=> "Ocorreu um Erro ao Eliminar Formação"
+                ]);
+            }
+
+        }catch(Exception $ex)
+        {   echo "<pre>";
+            print_r($ex->getMessage());
+            echo "</pre>";
+            exit;
+            throw new Exception("PAGINA NAO ENCONTRADA",404);
+        }
+    }
+
+    // EXPERIENCIAS
     public static function getAdicionarExperiencia($request,$id)
     {
         $model = new ModelsCandidato();

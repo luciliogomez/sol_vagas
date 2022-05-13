@@ -185,6 +185,41 @@ $router->post("/candidatos/{id}/cursos/adicionar",[
     }
 ]);
 
+
+
+$router->get("/candidatos/{id}/curso/{id_curso}/editar",[
+    "middlewares" => [
+        "admin-access",
+        "candidato-access"
+    ],
+    function($request,$id,$id_curso){
+        return new Response(200,Candidato::getEditarCurso($request,$id,$id_curso));
+    }
+]);
+
+$router->post("/candidatos/{id}/curso/{id_curso}/editar",[
+    "middlewares" => [
+        "admin-access",
+        "candidato-access"
+    ],
+    function($request,$id,$id_curso){
+        return new Response(200,Candidato::setEditarCurso($request,$id,$id_curso));
+    }
+]);
+
+
+
+$router->get("/candidatos/{id}/curso/{id_curso}/eliminar",[
+    "middlewares" => [
+        "admin-access",
+        "candidato-access"
+    ],
+    function($request,$id,$id_curso){
+        return new Response(200,Candidato::getEliminarCurso($request,$id,$id_curso));
+    }
+]);
+
+
 $router->get("/candidatos/{id}/experiencia/adicionar",[
     "middlewares" => [
         "admin-access",

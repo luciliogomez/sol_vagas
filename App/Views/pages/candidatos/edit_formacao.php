@@ -1,5 +1,5 @@
 <?= $this->layout("template::template",[
-    "title" => "ADICIONAR FORMACAO"
+    "title" => "EDITAR FORMACAO"
 ]);?>
     <!-- CONTENT -->
 

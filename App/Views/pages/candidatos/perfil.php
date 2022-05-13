@@ -152,7 +152,8 @@
                     <h3 class="title">CURSOS PROFISSIONAIS</h3>
                     <div class="section-content">
                         <?php foreach($cursos as $curso): ?>
-                        <div class="course ">
+                        <div class="course flex-row-space-between">
+                            <div>
                             <p>
                                 <span>Nome do Curso: </span> <?=$curso['nome']?>
                             </p>
@@ -167,6 +168,10 @@
                                 <span>Certificado: </span>
                                 <a href="<?=URL."/uploads/".$curso['certificado']?>"  target="_blank">Ver</a>
                             </p>
+                            </div>
+                            <div class="w-20">
+                                <a href="<?=URL?>/candidatos/<?=$candidato->getId()?>/curso/<?=$curso['id']?>/editar" class="btn btn-small">Editar</a>
+                            </div>
                         </div>
                         <?php endforeach; ?>
 
