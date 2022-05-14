@@ -1,5 +1,5 @@
 <?= $this->layout("template::template",[
-    'title' => $_SESSION['usuario']['nome'] 
+    'title' => $_SESSION['usuario']['nome'] . (isset($title)?$title:"")
 ]);?>
 
 
@@ -24,7 +24,7 @@
                     </div>
                 </a>
 
-                <a href="candidaturas.html" class="card-link">
+                <a href="candidaturas" class="card-link">
                     <div class="card flex-row-start">
                         <div class="card-image">
                             <figure>
@@ -39,7 +39,7 @@
                 </a>
 
 
-                <a href="vagas.html" class="card-link">
+                <a href="vagas" class="card-link">
                     <div class="card flex-row-start">
                         <div class="card-image">
                             <figure>
@@ -53,5 +53,12 @@
                     </div>
                 </a>
 
+            </div>
+
+            <div>
+
+                <!-- PUT YOUR CONTENT HERE -->
+                    <?= $this->section("content") ?>
+                <!-- END CONTENT -->
             </div>
         </div>

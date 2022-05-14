@@ -520,4 +520,24 @@ exit;
     }
 
 
+    public function getCandidaturas($id,$limit = null)
+    {
+        $limit = (strlen($limit))? " limit ".$limit:"";
+        $query = "  SELECT 
+                    CAND.id, CAND.id_candidato,VA.id as id_vaga,VA.titulo,VA.data_limite,
+                    EMP.id,EMP.nome,EMP.logotipo
+                    FROM candidatura CAND inner join vaga VA ON(CAND.id_vaga=VA.id)
+                    inner join empresa EMP ON(VA.id_empresa = EMP.id)
+                    WHERE CAND.id_candidato =:id_candidato  ORDER BY CAND.id DESC ".$limit;
+
+        $stmt = Conexao::getInstance()->prepare($query);
+        $stmt->bindParam(":id_candidato",$id);
+        $stmt->execute();
+        if($stmt->rowCount()>=1){
+            return ($stmt->fetchAll(\PDO::FETCH_ASSOC));
+        }else{
+            return [];
+        }       
+    }
+
 }

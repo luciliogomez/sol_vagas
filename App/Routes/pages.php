@@ -36,6 +36,8 @@ $router->get("/vagas/{id}/aplicar",[
     }
 ]);
 
+//  CANDIDATOS ROUTES
+
 // [GET]
 $router->get("/candidatos/login",[
     "middlewares" => [
@@ -77,6 +79,7 @@ $router->get("/candidatos/{id}/dashboard",[
         return new Response(200,Candidato::getDashboard($request,$id));
     }
 ]);
+
 
 
 //[GET]
@@ -165,7 +168,8 @@ $router->get("/candidatos/{id}/formacao/{id_formacao}/eliminar",[
     }
 ]);
 
-// CURSOS PROFISSIONAIS
+// CURSOS PROFISSIONAIS ROUTES
+
 $router->get("/candidatos/{id}/cursos/adicionar",[
     "middlewares" => [
         "admin-access",
@@ -221,7 +225,7 @@ $router->get("/candidatos/{id}/curso/{id_curso}/eliminar",[
 ]);
 
 
-//  EXPERIENCIAS
+//  EXPERIENCIAS ROUTES
 
 $router->get("/candidatos/{id}/experiencia/adicionar",[
     "middlewares" => [
@@ -273,6 +277,21 @@ $router->get("/candidatos/{id}/experiencia/{id_experiencia}/eliminar",[
     ],
     function($request,$id,$id_experiencia){
         return new Response(200,Candidato::getEliminarExperiencia($request,$id,$id_experiencia));
+    }
+]);
+
+
+
+// CANDIDATURAS ROUTES
+
+//[GET]
+$router->get("/candidatos/{id}/candidaturas",[
+    "middlewares" => [
+        "candidato-access",
+        "candidato-private-access"
+    ],
+    function($request,$id){
+        return new Response(200,Candidato::getCandidaturas($request,$id));
     }
 ]);
 

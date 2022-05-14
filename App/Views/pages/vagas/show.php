@@ -1,4 +1,6 @@
-<?php $this->layout("template::template"); ?>
+<?php $this->layout("template::template",[
+    "title" => "Vaga - " . $vaga->getTitulo()
+]); ?>
 
 
 <div class="vaga-info container">

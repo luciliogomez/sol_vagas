@@ -4,6 +4,7 @@ namespace App\Controllers\Pages;
 use App\Models\Candidato as ModelsCandidato;
 use App\Utils\Alert;
 use App\Utils\View;
+use WilliamCosta\DatabaseManager\Pagination;
 use Exception;
 
 class Candidato extends PagesBaseController{
@@ -768,6 +769,42 @@ class Candidato extends PagesBaseController{
             throw new Exception("PAGINA NAO ENCONTRADA",404);
         }
     }
+
+
+    public static function getCandidaturas($request,$id)
+    {
+        $model = new ModelsCandidato();
+        $queryParams = $request->getQueryParams();
+        $candidaturas = [];
+        $pagination = null;
+
+        try{
+            $candidato = $model->load($id);
+            if(!($candidato  instanceof ModelsCandidato)){
+                throw new Exception("PAGINA NÃO ENCONTRADA",404);
+            }
+            $total = count($model->getCandidaturas($id));
+
+            $page = $queryParams['page']?? '1';
+            
+            $pagination = new Pagination($total,$page,4);
+
+            $candidaturas = $model->getCandidaturas($id,$pagination->getLimit());
+        
+            
+        }catch(Exception $e)
+        {
+            
+            $candidaturas = [];
+            $pagination = null;
+        }
+
+        return View::render("candidatos::candidaturas",[
+            "candidaturas" => $candidaturas,
+            "links"        => self::getPagination($pagination,$request)
+        ]);
+    }
+
 
     public static function getStatus($request)
     {
