@@ -63,7 +63,7 @@ class PagesBaseController{
         protected static function getPagination($pagination,$request,$search = null){
         $search = strlen($search)? "&search=".$search: '';
         $links = '';
-        
+        if($pagination == null)return;
         $totalPages = count($pagination->getPages());
         $lastPage = $pagination->getPages()[$totalPages-1]?? '';
         $lastPage = $lastPage['page']??'';

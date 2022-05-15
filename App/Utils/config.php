@@ -26,6 +26,7 @@ $view::setFolders([
     "home"     => "App/Views/pages",
     "template" => "App/Views/layout/template",
     "pagination" =>"App/Views/layout/pagination", 
+    "layout" =>"App/Views/layout", 
     "error" => "App/Views/layout",
     "admin"    => "App/Views/admin",
     "candidatos"    => "App/Views/pages/candidatos",

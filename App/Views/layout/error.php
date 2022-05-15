@@ -22,13 +22,13 @@ html,body{
     /* background-repeat: no-repeat; */
     /* background-position: center; */
     /* background-size: cover; */
-background-color: white;
+background-color: black;
 }
 
 div{
     width: 100%;
     height: 100%;
-    background-color: white;
+    background-color: black;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -46,10 +46,12 @@ h4{
     font-size: 1.5em;
     margin-bottom: 10px;
     color: black;
+    color: white;
 }
 p{
     margin-bottom: 35px;
     color: black;
+    color: white;
 }
 a{
     background-color: rgb(21, 110, 199);

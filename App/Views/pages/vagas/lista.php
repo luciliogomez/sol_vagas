@@ -6,8 +6,8 @@
             <h3>Pesquise a sua Vaga</h3>
             <form action="" method="post">
                 <div>
-                    <input type="text" name="search" id="">
-                    <button type="submit" class="btn btn-medium">Pesquisar</button>
+                    <input type="text" name="pesquisa" id="pesquisa">
+                    <button type="submit" class="btn btn-small">Pesquisar</button>
                 </div>
             </form>
                 

@@ -19,6 +19,13 @@ $router->get("/vagas",[
 ]);
 
 
+$router->post("/vagas",[
+    function($request){
+        return new Response(200,Vaga::getVagasFiltered($request));
+    }
+]);
+
+
 
 $router->get("/vagas/{id}/ver",[
     function($request,$id){

@@ -153,6 +153,7 @@ class Vaga{
         
         }
     }
+
     public function load($id)
     {
         $query = "SELECT V.id,V.titulo,V.formato,V.modalidade,V.cidade,V.salario_min,V.salario_max,
@@ -173,6 +174,30 @@ class Vaga{
         }
     }
 
+
+    public function search($search,$limit = null)
+    {
+        $limit = (strlen($limit))? "limit ".$limit:"";
+        $search = "%".$search."%";
+        
+        $query = "SELECT V.id,V.titulo,V.formato,V.modalidade,V.cidade,V.salario_min,V.salario_max,
+        V.descricao,V.habilidades,V.ano_de_experiencia,V.educacao,V.data_limite,V.estado,V.id_empresa,E.nome as empresa FROM `vaga` V
+        INNER JOIN empresa E ON (V.id_empresa = E.id) 
+        WHERE V.titulo like :search ORDER BY id DESC ".$limit;
+
+        $stmt = Conexao::getInstance()->prepare($query);
+        $stmt->bindParam(":search",$search);
+        $stmt->execute();
+        if($stmt->rowCount()>0){
+
+            return $stmt->fetchAll(\PDO::FETCH_CLASS,Vaga::class);
+        
+        }else{
+
+            return [];
+        
+        }
+    }
 
     public function create()
     {

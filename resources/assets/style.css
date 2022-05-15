@@ -710,7 +710,7 @@ footer .footer-bottom a {
 /* PAGINA DE VAGAS  */
 
 .search{
-    height: 40%;
+    height: 30%;
     background-color: rgb(10, 82, 97);
     width: 100%;
     margin-bottom: 4%;
@@ -730,11 +730,11 @@ footer .footer-bottom a {
     width: 100%;
     /* background-color: green; */
 }
-.search div input{
-    padding: 2%;
+.search div #pesquisa{
+    padding: 2% !important ;
     margin-right: 7px;
-    font-size: 1.3em;
-    width: 400px;
+    font-size: 1.2em !important;
+    width: 300px;
     border: 1px solid rgb(196, 193, 193);
     border-radius: 4px;
 }
