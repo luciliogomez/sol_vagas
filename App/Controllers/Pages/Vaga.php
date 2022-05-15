@@ -23,7 +23,7 @@ class Vaga extends PagesBaseController{
 
             $page = $queryParams['page']?? '1';
             
-            $pagination = new Pagination($total,$page,4);
+            $pagination = new Pagination($total,$page,1);
 
             $vagas =(isset($queryParams['search']))?$vagasModel->search($queryParams['search'],$pagination->getLimit()):  $vagasModel->read($pagination->getLimit());
 
@@ -35,7 +35,7 @@ class Vaga extends PagesBaseController{
 
         return View::render("vagas::lista",[
                 "vagas" => $vagas,
-                "links" => self::getPagination($pagination,$request)
+                "links" => self::getPagination($pagination,$request,(isset($queryParams['search'])?$queryParams['search']:null))
             ]
         );
     }

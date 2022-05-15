@@ -4,7 +4,8 @@ use App\Utils\View;
 
 class PagesBaseController{
 
-  protected static function getPrevLink($pages, $request){   
+  protected static function getPrevLink($pages, $request,$search = null){   
+    $search = strlen($search)? $search : '';
         $links = '';
         foreach($pages as $page)
         {
@@ -13,14 +14,14 @@ class PagesBaseController{
               $pageNumber = intval($page['page']);  
               
               if( ($pageNumber) == 1 ){
-                $link = $request->getURI()."?page=".$page['page'];
+                $link = $request->getURI()."?page=".$page['page'].$search;
                 
                   return View::render("pagination::item_left",[
                     'link' => $link,
                     'disabled' => 'disabled'
                   ]);
               }else{
-                $link = $request->getURI()."?page=".($pageNumber - 1);
+                $link = $request->getURI()."?page=".($pageNumber - 1).$search;
                
                 return View::render("pagination::item_left",[
                   'link' => $link,
@@ -33,8 +34,8 @@ class PagesBaseController{
   }
         
         
-    protected static function getNextLink($pages, $request){
-        
+    protected static function getNextLink($pages, $request,$search = null){
+        $search = strlen($search)? $search : '';
         $links = '';
         foreach($pages as $page)
         {
@@ -43,13 +44,13 @@ class PagesBaseController{
               $pageNumber = intval($page['page']);  
               
               if( ($pageNumber + 1) > count($pages) ){
-                $link = $request->getURI()."?page=".$page['page'];
+                $link = $request->getURI()."?page=".$page['page'].$search;
                   return View::render("pagination::item_right",[
                     'link' => $link,
                     'disabled' => 'disabled'
                   ]);
               }else{
-                $link = $request->getURI()."?page=".($pageNumber + 1);
+                $link = $request->getURI()."?page=".($pageNumber + 1).$search;
                 return View::render("pagination::item_right",[
                   'link' => $link,
                   'disabled' => ''
@@ -113,8 +114,8 @@ class PagesBaseController{
         
             }
         }
-        $prevLinK = self::getPrevLink($pagination->getPages(),$request);
-        $nextLink = self::getNextLink($pagination->getPages(),$request);
+        $prevLinK = self::getPrevLink($pagination->getPages(),$request,$search);
+        $nextLink = self::getNextLink($pagination->getPages(),$request,$search);
         return View::render("pagination::box",[
             "left" => $prevLinK,
             "links"=> $links,

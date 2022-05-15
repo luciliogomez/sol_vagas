@@ -193,9 +193,7 @@ class Vaga{
             return $stmt->fetchAll(\PDO::FETCH_CLASS,Vaga::class);
         
         }else{
-
             return [];
-        
         }
     }
 
