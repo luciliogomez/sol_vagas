@@ -175,18 +175,32 @@ class Vaga{
     }
 
 
-    public function search($search,$limit = null)
+    public function search($search,$area,$modalidade,$formato,$cidade,$limit = null)
     {
         $limit = (strlen($limit))? "limit ".$limit:"";
-        $search = "%".$search."%";
+        $search     = "%".$search."%";
+        $area       = $area."%";
+        $modalidade = $modalidade."%";
+        $formato    = $formato."%";
+        $cidade     = "%".$cidade."%";
+
         
         $query = "SELECT V.id,V.titulo,V.formato,V.modalidade,V.cidade,V.salario_min,V.salario_max,
         V.descricao,V.habilidades,V.ano_de_experiencia,V.educacao,V.data_limite,V.estado,V.id_empresa,E.nome as empresa FROM `vaga` V
         INNER JOIN empresa E ON (V.id_empresa = E.id) 
-        WHERE V.titulo like :search ORDER BY id DESC ".$limit;
+        WHERE V.titulo like :search
+        AND V.area like :area
+        AND V.formato like :formato
+        AND V.modalidade like :modalidade
+        AND V.cidade like :cidade
+        ORDER BY id DESC ".$limit;
 
         $stmt = Conexao::getInstance()->prepare($query);
         $stmt->bindParam(":search",$search);
+        $stmt->bindParam(":area",$area);
+        $stmt->bindParam(":modalidade",$modalidade);
+        $stmt->bindParam(":formato",$formato);
+        $stmt->bindParam(":cidade",$cidade);
         $stmt->execute();
         if($stmt->rowCount()>0){
 

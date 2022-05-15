@@ -23,8 +23,8 @@
                         <label for="area">Area</label>
                         <select name="area" id="">
                             <option value="ti">Tecnologias de Informação</option>
-                            <option value="saude" selected>Saúde</option>
-                            <option value="educacao">Educação</option>
+                            <option value="Saúde" >Saúde</option>
+                            <option value="Educação">Educação</option>
                             <option value="mecanica">Mecanica</option>
                         </select>
                     </div>

@@ -18,6 +18,25 @@ $router->get("/vagas",[
     }
 ]);
 
+$router->post("/vagas",[
+    function($request){
+        return new Response(200,Vaga::getVagasFiltered($request));
+    }
+]);
+
+
+
+$router->get("/vagas/filter",[
+    function($request){
+        return new Response(200,Vaga::filtrarVagas($request));
+    }
+]);
+$router->post("/vagas/filter",[
+    function($request){
+        return new Response(200,Vaga::getVagasFiltered($request));
+    }
+]);
+
 
 $router->post("/vagas",[
     function($request){
