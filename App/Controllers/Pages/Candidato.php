@@ -42,6 +42,8 @@ class Candidato extends PagesBaseController{
                 $_SESSION['usuario']["email"] = $candidato->getEmail();
                 $_SESSION['usuario']["tipo"] = "candidatos";
                 $_SESSION['usuario']["foto"] = $candidato->getFoto();
+                $_SESSION['usuario']["area"] = $candidato->getArea();
+                $_SESSION['usuario']["titulo"] = $candidato->getTitulo();
   
                 $request->getRouter()->redirect("/candidatos/{$candidato->getId()}/dashboard");
             

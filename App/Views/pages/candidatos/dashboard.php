@@ -39,7 +39,8 @@
                 </a>
 
 
-                <a href="vagas" class="card-link">
+                <a 
+                href="<?=URL?>/vagas/filter?area=<?=$_SESSION['usuario']['area']?>&search=<?=$_SESSION['usuario']['titulo']?>" class="card-link">
                     <div class="card flex-row-start">
                         <div class="card-image">
                             <figure>

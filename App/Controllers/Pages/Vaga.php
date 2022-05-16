@@ -25,7 +25,7 @@ class Vaga extends PagesBaseController{
 
             $page = $queryParams['page']?? '1';
             
-            $pagination = new Pagination($total,$page,1);
+            $pagination = new Pagination($total,$page,2);
 
             $vagas =(isset($titulo))?$vagasModel->search($titulo,'','','','',$pagination->getLimit()):  $vagasModel->read($pagination->getLimit());
 
@@ -59,7 +59,7 @@ class Vaga extends PagesBaseController{
 
             $page = $queryParams['page'] ?? '1';
             
-            $pagination = new Pagination($total,$page,1);
+            $pagination = new Pagination($total,$page,2);
 
             $vagas =$vagasModel->search($titulo,$area,$modalidade,$formato,$cidade,$pagination->getLimit());
 
@@ -70,8 +70,13 @@ class Vaga extends PagesBaseController{
         }
 
         return View::render("vagas::lista",[
-                "vagas" => $vagas,
-                "links" => self::getPagination($pagination,$request,$titulo,$area,$modalidade,$formato,$cidade)
+                "vagas"      => $vagas,
+                "area"       => $area,
+                "titulo"     => $titulo,
+                "modalidade" => $modalidade,
+                "formato"    => $formato,
+                "cidade"     =>$cidade,
+                "links"      => self::getPagination($pagination,$request,$titulo,$area,$modalidade,$formato,$cidade)
             ]
         );
     }

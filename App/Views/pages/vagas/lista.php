@@ -6,7 +6,7 @@
             <h3>Pesquise a sua Vaga</h3>
             <form action="" method="post">
                 <div>
-                    <input type="text" name="pesquisa" id="pesquisa">
+                    <input type="text" name="pesquisa" id="pesquisa" value="<?=isset($titulo)?$titulo:''?>">
                     <button type="submit" class="btn btn-small">Pesquisar</button>
                 </div>
             </form>
@@ -22,37 +22,42 @@
                     <div class="form-input">
                         <label for="area">Area</label>
                         <select name="area" id="">
-                            <option value="ti">Tecnologias de Informação</option>
-                            <option value="Saúde" >Saúde</option>
-                            <option value="Educação">Educação</option>
-                            <option value="mecanica">Mecanica</option>
+                            <option value="ti" <?=(isset($area)&&$area=='ti'?'selected':'')?> >Tecnologias de Informação</option>
+                            <option value="Saúde" <?=(isset($area)&&$area=='Saúde'?'selected':'')?> >Saúde</option>
+                            <option value="Educação" <?=(isset($area)&&$area=='educacao'?'selected':'')?>>Educação</option>
+                            <option value="mecanica" <?=(isset($area)&&$area=='mecanica'?'selected':'')?>>Mecanica</option>
                         </select>
                     </div>
                     <div class="form-input">
                         <label for="formato">Tipo</label>
                         <select name="formato" id="">
-                            <option value="estagio">Estágio</option>
-                            <option value="meioperiodo">Meio Período</option>
-                            <option value="fulltime" selected>Full-Time</option>
+                            <option value="estagio" <?=(isset($formato)&&$formato=='estagio'?'selected':'')?>>Estágio</option>
+                            <option value="meioperiodo" <?=(isset($formato)&&$formato=='meio-periodo'?'selected':'')?>>Meio Período</option>
+                            <option value="fulltime" <?=(isset($formato)&&$formato=='fulltime'?'selected':'')?>>Full-Time</option>
                         </select>
                     </div>
                     <div class="form-input">
                         <label for="modalidade">Modalidade</label>
-                        <select name="modalidade" id="">
-                            <option value="presencial" selected>Presencial</option>
-                            <option value="remoto">Remoto</option>
+                        <select name="modalidade" id="" >
+                            <option value="presencial" <?=(isset($modalidade)&&$modalidade=='presencial'?'selected':'')?>>Presencial</option>
+                            <option value="remoto" <?=(isset($modalidade)&&$modalidade=='remoto'?'selected':'')?>>Remoto</option>
                         </select>
                     </div>
                     <div class="form-input">
                         <label for="cidade">Cidade</label>
-                        <input type="text" name="cidade" id="">
+                        <input type="text" name="cidade" id="" value="<?=(isset($cidade)?$cidade:'')?>" >
                     </div>
                     <div class="form-input">
                         <label for=""><input type="checkbox" name="activas" id="" value="activas"> Apenas Vagas Activas </label>
                         
                     </div>
-                    <div class="form-input">
+                    <div class="flex-row-space-between">
+                    <div class="form-input ">
                         <input type="submit" value="Filtrar" class="btn ">
+                    </div>
+                    <div class="form-input">
+                        <a href="<?=URL?>/vagas" class="btn btn-small red ">Limpar</a>
+                    </div>
                     </div>
                 </form>
             </div>

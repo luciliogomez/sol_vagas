@@ -70,7 +70,7 @@ class PagesBaseController{
         }
         }
         
-        protected static function getPagination($pagination,$request,$search = null,$area,$modalidade,$formato,$cidade){
+        protected static function getPagination($pagination,$request,$search = null,$area=null,$modalidade=null,$formato=null,$cidade=null){
         $search = strlen($search)? "&search=".$search: '';
         $area= strlen($area)? "&area=".$area: '';
         $modalidade = strlen($modalidade)? "&modalidade=".$modalidade: '';
