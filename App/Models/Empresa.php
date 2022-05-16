@@ -1,6 +1,5 @@
 <?php
 namespace App\Models;
-
 use App\Utils\Conexao;
 
 class Empresa{
@@ -109,13 +108,9 @@ class Empresa{
         $stmt = Conexao::getInstance()->prepare($query);
         $stmt->execute();
         if($stmt->rowCount()>0){
-
             return $stmt->fetchAll(\PDO::FETCH_CLASS,Empresa::class);
-        
         }else{
-
             return [];
-        
         }
     }
 
@@ -129,11 +124,25 @@ class Empresa{
         $stmt->bindParam(":id",$id);
         $stmt->execute();
         if($stmt->rowCount()>0){
-
             return $stmt->fetchObject(Empresa::class);
-        
         }else{
-            return [];
+            return null;
+        }
+    }
+
+    public function loadByEmail($email)
+    {
+        $query = "SELECT id,nome,email,cidade,descricao,
+        logotipo,telefone,ano,senha FROM empresa 
+        WHERE email = :email";
+
+        $stmt = Conexao::getInstance()->prepare($query);
+        $stmt->bindParam(":email",$email);
+        $stmt->execute();
+        if($stmt->rowCount()>0){
+            return $stmt->fetchObject(Empresa::class);
+        }else{
+            return null;
         }
     }
 
@@ -144,9 +153,9 @@ class Empresa{
         VALUES (:nome,:email,:senha)";
 
         $stmt = Conexao::getInstance()->prepare($query);
-        $stmt->bindParam(":nome",$this->getNome());
-        $stmt->bindParam(":email",$this->getEmail());
-        $stmt->bindParam(":senha",$this->getSenha());
+        $stmt->bindParam(":nome",$this->nome);
+        $stmt->bindParam(":email",$this->email);
+        $stmt->bindParam(":senha",$this->senha);
         $stmt->execute();
         if($stmt->rowCount()>=1){
 
@@ -164,15 +173,15 @@ class Empresa{
         WHERE id = :id";
 
         $stmt = Conexao::getInstance()->prepare($query);
-        $stmt->bindParam(":nome",$this->getNome());
-        $stmt->bindParam(":email",$this->getEmail());
-        $stmt->bindParam(":cidade",$this->getCidade());
-        $stmt->bindParam(":foto",$this->getLogo());
-        $stmt->bindParam(":telefone",$this->getTelefone());
-        $stmt->bindParam(":ano",$this->getAnoFundacao());
-        $stmt->bindParam(":descricao",$this->getDescricao());
-        $stmt->bindParam(":cidade",$this->getCidade());
-        $stmt->bindParam(":id",$this->getId());
+        $stmt->bindParam(":nome",$this->nome);
+        $stmt->bindParam(":email",$this->email);
+        $stmt->bindParam(":cidade",$this->cidade);
+        $stmt->bindParam(":foto",$this->foto);
+        $stmt->bindParam(":telefone",$this->telefone);
+        $stmt->bindParam(":ano",$this->ano);
+        $stmt->bindParam(":descricao",$this->descricao);
+        $stmt->bindParam(":cidade",$this->cidade);
+        $stmt->bindParam(":id",$this->id);
         $stmt->execute();
         if($stmt->rowCount()>=1){
 

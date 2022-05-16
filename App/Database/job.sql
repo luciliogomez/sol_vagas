@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Tempo de geração: 06-Abr-2022 às 23:20
+-- Tempo de geração: 16-Maio-2022 às 15:25
 -- Versão do servidor: 10.4.19-MariaDB
 -- versão do PHP: 7.4.19
 
@@ -49,8 +49,11 @@ CREATE TABLE `candidato` (
 --
 
 INSERT INTO `candidato` (`id`, `nome`, `email`, `senha`, `titulo`, `foto`, `cidade`, `telefone`, `resumo`, `habilidades`, `area`, `cv`, `ingles`, `estado`) VALUES
-(1, 'Lucílio Gomes', 'lucilio@gmail.com', '12345', 'Técnico de Informática', NULL, 'Luanda', '922223432', 'Apaixonado por tecnologia. Estou a procura de novas oportunidades nas áreas de Programação e Segurança Cibernética', 'Conhecimentos em Programação, com Tecnologias Backend, PHP,Python, JavaScript.\r\nMetodologia Ágeis, Clean Code, TDD,DDD, Api\'s Restfull', 'Tecnologias de Informação', NULL, 'basico', 0),
-(2, 'Pedro Viriato', 'pedro@gmail.com', '12345', 'Enfermeiro', NULL, 'Huambo, Angola', '934445566', 'Amante da Vida. Sou enfermeiro de profissão, comprometido com o melhoramento da vida dos meus pacientes.', 'Dinâmico. Boas práticas em primeiros socorros, suporte de vida, etc', 'Saúde', NULL, 'basico', 1);
+(1, 'Lucílio Gomes', 'luciliodetales@gmail.com', '$2y$10$IVSSx/NxTVmcz/75Fjx0XedoSAdlLb5nbAHuJ4zKWz.bVGUxz6t2W', 'Técnico de Informática', 'sv62824d388a41a151016', 'Luanda', '943812726', 'resumo', NULL, 'ti', NULL, 'basico', 0),
+(2, 'Pedro Viriato', 'pedro@gmail.com', '$2y$10$IVSSx/NxTVmcz/75Fjx0XedoSAdlLb5nbAHuJ4zKWz.bVGUxz6t2W', 'Enfermeiro', 'sv627e314ea4689122206', 'Huambo, Angola', '934445566', 'Amante da Vida. Sou enfermeiro de profissão, comprometido com o melhoramento da vida dos meus pacientes.', NULL, 'Saúde', NULL, 'basico', 1),
+(3, 'Joana Dos Santos', 'joana@gmail.com', '$2y$10$c0ULTtb/YwcLG.OWySwBO.i0SI2IeenKfIIp90YI.FHnaTqpx/dz.', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(4, 'Elisa Da Silva Salumbo Hebo', 'elisa@gmail.com', '$2y$10$J99YwSj8/JFrwUDky9GU3ua4km6r6jy8K3MURTKPRhA8cxfaX/j9a', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(5, 'Maria Joao', 'maria@gmail.com', '$2y$10$XInK8RVDaeLSpbIbY0b4.u4OalZMCsvmIr0i.nXnejNo39kt1TV6y', 'Contabilista', 'sv628246d45eba7144300', 'Luanda', '923240284', 'Contabilista a mais de 4 anos. Proactiva, autodidata.', NULL, 'economia', NULL, 'basico', 1);
 
 -- --------------------------------------------------------
 
@@ -64,6 +67,16 @@ CREATE TABLE `candidatura` (
   `id_vaga` int(11) NOT NULL,
   `estado` varchar(200) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Extraindo dados da tabela `candidatura`
+--
+
+INSERT INTO `candidatura` (`id`, `id_candidato`, `id_vaga`, `estado`) VALUES
+(1, 1, 1, 'pendente'),
+(2, 1, 2, 'pendente'),
+(3, 1, 3, 'pendente'),
+(4, 2, 2, 'pendente');
 
 -- --------------------------------------------------------
 
@@ -85,7 +98,8 @@ CREATE TABLE `curso` (
 --
 
 INSERT INTO `curso` (`id`, `nome`, `escola`, `data_conclusao`, `certificado`, `id_user`) VALUES
-(1, 'Desenvolvimento Web', 'LUTEC-Formações', '2021-09-14', 'qewewwwqwqwwq.pdf', 1);
+(3, 'Primeiros Socorros', 'MedSchool', '2022-05-26', 'sv627e085ca6207092724', 2),
+(4, 'Desenvolvimento Web', 'UAN', '2022-05-28', 'sv627e439015575134000', 1);
 
 -- --------------------------------------------------------
 
@@ -136,7 +150,8 @@ CREATE TABLE `experiencia` (
 INSERT INTO `experiencia` (`id`, `cargo`, `empresa`, `descricao`, `inicio`, `fim`, `id_user`) VALUES
 (3, 'Técnico de Suporte em TI', 'Adobe IT', 'Manutenção de Computadores, Montagem, manutenção e operação em infraestruturas de redes, configuração de roteadores.', '2018-03-15', '2020-08-20', 1),
 (4, 'Enfermeiro ', 'Hospital Vida Feliz', 'Consultas gerais, suporte de Vida, primeiros socorros', '2019-04-18', NULL, 2),
-(5, 'Programador Júnior', 'Hack Soft', 'Criação de Paginas Web, Html, Css, JavaScript. ', '2020-12-24', '2022-02-23', 1);
+(6, 'Professor de Informática', 'Escola', 'Ensinava programação e hardware. Auxiliava em trabalhos de fim de curso.', '2021-11-02', '2022-05-14', 1),
+(8, 'Professora de Economia', 'Escola Maria 14', 'Ensinava contabilidade Básica ao alunos', '2018-05-19', '2020-05-03', 5);
 
 -- --------------------------------------------------------
 
@@ -159,8 +174,8 @@ CREATE TABLE `formacao` (
 --
 
 INSERT INTO `formacao` (`id`, `nivel`, `curso`, `escola`, `inicio`, `fim`, `id_user`) VALUES
-(1, 'medio', 'Informática', 'Instituto de Telecomunicações', '2014-02-04', '2017-12-28', 1),
-(2, 'licenciado', 'Enfermagem Geral', 'Universidade Boa Vida', '2017-03-08', '2021-11-22', 2);
+(6, 'medio', 'Informática', 'Instituto de Telecomunicações', '2013-02-07', '2017-10-29', 1),
+(7, 'licenciatura', 'Contabilidade E Finanças', 'Universidade Virginea', '2018-06-06', '2022-05-25', 5);
 
 -- --------------------------------------------------------
 
@@ -191,6 +206,7 @@ INSERT INTO `users` (`id`, `nome`, `email`, `senha`, `nivel`) VALUES
 
 CREATE TABLE `vaga` (
   `id` int(11) NOT NULL,
+  `area` varchar(50) DEFAULT NULL,
   `titulo` varchar(255) NOT NULL,
   `formato` varchar(200) NOT NULL,
   `modalidade` varchar(200) NOT NULL,
@@ -210,9 +226,10 @@ CREATE TABLE `vaga` (
 -- Extraindo dados da tabela `vaga`
 --
 
-INSERT INTO `vaga` (`id`, `titulo`, `formato`, `modalidade`, `cidade`, `salario_min`, `salario_max`, `descricao`, `habilidades`, `ano_de_experiencia`, `educacao`, `data_limite`, `estado`, `id_empresa`) VALUES
-(1, 'Programador', 'full', 'presencial', 'Luanda', 300000, NULL, 'Desenvolvedor de Software, BACKEND.\r\nDesenvolver sites, softwares de variados generos.\r\nDar manutenção aos softwares existentes na compania.', 'Desenvolvimento Web\r\n- Dinamico\r\n- Html, Css, Javascript\r\n- PHP, JAVA\r\n- Angular , Sringboot\r\n- Git\r\n- Metodologias Ageis\r\n- Apis\r\n- Clean Code', 2, 'medio', '2022-04-14', 1, 1),
-(2, 'Enfermeiro', 'full', 'presencial', 'Moxico', 200000, NULL, 'Tratar doentes, cuidar de doentes', 'Dinamico, Proeficiente em primeiros socorros', 1, 'licenciado', '2022-05-19', 1, 2);
+INSERT INTO `vaga` (`id`, `area`, `titulo`, `formato`, `modalidade`, `cidade`, `salario_min`, `salario_max`, `descricao`, `habilidades`, `ano_de_experiencia`, `educacao`, `data_limite`, `estado`, `id_empresa`) VALUES
+(1, 'ti', 'Programador', 'fulltime', 'presencial', 'Luanda', 300000, NULL, 'Desenvolvedor de Software, BACKEND.\r\nDesenvolver sites, softwares de variados generos.\r\nDar manutenção aos softwares existentes na compania.', 'Desenvolvimento Web\r\n- Dinamico\r\n- Html, Css, Javascript\r\n- PHP, JAVA\r\n- Angular , Sringboot\r\n- Git\r\n- Metodologias Ageis\r\n- Apis\r\n- Clean Code', 2, 'medio', '2022-04-14', 1, 1),
+(2, 'Saúde', 'Enfermeiro', 'fulltime', 'presencial', 'Moxico', 200000, NULL, 'Tratar doentes, cuidar de doentes', 'Dinamico, Proeficiente em primeiros socorros', 1, 'licenciado', '2022-05-19', 1, 2),
+(3, 'ti', 'Programador C#', 'fulltime', 'presencial', 'Luanda', NULL, NULL, 'Desenvolver Aplicações C#', '', NULL, 'licenciatura', '2022-05-26', 1, 1);
 
 --
 -- Índices para tabelas despejadas
@@ -281,19 +298,19 @@ ALTER TABLE `vaga`
 -- AUTO_INCREMENT de tabela `candidato`
 --
 ALTER TABLE `candidato`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT de tabela `candidatura`
 --
 ALTER TABLE `candidatura`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT de tabela `curso`
 --
 ALTER TABLE `curso`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT de tabela `empresa`
@@ -305,13 +322,13 @@ ALTER TABLE `empresa`
 -- AUTO_INCREMENT de tabela `experiencia`
 --
 ALTER TABLE `experiencia`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT de tabela `formacao`
 --
 ALTER TABLE `formacao`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT de tabela `users`
@@ -323,7 +340,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT de tabela `vaga`
 --
 ALTER TABLE `vaga`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- Restrições para despejos de tabelas

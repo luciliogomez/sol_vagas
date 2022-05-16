@@ -1,6 +1,7 @@
 <?php
 
 use App\Controllers\Pages\Candidato;
+use App\Controllers\Pages\Empresa;
 use App\Http\Response;
 use App\Controllers\Pages\Home;
 use App\Controllers\Pages\Vaga;
@@ -357,9 +358,32 @@ $router->get("/candidatos/{id}/candidaturas",[
 
 
 // EMPRESAS ROUTES
+
+// [GET]
+$router->get("/empresas/login",[
+    function($request){
+        return new Response(200,Empresa::getLogin($request));
+    }
+]);
+
+// [POST]
+$router->post("/empresas/login",[
+    function($request){
+        return new Response(200,Empresa::setLogin($request));
+    }
+]);
+
+
+
+$router->get("/empresas/{id}/dashboard",[
+    function($request,$id){
+        return new Response(200,Empresa::getDashboard($request,$id));
+    }
+]);
+
 $router->get("/empresas/{id}/perfil",[
-    function(){
-        return new Response(200,Home::index());
+    function($request,$id){
+        return new Response(200,Empresa::getPerfil($request,$id));
     }
 ]);
 

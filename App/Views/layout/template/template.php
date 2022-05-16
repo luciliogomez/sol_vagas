@@ -19,7 +19,7 @@
                 <li><a href="<?=URL?>">Home</a></li>
                 <li><a href="<?=URL?>/vagas">Vagas</a></li>
                 <?php if(!isset($_SESSION['usuario'])):?>
-                <li><a href="login_empresa.html">Sou Empresa</a></li>
+                <li><a href="<?=URL?>/empresas/login">Sou Empresa</a></li>
                 <li class="active"><a href="<?=URL?>/candidatos/login">Login</a></li>
                 <?php else: ?>
                     <li class="active rad-1">
