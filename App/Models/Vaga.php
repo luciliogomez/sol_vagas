@@ -295,4 +295,20 @@ class Vaga{
         }       
     }
 
+    public function aplicarVaga($id_candidato,$id_vaga,$limit = null)
+    {
+        $query = "  INSERT INTO candidatura (id_candidato,id_vaga,estado) 
+                    VALUES(:candidato,:vaga,'pendente');";
+
+        $stmt = Conexao::getInstance()->prepare($query);
+        $stmt->bindParam(":candidato",$id_candidato);
+        $stmt->bindParam(":vaga",$id_vaga);
+        $stmt->execute();
+        if($stmt->rowCount()>=1){
+            return true;
+        }else{
+            return false;
+        }       
+    }
+
 }

@@ -55,10 +55,21 @@ $router->get("/vagas/{id}/ver",[
 
 $router->get("/vagas/{id}/aplicar",[
     "middlewares"=>[
+        "require-login",
         "candidato-access"
     ],
-    function(){
-        return new Response(200,Home::index());
+    function($request,$id){
+        return new Response(200,Vaga::getAplicarVaga($request,$id));
+    }
+]);
+
+$router->post("/vagas/{id}/aplicar",[
+    "middlewares"=>[
+        "require-login",
+        "candidato-access"
+    ],
+    function($request,$id){
+        return new Response(200,Vaga::setAplicarVaga($request,$id));
     }
 ]);
 

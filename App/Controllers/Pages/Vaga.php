@@ -5,6 +5,7 @@ use App\Models\Vaga as ModelsVaga;
 use App\Utils\View;
 use Exception;
 use WilliamCosta\DatabaseManager\Pagination;
+use App\Utils\Alert;
 
 class Vaga extends PagesBaseController{
 
@@ -132,6 +133,87 @@ class Vaga extends PagesBaseController{
                 "code" => $ex->getCode(),
                 "message" => $ex->getMessage()
             ]);
+        }
+    }
+
+    public static function getAplicarVaga($request,$id)
+    {
+        $vagasModel = new ModelsVaga();
+        try{
+            $vaga = $vagasModel->load($id);
+
+            if($vaga instanceof ModelsVaga){
+                return View::render("vagas::aplicar",[
+                    "vaga" => $vaga,
+                    "status" => self::getStatus($request)
+                ]);    
+            }else{
+                return View::render("error::error",[
+                    "code" => 404,
+                    "message" => "VAGA NÃO ENCONTRADA"
+                ]);    
+            }
+
+        }catch(Exception $ex){
+            return View::render("error::error",[
+                "code" => $ex->getCode(),
+                "message" => $ex->getMessage()
+            ]);
+        }
+    }
+
+    public static function setAplicarVaga($request,$id)
+    {
+        $vagasModel = new ModelsVaga();
+        try{
+            $vaga = $vagasModel->load($id);
+
+            if($vaga instanceof ModelsVaga){
+                
+                if($vagasModel->aplicarVaga($_SESSION['usuario']['id'],$vaga->getId())){
+                    $request->getRouter()->redirect("/vagas/{$vaga->getId()}/ver");
+                }else{
+                    return View::render("vagas::aplicar",[
+                        "vaga" => $vaga,
+                        "status" => Alert::getError("Ocorreu um Erro. Tente Novamente Mais Tarde")
+                    ]);  
+                }
+                
+            }else{
+                return View::render("vagas::aplicar",[
+                    "vaga" => $vaga,
+                    "status" => Alert::getError("Ocorreu um Erro. Tente Novamente Mais Tarde")
+                ]);     
+            }
+
+        }catch(Exception $ex){
+            return View::render("vagas::aplicar",[
+                "vaga" => $vaga,
+                "status" => Alert::getError("Ocorreu um Erro. Tente Novamente Mais tarde")
+            ]);     
+        }
+    }
+
+    public static function getStatus($request)
+    {
+        $queryParams = $request->getQueryParams();
+        if(!isset($queryParams['status'])){
+            return "";
+        }
+        switch($queryParams['status'])
+        {
+            case "empty":
+                return Alert::getError("Preencha os campos obrigatorios!");
+                break;
+            case "updated":
+                return Alert::getSucess("Dados Guardados!");
+                break;
+            case "error":
+                return Alert::getError("Ocorreu um Erro. Tente novamente!");
+                break;
+            case "wrong_pass":
+                return Alert::getError("Palavra-passe Errada!");
+                break;
         }
     }
 
