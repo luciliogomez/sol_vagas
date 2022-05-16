@@ -54,6 +54,12 @@ body,html{
     justify-content: center;
     align-items: center;
 }
+
+.flex-row-start-start{
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+}
 .flex-row-start{
     display: flex;
     justify-content: flex-start;

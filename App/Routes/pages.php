@@ -387,6 +387,18 @@ $router->get("/empresas/{id}/perfil",[
     }
 ]);
 
+$router->get("/empresas/{id}/perfil/editar",[
+    function($request,$id){
+        return new Response(200,Empresa::getEditPerfil($request,$id));
+    }
+]);
+
+$router->post("/empresas/{id}/perfil/editar",[
+    function($request,$id){
+        return new Response(200,Empresa::setEditPerfil($request,$id));
+    }
+]);
+
 $router->get("/empresas/{id}/editar",[
     function(){
         return new Response(200,Home::index());

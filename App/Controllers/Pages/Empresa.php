@@ -115,6 +115,96 @@ class Empresa extends PagesBaseController{
         }
     }
 
+    public static function getEditPerfil($request,$id)
+    {
+        $model = new ModelsEmpresa();
+        try{
+            $empresa = $model->load($id);
+            if(!($empresa instanceof ModelsEmpresa)){
+                throw new Exception("PAGINA NAO ENCONTRADA",404);
+            }
+            return View::render("empresas::editar",[
+                "empresa" => $empresa,
+                'status' => self::getStatus($request)
+            ]);
+
+        }catch(Exception $ex)
+        {   
+            throw new Exception("PAGINA NAO ENCONTRADA",404);
+        }
+    }
+
+
+    public static function setEditPerfil($request,$id)
+    {
+        $postVars = $request->getPostVars();
+
+        if( empty($postVars['nome']) || empty($postVars['email']) 
+            || empty($postVars['cidade'])|| empty($postVars['telefone']) || empty($postVars['ano'])   
+        ){
+            return View::render("empresas::editar",[
+                "nome" => $postVars['nome'],
+                'email' =>$postVars['email'],
+                'ano'=>$postVars['ano'],
+                'resumo'=>$postVars['resumo'],
+                'telefone'=>$postVars['telefone'],
+                'cidade'=>$postVars['cidade'],
+                'foto'=>$postVars['old_foto'],
+                'status' => Alert::getError("Preencha os campos obrigatórios")
+            ]);
+        }
+
+        if(uploaded_foto() && !is_valid_foto()){
+            return View::render("empresas::editar",[
+                "nome" => $postVars['nome'],
+                'email' =>$postVars['email'],
+                'ano'=>$postVars['ano'],
+                'resumo'=>$postVars['resumo'],
+                'telefone'=>$postVars['telefone'],
+                'cidade'=>$postVars['cidade'],
+                'foto'=>$postVars['old_foto'],
+                'status' => Alert::getError("Formato da Imagem Invalido")
+            ]);
+        }
+
+        $nome =   filter_var($postVars['nome'],FILTER_SANITIZE_SPECIAL_CHARS);
+        $email =  filter_var($postVars['email'],FILTER_SANITIZE_EMAIL);
+        $ano = filter_var($postVars['ano'],FILTER_SANITIZE_SPECIAL_CHARS);
+        $resumo = filter_var($postVars['resumo'],FILTER_SANITIZE_SPECIAL_CHARS);
+        $telefone =  filter_var($postVars['telefone'],FILTER_SANITIZE_SPECIAL_CHARS);
+        $cidade = filter_var($postVars['cidade'],FILTER_SANITIZE_SPECIAL_CHARS);
+        if(!uploaded_foto()){
+            $foto = $postVars['old_foto'];
+        }else{
+            $foto = get_uploaded_foto();
+        }
+        
+        $model = new ModelsEmpresa();
+        $model->setNome($nome);
+        $model->setEmail($email);
+        $model->setAnoFundacao($ano);
+        $model->setDescricao($resumo);
+        $model->setTelefone($telefone);
+        $model->setCidade($cidade);
+        $model->setId($id);
+        $model->setLogo($foto);
+        
+        try{
+            if(($model->update())){
+                $request->getRouter()->redirect("/empresas/{$id}/perfil/editar?status=updated");
+            }else{
+                $request->getRouter()->redirect("/empresas/{$id}/perfil/editar?status=error");
+            }
+
+        }catch(Exception $ex)
+        {   echo "<pre>";
+            print_r($ex->getMessage());
+            echo "</pre>";
+            exit;
+            $request->getRouter()->redirect("/empresas/{$id}/perfil/editar?status=error");
+        }
+    }
+
 
     public static function getStatus($request)
     {

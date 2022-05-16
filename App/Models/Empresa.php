@@ -176,7 +176,7 @@ class Empresa{
         $stmt->bindParam(":nome",$this->nome);
         $stmt->bindParam(":email",$this->email);
         $stmt->bindParam(":cidade",$this->cidade);
-        $stmt->bindParam(":foto",$this->foto);
+        $stmt->bindParam(":foto",$this->logotipo);
         $stmt->bindParam(":telefone",$this->telefone);
         $stmt->bindParam(":ano",$this->ano);
         $stmt->bindParam(":descricao",$this->descricao);

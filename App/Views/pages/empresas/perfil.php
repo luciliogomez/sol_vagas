@@ -9,20 +9,19 @@
             <div class="basic-info">
                 <div class="picture">
                     <figure class="no-border">
-                        <img src="img/c1.png" alt="" class="no-border">
+                        <img src="<?=ASSETS?>/img/c1.png" alt="" class="no-border">
                     </figure>
                 </div>
                 <div class="presentation">
                     <h3 class="name"><?=$empresa->getNome()?></h3>
-                    <h4 class="title">Empresa de Software</h4>
+                    <h4 class="title"><?=$empresa->getEmail()?></h4>
                 </div>
                 <div class="links flex-column-start">
-                    <a href="editar_perfil_empresa.html" class="btn">Editar perfil</a>
-                    <a href="dashboard_empresa.html" class="btn">Voltar ao dashboard</a>
+                    <a href="<?=URL?>/empresas/<?=$empresa->getId()?>/perfil/editar" class="btn">Editar perfil</a>
+                    <a href="<?=URL?>/empresas/<?=$empresa->getId()?>/dashboard" class="btn">Voltar ao dashboard</a>
                 </div>
                 <div class="contacts flex-column-start">
-                    <span><i class="fa fa-envelope"></i> geral.sambatec@gmail.com</span>
-                    <span><i class="fa fa-phone"></i> 943812726</span>
+                    
                 </div>
             </div>
             <div class="general-info flex-column-start">
@@ -33,9 +32,7 @@
                     <h3 class="title">Descrição da Empresa</h3>
                     <div class="section-content">
                         <p>
-                            Lorem ipsum dolor sit amet consectetur adipisicing elit. 
-                            Odit excepturi fugiat nesciunt corporis vitae voluptas? Enim, sunt est minima, 
-                            rem, maxime suscipit amet quae iusto voluptatibus rerum dolores nobis recusandae!
+                            <?=$empresa->getDescricao()?>
                         </p>
                     </div>
                 </div>
@@ -52,7 +49,7 @@
                             </div>
                             <div class="text flex-column-start ">
                                 <h3>Ano de Fundação</h3>
-                                <h2>2005</h2>
+                                <h2><?=$empresa->getAnoFundacao()?></h2>
                             </div>  
                         </div>
                         <div class="info flex-row-space-between">
@@ -63,31 +60,21 @@
                             </div>
                             <div class="text flex-column-start ">
                                 <h3>Localização</h3>
-                                <h2>Luanda</h2>
+                                <h2><?=$empresa->getCidade()?></h2>
                             </div>  
                         </div>
                         <div class="info flex-row-space-between">
                             <div class="picture">
                                 <figure>
-                                    <i class="fa fa-laptop"></i>
+                                    <i class="fa fa-phone"></i>
                                 </figure>
                             </div>
                             <div class="text">
-                                <h3>Site</h3>
-                                <h2>www.sambatec.com</h2>
+                                <h3>Telefone</h3>
+                                <h2><?=$empresa->getTelefone()?></h2>
                             </div>  
                         </div>
-                        <div class="info flex-row-space-between">
-                            <div class="picture">
-                                <figure>
-                                    <i class="fa fa-linkedin"></i>
-                                </figure>
-                            </div>
-                            <div class="text">
-                                <h3>Linkedin</h3>
-                                <h2>www.linkedin.com/u/sambatec-23111</h2>
-                            </div>  
-                        </div>
+                       
                     
                     </div>
                 </div>
