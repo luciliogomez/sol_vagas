@@ -35,7 +35,11 @@
                 </div>
 
                 <div class="end flex-column-center">
-                    <a href="<?=URL?>/vagas/<?=$vaga->getId()?>/aplicar" class="btn">Candidatar-se</a>
+                    <?php if($candidatei_me): ?>
+                        <a href="#"  class="btn red">Candidatei-me</a>
+                    <?php else:?>
+                        <a href="<?=URL?>/vagas/<?=$vaga->getId()?>/aplicar" class="btn">Candidatar-se</a>    
+                    <?php endif;?>
                 </div>
 
             </article>
@@ -60,6 +64,12 @@
                     Português
                 </p>
             </div>
-            <a href="<?=URL?>/vagas/<?=$vaga->getId()?>/aplicar" class="btn btn-medium">Candidatar-se</a>
+            <div>
+                    <?php if($candidatei_me): ?>
+                        <a href="#"  class="btn red">Candidatei-me</a>
+                    <?php else:?>
+                        <a href="<?=URL?>/vagas/<?=$vaga->getId()?>/aplicar" class="btn">Candidatar-se</a>    
+                    <?php endif;?>
+            </div>
     </div>
     

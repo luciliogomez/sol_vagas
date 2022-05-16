@@ -278,4 +278,21 @@ class Vaga{
         }
     }
 
+    public function isCandidato($id_candidato,$id_vaga,$limit = null)
+    {
+        $query = "  SELECT * FROM candidatura 
+                    WHERE id_candidato =:candidato 
+                    AND id_vaga = :vaga ;";
+
+        $stmt = Conexao::getInstance()->prepare($query);
+        $stmt->bindParam(":candidato",$id_candidato);
+        $stmt->bindParam(":vaga",$id_vaga);
+        $stmt->execute();
+        if($stmt->rowCount()>=1){
+            return true;
+        }else{
+            return false;
+        }       
+    }
+
 }
