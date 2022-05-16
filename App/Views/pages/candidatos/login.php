@@ -30,7 +30,7 @@
                             <?=$status?>
                         </div>
                         <div>
-                            <p class="text-center">Não tem uma conta? <a href="cadastro.html" class="text-blue">Cadastra-se</a></p>
+                            <p class="text-center">Não tem uma conta? <a href="cadastro" class="text-blue">Cadastra-se</a></p>
                         </div>
                     </form>
                 </div>

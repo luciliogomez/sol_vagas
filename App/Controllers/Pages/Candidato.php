@@ -17,6 +17,74 @@ class Candidato extends PagesBaseController{
         ]);
     }
 
+    public static function getCadastro($request)
+    {
+        return View::render("candidatos::cadastro",[
+            "status" => self::getStatus($request),
+            "nome"   => '',
+            "email"  => ''
+        ]);
+    }
+
+    public static function setCadastro($request)
+    {
+        $postVars = $request->getPostVars();
+        if(empty($postVars['nome']) || empty($postVars['email']) || empty($postVars['senha']))
+        {
+            $request->getRouter()->redirect("/candidatos/cadastro?status=empty");
+        }
+
+        $nome = filter_var($postVars['nome'],FILTER_SANITIZE_SPECIAL_CHARS);
+        $email = filter_var($postVars['email'],FILTER_SANITIZE_SPECIAL_CHARS);
+        $senha = filter_var($postVars['senha'],FILTER_SANITIZE_SPECIAL_CHARS);
+        
+        $model = new ModelsCandidato();
+
+        try{
+
+            $candidato = $model->loadByEmail($email);
+            if($candidato instanceof ModelsCandidato)
+            {
+                return View::render("candidatos::cadastro",[
+                    "nome"  => $nome,
+                    "email" => $email,
+                    "senha" => $senha,
+                    "status"=> Alert::getError("Email Já Em Uso. Faça Login")
+                ]);
+            }
+
+            $model->setNome($nome);
+            $model->setEmail($email);
+            $model->setSenha(password_hash($senha,PASSWORD_DEFAULT));
+
+            if( ($id = $model->create()) != null){
+                $_SESSION['usuario']["id"] = $id;
+                $_SESSION['usuario']["nome"] = $nome;
+                $_SESSION['usuario']["email"] = $email;
+                $_SESSION['usuario']["tipo"] = "candidatos";
+                $_SESSION['usuario']["foto"] = '';
+                $_SESSION['usuario']["area"] = '';
+                $_SESSION['usuario']["titulo"] = '';
+  
+                $request->getRouter()->redirect("/candidatos/{$id}/dashboard");
+            
+            }
+
+        }catch(Exception $ex)
+        {
+            echo "<pre>";
+print_r($ex->getMessage());
+echo "</pre>";
+exit;
+            throw new Exception("PAGINA NÃO ENCONTRADA",404);
+        }
+        return View::render("candidatos::cadastro",[
+            "status" => self::getStatus($request),
+            "nome"   => '',
+            "email"  => ''
+        ]);
+    }
+
     public static function setLogin($request)
     {
         $postVars = $request->getPostVars();
@@ -117,6 +185,7 @@ class Candidato extends PagesBaseController{
                 'ingles'=>$candidato->getNivelIngles(),
                 'cidade'=>$candidato->getCidade(),
                 'foto'=>$candidato->getFoto(),
+                "area"=> $candidato->getArea(),
                 'status' => self::getStatus($request)
             ]);
 
@@ -141,6 +210,7 @@ class Candidato extends PagesBaseController{
                 'estado'=>$postVars['estado'],
                 'ingles'=>$postVars['ingles'],
                 'cidade'=>$postVars['cidade'],
+                "area"  => $postVars['area'],
                 'foto'=>$postVars['old_foto'],
                 'status' => Alert::getError("Preencha os campos obrigatórios")
             ]);
@@ -156,19 +226,21 @@ class Candidato extends PagesBaseController{
                 'estado'=>$postVars['estado'],
                 'ingles'=>$postVars['ingles'],
                 'cidade'=>$postVars['cidade'],
+                "area"  => $postVars['area'],
                 'foto'=>$postVars['old_foto'],
                 'status' => Alert::getError("Formato da Imagem Invalido")
             ]);
         }
 
-        $nome = filter_var($postVars['nome'],FILTER_SANITIZE_SPECIAL_CHARS);
+        $nome =   filter_var($postVars['nome'],FILTER_SANITIZE_SPECIAL_CHARS);
         $email =  filter_var($postVars['email'],FILTER_SANITIZE_EMAIL);
-        $titulo =  filter_var($postVars['titulo'],FILTER_SANITIZE_SPECIAL_CHARS);
-        $resumo =  filter_var($postVars['resumo'],FILTER_SANITIZE_SPECIAL_CHARS);
+        $titulo = filter_var($postVars['titulo'],FILTER_SANITIZE_SPECIAL_CHARS);
+        $resumo = filter_var($postVars['resumo'],FILTER_SANITIZE_SPECIAL_CHARS);
         $telefone =  filter_var($postVars['telefone'],FILTER_SANITIZE_SPECIAL_CHARS);
-        $cidade =  filter_var($postVars['cidade'],FILTER_SANITIZE_SPECIAL_CHARS);
+        $cidade = filter_var($postVars['cidade'],FILTER_SANITIZE_SPECIAL_CHARS);
         $estado = $postVars['estado'];
         $ingles = $postVars['ingles'];
+        $area   = $postVars['area'];
         if(!uploaded_foto()){
             $foto = $postVars['old_foto'];
         }else{
@@ -188,7 +260,7 @@ class Candidato extends PagesBaseController{
         $model->setNivelIngles($ingles);
         $model->setId($id);
         $model->setFoto($foto);
-
+        $model->setArea($area);
         
         try{
             if(($model->update())){

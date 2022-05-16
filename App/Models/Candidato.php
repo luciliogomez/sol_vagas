@@ -220,9 +220,9 @@ class Candidato{
         $query = "INSERT INTO candidato (nome,email,senha) VALUES (:nome,:email,:senha)";
 
         $stmt = Conexao::getInstance()->prepare($query);
-        $stmt->bindParam(":nome",$this->getNome());
-        $stmt->bindParam(":email",$this->getEmail());
-        $stmt->bindParam(":senha",$this->getSenha());
+        $stmt->bindParam(":nome",$this->nome);
+        $stmt->bindParam(":email",$this->email);
+        $stmt->bindParam(":senha",$this->senha);
         $stmt->execute();
         if($stmt->rowCount()>=1){
 

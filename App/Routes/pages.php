@@ -85,6 +85,27 @@ $router->get("/candidatos/login",[
     }
 ]);
 
+// [GET]
+$router->get("/candidatos/cadastro",[
+    "middlewares" => [
+        "require-logout"
+    ],
+    function($request){
+        return new Response(200,Candidato::getCadastro($request));
+    }
+]);
+
+
+// [POST]
+$router->post("/candidatos/cadastro",[
+    "middlewares" => [
+        "require-logout"
+    ],
+    function($request){
+        return new Response(200,Candidato::setCadastro($request));
+    }
+]);
+
 
 // [GET]
 $router->get("/logout",[

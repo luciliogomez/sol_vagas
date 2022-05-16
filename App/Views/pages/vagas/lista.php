@@ -24,6 +24,7 @@
                         <select name="area" id="">
                             <option value="ti" <?=(isset($area)&&$area=='ti'?'selected':'')?> >Tecnologias de Informação</option>
                             <option value="Saúde" <?=(isset($area)&&$area=='Saúde'?'selected':'')?> >Saúde</option>
+                            <option value="economia" <?=(isset($area)&&$area=='economia'?'selected':'')?>>Economia & Finanças</option>
                             <option value="Educação" <?=(isset($area)&&$area=='educacao'?'selected':'')?>>Educação</option>
                             <option value="mecanica" <?=(isset($area)&&$area=='mecanica'?'selected':'')?>>Mecanica</option>
                         </select>

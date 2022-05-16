@@ -6,7 +6,7 @@
 
 <div class="dashboard container">
             <div class="wellcome">
-                <h4 class="text-center text-blue" >Bem Vindo, <?=$_SESSION['usuario']['nome'] ?></h4>
+                <h4 class="text-center text-blue" >Bem Vindo(a), <?=$_SESSION['usuario']['nome'] ?></h4>
             </div>
 
             <div class="cards flex-row-space-between">
