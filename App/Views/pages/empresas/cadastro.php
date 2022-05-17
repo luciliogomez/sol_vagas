@@ -11,7 +11,7 @@
             <div class="content  flex-row-space-between">
                 <div class="picture">
                     <figure>
-                        <img src="img/3.jpg" alt="">
+                        <img src="<?=ASSETS?>/img/3.jpg" alt="">
                         
                     <figcaption>Encontre os melhores talentos para duplicar os resultados da sua empresa</figcaption>
                 
@@ -19,24 +19,27 @@
                 </div>
                 <div class="formulario">
                     <h4 class="description">Cadastre a sua Empresa</h4>
-                    <form action="dashboard_empresa.html" method="post">
+                    <form action="" method="post">
                         <div class="form-input">
                             <label for="nome">Nome</label>
-                            <input type="text" name="nome" id="" placeholder="Nome da empresa" required>
+                            <input type="text" name="nome" id="" placeholder="Nome da empresa" value="<?=$nome?>" required>
                         </div>
                         <div class="form-input">
                             <label for="email">Email</label>
-                            <input type="email" name="email" id="" placeholder="email@example.com" required>
+                            <input type="email" name="email" id="" placeholder="email@example.com" value="<?=$email?>"required>
                         </div>
                         <div class="form-input">
                             <label for="senha">Senha</label>
-                            <input type="password" name="senha" id="" placeholder="**********" required>
+                            <input type="password" name="senha" id="" placeholder="**********" value="<?=$senha?>" required>
                         </div>
                         <div class="form-input">
-                            <input type="submit" class="btn btn-medium" value="Inscreva-se">
+                            <input type="submit" class="btn btn-medium mb-0" value="Inscreva-se">
+                        </div>
+                        <div class="error mb-1">
+                            <p><?=$status?></p>
                         </div>
                         <div>
-                            <p class="text-center">Já tem uma conta? <a href="login_empresa.html" class="text-blue">Entra</a></p>
+                            <p class="text-center">Já tem uma conta? <a href="<?=URL?>/empresas/login" class="text-blue">Entra</a></p>
                         </div>
                     </form>
                 </div>

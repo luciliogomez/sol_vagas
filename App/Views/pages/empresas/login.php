@@ -31,7 +31,7 @@
                             <p class="error"> <?=$status?> </p>
                         </div>
                         <div>
-                            <p class="text-center">Não tem uma conta? <a href="empresas/cadastro" class="text-blue">Faça Login</a></p>
+                            <p class="text-center">Não tem uma conta? <a href="<?=URL?>/empresas/cadastro" class="text-blue">Faça Login</a></p>
                         </div>
                     </form>
                 </div>

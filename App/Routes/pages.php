@@ -374,6 +374,21 @@ $router->post("/empresas/login",[
 ]);
 
 
+// [GET]
+$router->get("/empresas/cadastro",[
+    function($request){
+        return new Response(200,Empresa::getCadastro($request));
+    }
+]);
+
+// [POST]
+$router->post("/empresas/cadastro",[
+    function($request){
+        return new Response(200,Empresa::setCadastro($request));
+    }
+]);
+
+
 
 $router->get("/empresas/{id}/dashboard",[
     function($request,$id){
@@ -399,18 +414,6 @@ $router->post("/empresas/{id}/perfil/editar",[
     }
 ]);
 
-$router->get("/empresas/{id}/editar",[
-    function(){
-        return new Response(200,Home::index());
-    }
-]);
-
-
-$router->get("/vagas/publicar",[
-    function(){
-        return new Response(200,Home::index());
-    }
-]);
 
 
 

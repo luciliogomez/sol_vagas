@@ -9,7 +9,11 @@
             <div class="basic-info">
                 <div class="picture">
                     <figure class="no-border">
-                        <img src="<?=ASSETS?>/img/c1.png" alt="" class="no-border">
+                        <?php if(empty($empresa->getLogo())):?>
+                            <img src="<?=ASSETS?>/img/c1.png" alt="" class="no-border">    
+                        <?php else:?>
+                            <img src="<?=URL?>/uploads/<?=$empresa->getLogo()?>" alt="" class="no-border">
+                        <?php endif;?>
                     </figure>
                 </div>
                 <div class="presentation">

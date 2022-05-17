@@ -78,6 +78,68 @@ class Empresa extends PagesBaseController{
 
     }
 
+    public static function getCadastro($request)
+    {
+        return View::render("empresas::cadastro",[
+            "status" => self::getStatus($request),
+            "nome"   => 'cadastre o se nome',
+            "email"  => '',
+            "senha"  => ''
+        ]);
+    }
+
+    public static function setCadastro($request)
+    {  
+        $postVars = $request->getPostVars();
+        if(empty($postVars['nome']) || empty($postVars['email']) || empty($postVars['senha']))
+        {
+            $request->getRouter()->redirect("/empresas/cadastro?status=empty");
+        }
+
+        $nome = filter_var($postVars['nome'],FILTER_SANITIZE_SPECIAL_CHARS);
+        $email = filter_var($postVars['email'],FILTER_SANITIZE_SPECIAL_CHARS);
+        $senha = filter_var($postVars['senha'],FILTER_SANITIZE_SPECIAL_CHARS);
+        
+        $model = new ModelsEmpresa();
+
+        try{
+
+            $empresa = $model->loadByEmail($email);
+            if($empresa instanceof ModelsEmpresa)
+            {
+                return View::render("empresas::cadastro",[
+                    "nome"  => $nome,
+                    "email" => $email,
+                    "senha" => $senha,
+                    "status"=> Alert::getError("Email Já Em Uso. Faça Login")
+                ]);
+            }
+
+            $model->setNome($nome);
+            $model->setEmail($email);
+            $model->setSenha(password_hash($senha,PASSWORD_DEFAULT));
+
+            if( ($id = $model->create()) != null){
+                $_SESSION['usuario']["id"] = $id;
+                $_SESSION['usuario']["nome"] = $nome;
+                $_SESSION['usuario']["email"] = $email;
+                $_SESSION['usuario']["tipo"] = "empresas";
+                $_SESSION['usuario']["logotipo"] = null;
+  
+                $request->getRouter()->redirect("/empresas/{$id}/dashboard");
+            
+            }
+
+        }catch(Exception $ex)
+        {
+            echo "<pre>";
+print_r($ex->getMessage());
+echo "</pre>";
+exit;
+            throw new Exception("PAGINA NÃO ENCONTRADA",404);
+        }
+    }
+
 
     public static function getDashboard($request,$id)
     {
