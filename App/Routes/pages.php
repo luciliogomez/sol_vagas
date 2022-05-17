@@ -422,6 +422,25 @@ $router->get("/empresas/{id}/candidaturas",[
 ]);
 
 
+$router->post("/empresas/{id}/candidaturas",[
+    function($request,$id){
+        return new Response(200,Empresa::getFilteredCandidaturas($request,$id));
+    }
+]);
+
+$router->get("/empresas/{id}/candidaturas/filter",[
+    function($request,$id){
+        return new Response(200,Empresa::filtrarCandidaturas($request,$id));
+    }
+]);
+
+$router->post("/empresas/{id}/candidaturas/filter",[
+    function($request,$id){
+        return new Response(200,Empresa::getFilteredCandidaturas($request,$id));
+    }
+]);
+
+
 
 
 

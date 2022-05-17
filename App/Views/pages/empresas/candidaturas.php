@@ -18,23 +18,18 @@
                                 <div class="form-input mr-1">
                                <label for="vaga">Selecione a Vaga</label>
                                <select name="vaga" id="">
-                                   <option value="1">Desenvolvedor Backend</option>
-                                   <option value="2">Programador Java</option>
-                                   <option value="3">UX/UI Designer</option>
+                                   <?php foreach($vagas as $vaga): ?>
+                                        <option value="<?=$vaga['id']?>"><?=$vaga['titulo']?></option>
+                                   <?php endforeach; ?>
+                                   <option value="all">Todos</option>
                                </select>
                            </div>
-                           <div class="form-input mr-1">
-                               <label for="status">Status</label>
-                               <select name="status" id="">
-                                   <option value="1">Pendente</option>
-                                   <option value="2">Entrevista</option>
-                                   <option value="3">Reprovado</option>
-                                   <option value="4">Aprovado</option>
-                                   <option value="4">Todos</option>
-                               </select>
-                           </div>
+                           
                            <div class="form-input">
-                               <button type="submit" class="btn btn-medium mt-20" name="f" >FILTRAR</button>
+                               <button type="submit" class="btn btn-medium mt-20 " name="f" >Filtrar</button>
+                           </div>
+                           <div>
+                               <a href="<?=URL?>/empresas/<?=$empresa->getId()?>/candidaturas" class="btn btn-medium mt-20 red ">Limpar</a>
                            </div>
                        </div>
                         </form>

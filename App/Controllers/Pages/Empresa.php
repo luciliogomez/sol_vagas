@@ -274,6 +274,7 @@ exit;
         $model = new ModelsEmpresa();
         $queryParams     = $request->getQueryParams();
         $candidaturas = [];
+        $vagas = [];
         $pagination = null;
         try{
             $empresa = $model->load($id);
@@ -287,6 +288,9 @@ exit;
             $pagination = new Pagination($total,$page,1);
 
             $candidaturas = $model->getCandidaturas($id,$pagination->getLimit());
+
+            $vagas = $empresa->getVagas($empresa->getId());
+      
         }catch(Exception $e)
         {
             $candidaturas = [];
@@ -295,10 +299,83 @@ exit;
         return View::render("empresas::candidaturas",[
             "candidaturas" => $candidaturas,
             "empresa"      => $empresa,
-            "links"        => self::getPagination($pagination,$request)
+            "links"        => self::getPagination($pagination,$request),
+            "vagas"        => $vagas
         ]);
     }
 
+    public static function getFilteredCandidaturas($request,$id)
+    {
+        $model = new ModelsEmpresa();
+        $queryParams     = $request->getQueryParams();
+        $postVars = $request->getPostVars();
+        $id_vaga = $postVars['vaga'];
+   
+        $request->getRouter()->redirect("/empresas/{$id}/candidaturas/filter?search={$id_vaga}");
+        $candidaturas = [];
+        $vagas = [];
+        $pagination = null;
+        try{
+            $empresa = $model->load($id);
+            if(!($empresa  instanceof ModelsEmpresa)){
+                throw new Exception("PAGINA NÃO ENCONTRADA",404);
+            }
+            $total =($id_vaga == 'all')?count($model->getCandidaturas($id)): count($model->getCandidaturasByVagas($id,$id_vaga));
+
+            $page = $queryParams['page']?? '1';
+            
+            $pagination = new Pagination($total,$page,1);
+
+            $candidaturas = ($id_vaga == 'all')? $model->getCandidaturas($id,$pagination->getLimit()): $model->getCandidaturasByVagas($id,$id_vaga,$pagination->getLimit());
+
+            $vagas = $empresa->getVagas($empresa->getId());
+        }catch(Exception $e)
+        {
+            $candidaturas = [];
+            $pagination = null;
+        }
+        return View::render("empresas::candidaturas",[
+            "candidaturas" => $candidaturas,
+            "empresa"      => $empresa,
+            "links"        => self::getPagination($pagination,$request),
+            "vagas"        => $vagas
+        ]);
+    }
+
+    public static function filtrarCandidaturas($request,$id)
+    {
+        $model = new ModelsEmpresa();
+        $queryParams     = $request->getQueryParams();
+        $id_vaga = $queryParams['search'];
+        $candidaturas = [];
+        $vagas = [];
+        $pagination = null;
+        try{
+            $empresa = $model->load($id);
+            if(!($empresa  instanceof ModelsEmpresa)){
+                throw new Exception("PAGINA NÃO ENCONTRADA",404);
+            }
+            $total =($id_vaga == 'all')?count($model->getCandidaturas($id)): count($model->getCandidaturasByVagas($id,$id_vaga));
+
+            $page = $queryParams['page']?? '1';
+            
+            $pagination = new Pagination($total,$page,1);
+
+            $candidaturas = ($id_vaga == 'all')? $model->getCandidaturas($id,$pagination->getLimit()): $model->getCandidaturasByVagas($id,$id_vaga,$pagination->getLimit());
+
+            $vagas = $empresa->getVagas($empresa->getId());
+        }catch(Exception $e)
+        {
+            $candidaturas = [];
+            $pagination = null;
+        }
+        return View::render("empresas::candidaturas",[
+            "candidaturas" => $candidaturas,
+            "empresa"      => $empresa,
+            "links"        => self::getPagination($pagination,$request,$id_vaga),
+            "vagas"        => $vagas
+        ]);
+    }
 
     public static function getStatus($request)
     {
