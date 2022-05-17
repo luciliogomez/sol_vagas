@@ -268,6 +268,38 @@ exit;
     }
 
 
+    
+    public static function getCandidaturas($request,$id)
+    {
+        $model = new ModelsEmpresa();
+        $queryParams     = $request->getQueryParams();
+        $candidaturas = [];
+        $pagination = null;
+        try{
+            $empresa = $model->load($id);
+            if(!($empresa  instanceof ModelsEmpresa)){
+                throw new Exception("PAGINA NÃO ENCONTRADA",404);
+            }
+            $total = count($model->getCandidaturas($id));
+
+            $page = $queryParams['page']?? '1';
+            
+            $pagination = new Pagination($total,$page,1);
+
+            $candidaturas = $model->getCandidaturas($id,$pagination->getLimit());
+        }catch(Exception $e)
+        {
+            $candidaturas = [];
+            $pagination = null;
+        }
+        return View::render("empresas::candidaturas",[
+            "candidaturas" => $candidaturas,
+            "empresa"      => $empresa,
+            "links"        => self::getPagination($pagination,$request)
+        ]);
+    }
+
+
     public static function getStatus($request)
     {
         $queryParams = $request->getQueryParams();

@@ -50,6 +50,10 @@
                </a>
 
            </div>
+            
+            <!-- PUT YOUR CONTENT HERE -->
+            <?= $this->section("content") ?>
+            <!-- END CONTENT -->
 
            <div class="section content container white flex-row-space-between mb-5" >
                <div class="picture w-50">

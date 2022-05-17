@@ -415,6 +415,18 @@ $router->post("/empresas/{id}/perfil/editar",[
 ]);
 
 
+$router->get("/empresas/{id}/candidaturas",[
+    function($request,$id){
+        return new Response(200,Empresa::getCandidaturas($request,$id));
+    }
+]);
+
+
+
+
+
+
+
 
 
 
