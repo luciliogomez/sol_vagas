@@ -8,6 +8,7 @@ class Vaga{
     private $id;
     private $titulo;
     private $formato;
+    private $area;
     private $modalidade;
     private $salario_min;
     private $salario_max;
@@ -39,6 +40,11 @@ class Vaga{
     {
         $this->descricao = $desc;
     }
+
+    public function setArea($area)
+    {
+        $this->area = $area;
+    }
     public function setEducacao($educacao)
     {
         $this->educacao = $educacao;
@@ -47,11 +53,25 @@ class Vaga{
     {
         $this->data_limite = $limit;
     }
+
     public function setHabilidades($skills)
     {
         $this->habilidades = $skills;
     }
 
+    public function setModalidade($modalidade)
+    {
+        $this->modalidade = $modalidade;
+    }
+    public function setSalarioMin($salario_min)
+    {
+        $this->salario_min = (isset($salario_min)?$salario_min:0);
+    }
+
+    public function setSalarioMax($salario_max)
+    {
+        $this->salario_max = (isset($salario_max)?$salario_max:0);;
+    }
 
     public function setEstado($status)
     {
@@ -73,6 +93,11 @@ class Vaga{
     public function getDescricao()
     {
         return $this->descricao;
+    }
+
+    public function getArea()
+    {
+        return $this->area;
     }
     public function getCidade()
     {
@@ -137,7 +162,7 @@ class Vaga{
     {
         $limit = (strlen($limit))? "limit ".$limit:"";
 
-        $query = "SELECT V.id,V.titulo,V.formato,V.modalidade,V.cidade,V.salario_min,V.salario_max,
+        $query = "SELECT V.id,V.titulo,V.formato,V.modalidade,V.area,V.cidade,V.salario_min,V.salario_max,
         V.descricao,V.habilidades,V.ano_de_experiencia,V.educacao,V.data_limite,V.estado,V.id_empresa,E.nome as empresa FROM `vaga` V
         INNER JOIN empresa E ON (V.id_empresa = E.id) ORDER BY id DESC ".$limit;
 
@@ -156,7 +181,7 @@ class Vaga{
 
     public function load($id)
     {
-        $query = "SELECT V.id,V.titulo,V.formato,V.modalidade,V.cidade,V.salario_min,V.salario_max,
+        $query = "SELECT V.id,V.titulo,V.formato,V.modalidade,V.area,V.cidade,V.salario_min,V.salario_max,
         V.descricao,V.habilidades,V.ano_de_experiencia,V.educacao,V.data_limite,V.estado,V.id_empresa,E.nome as empresa FROM `vaga` V
         INNER JOIN empresa E ON (V.id_empresa = E.id) WHERE V.id = :id";
 
@@ -213,25 +238,55 @@ class Vaga{
 
     public function create()
     {
-        $query = "INSERT INTO vaga (titulo,formato,modalidade,cidade,salario_min,salario_max,
-        descricao,habilidades,anos_de_experiencia,educacao,data_limite,estado,id_empresa) 
-        VALUES (:titulo,:formato,:modalidade,:cidade,:salario_min,:salario_max,
-        :descricao,:habilidades,:anos_de_experiencia,:educacao,:data_limite,:estado,:id_empresa)";
+        $query = "INSERT INTO vaga 
+        (
+            titulo,
+            area,
+            formato,
+            modalidade,
+            cidade,
+            salario_min,
+            salario_max,
+            descricao,
+            habilidades,
+            ano_de_experiencia,
+            educacao,
+            data_limite,
+            estado,
+            id_empresa
+        ) 
+        VALUES 
+        (
+            :titulo,
+            :area,
+            :formato,
+            :modalidade,
+            :cidade,
+            :salario_min,
+            :salario_max,
+            :descricao,
+            :habilidades,
+            :anos_de_experiencia,
+            :educacao,
+            :data_limite,
+            1,
+            :id_empresa
+        )";
 
         $stmt = Conexao::getInstance()->prepare($query);
-        $stmt->bindParam(":titulo",$this->getTitulo());
-        $stmt->bindParam(":formato",$this->getFormato());
-        $stmt->bindParam(":modalidade",$this->getModalidade());
-        $stmt->bindParam(":cidade",$this->getCidade());
-        $stmt->bindParam(":salario_min",$this->getSalarioMin());
-        $stmt->bindParam(":salario_max",$this->getSalarioMax());
-        $stmt->bindParam(":descricao",$this->getDescricao());
-        $stmt->bindParam(":habilidades",$this->getHabilidades());
-        $stmt->bindParam(":anos_de_experiencia",$this->getAnos());
-        $stmt->bindParam(":educacao",$this->getEducacao());
-        $stmt->bindParam(":data_limite",$this->getDataLimite());
-        $stmt->bindParam(":estado",$this->getEstado());
-        $stmt->bindParam(":id_empresa",$this->getIdEmpresa());
+        $stmt->bindParam(":titulo",$this->titulo);
+        $stmt->bindParam(":formato",$this->formato);
+        $stmt->bindParam(":modalidade",$this->modalidade);
+        $stmt->bindParam(":cidade",$this->cidade);
+        $stmt->bindParam(":salario_min",$this->salario_min);
+        $stmt->bindParam(":salario_max",$this->salario_max);
+        $stmt->bindParam(":descricao",$this->descricao);
+        $stmt->bindParam(":habilidades",$this->habilidades);
+        $stmt->bindParam(":anos_de_experiencia",$this->ano_de_experiencia);
+        $stmt->bindParam(":educacao",$this->educacao);
+        $stmt->bindParam(":data_limite",$this->data_limite);
+        $stmt->bindParam(":id_empresa",$this->id_empresa);
+        $stmt->bindParam(":area",$this->area);
         
         $stmt->execute();
         if($stmt->rowCount()>=1){

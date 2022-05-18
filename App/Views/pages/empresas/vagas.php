@@ -1,5 +1,5 @@
 <?=$this->layout("template::template",[
-    "title" => "Candidaturas"
+    "title" => "Vagas"
 ]);
 ?>
 <?php 
@@ -9,6 +9,7 @@
 
     <div class="dashboard container" >
     <a href="<?=URL?>/empresas/<?=$empresa->getId()?>/dashboard" class="btn mb-2"><-</a>
+    <a href="<?=URL?>/empresas/<?=$empresa->getId()?>/vagas/nova" class="btn mb-2">Publicar Vaga</a>
            <div class="candidaturas container white mb-0 " >
                    <h2>Vagas</h2>
                    <div class="filtro">

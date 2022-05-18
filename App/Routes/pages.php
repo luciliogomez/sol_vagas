@@ -473,6 +473,18 @@ $router->post("/empresas/{id}/vagas/filter",[
 ]);
 
 
+$router->get("/empresas/{id}/vagas/nova",[
+    function($request,$id){
+        return new Response(200,Empresa::getPublicarVaga($request,$id));
+    }
+]);
+
+
+$router->post("/empresas/{id}/vagas/nova",[
+    function($request,$id){
+        return new Response(200,Empresa::setPublicarVaga($request,$id));
+    }
+]);
 
 
 
