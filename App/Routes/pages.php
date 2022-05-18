@@ -447,6 +447,11 @@ $router->get("/empresas/{id}/candidaturas/{id_candidatura}",[
     }
 ]);
 
+$router->get("/empresas/{id}/vagas",[
+    function($request,$id){
+        return new Response(200,Empresa::getVagas($request,$id));
+    }
+]);
 
 
 

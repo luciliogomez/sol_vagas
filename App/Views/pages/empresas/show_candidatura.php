@@ -4,14 +4,14 @@
 
 ?>
 
-    
+
     <!-- CONTENT -->
     <div class=" flex-row-space-between mt-2 container">
             
             <div class=" flex-column-start w-100">
                 <h3 class="text-size-normal mb-1">Candidatura</h3>
                 <div class="mb-1 w-100 flex-row-space-between">
-                    <a href="vaga.html" class="vaga-horizontal w-60">
+                    <a href="<?=URL?>/vagas/<?=$vaga->getId()?>/ver" class="vaga-horizontal w-60">
                         <article class="flex-row-start ">
                             <div class="start">
                                 <figure>
