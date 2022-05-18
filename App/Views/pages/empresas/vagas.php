@@ -16,10 +16,10 @@
                         <form action="" method="post">
                             <div class=" flex-row-end">
                                 <div class="form-input mr-1">
-                               <label for="vaga">Selecione o Estado</label>
-                               <select name="vaga" id="">
+                               <label for="estado">Selecione o Estado</label>
+                               <select name="estado" id="">
                                    <option value="1">Aberta</option>
-                                   <option value="0">Fechada</option>
+                                   <option value="0" <?=((isset($estado))&& ($estado=='0'))?'selected':''?>>Fechada</option>
                                </select>
                            </div>
                            

@@ -454,6 +454,25 @@ $router->get("/empresas/{id}/vagas",[
 ]);
 
 
+$router->post("/empresas/{id}/vagas",[
+    function($request,$id){
+        return new Response(200,Empresa::getFilteredVagas($request,$id));
+    }
+]);
+
+
+$router->get("/empresas/{id}/vagas/filter",[
+    function($request,$id){
+        return new Response(200,Empresa::filtrarVagas($request,$id));
+    }
+]);
+$router->post("/empresas/{id}/vagas/filter",[
+    function($request,$id){
+        return new Response(200,Empresa::getFilteredVagas($request,$id));
+    }
+]);
+
+
 
 
 

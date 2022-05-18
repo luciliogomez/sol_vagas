@@ -271,5 +271,22 @@ class Empresa{
             return [];
         }       
     }
+    public function getVagasByEstado($id,$estado,$limit = null)
+    {
+        $limit = (strlen($limit))? " limit ".$limit:"";
+        $query = "  SELECT * FROM vaga
+                    WHERE id_empresa = :empresa AND estado = :estado
+                    ORDER BY id DESC ".$limit;
+
+        $stmt = Conexao::getInstance()->prepare($query);
+        $stmt->bindParam(":empresa",$id);
+        $stmt->bindParam(":estado",$estado);
+        $stmt->execute();
+        if($stmt->rowCount()>=1){
+            return ($stmt->fetchAll(\PDO::FETCH_ASSOC));
+        }else{
+            return [];
+        }       
+    }
 
 }

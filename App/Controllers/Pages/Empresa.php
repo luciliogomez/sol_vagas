@@ -426,6 +426,51 @@ exit;
             "vagas"        => $vagas
         ]);
     }
+
+
+    public static function getFilteredVagas($request,$id)
+    {
+        $model = new ModelsEmpresa();
+        $queryParams     = $request->getQueryParams();
+        $postVars = $request->getPostVars();
+        $estado = $postVars['estado'];
+   
+        $request->getRouter()->redirect("/empresas/{$id}/vagas/filter?search={$estado}");
+        
+    }
+
+    public static function filtrarVagas($request,$id)
+    {
+        $model = new ModelsEmpresa();
+        $queryParams     = $request->getQueryParams();
+        $estado = $queryParams['search'];
+        $vagas = [];
+        $pagination = null;
+        try{
+            $empresa = $model->load($id);
+            if(!($empresa  instanceof ModelsEmpresa)){
+                throw new Exception("PAGINA NÃO ENCONTRADA",404);
+            }
+            $total =count($empresa->getVagasByEstado($empresa->getId(),$estado));
+
+            $page = $queryParams['page']?? '1';
+            
+            $pagination = new Pagination($total,$page,1);
+
+            $vagas = $empresa->getVagasByEstado($empresa->getId(),$estado,$pagination->getLimit());
+        }catch(Exception $e)
+        {
+            $vagas = [];
+            $pagination = null;
+        }
+        return View::render("empresas::vagas",[
+            "empresa"      => $empresa,
+            "links"        => self::getPagination($pagination,$request,$estado),
+            "vagas"        => $vagas,
+            "estado"       => $estado
+        ]);
+    }
+
     public static function getStatus($request)
     {
         $queryParams = $request->getQueryParams();
