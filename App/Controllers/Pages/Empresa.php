@@ -5,7 +5,9 @@ use App\Utils\Alert;
 use App\Utils\View;
 use WilliamCosta\DatabaseManager\Pagination;
 use App\Controllers\Pages\PagesBaseController;
+use App\Models\Candidato;
 use App\Models\Empresa as ModelsEmpresa;
+use App\Models\Vaga;
 use Exception;
 
 class Empresa extends PagesBaseController{
@@ -312,34 +314,7 @@ exit;
         $id_vaga = $postVars['vaga'];
    
         $request->getRouter()->redirect("/empresas/{$id}/candidaturas/filter?search={$id_vaga}");
-        $candidaturas = [];
-        $vagas = [];
-        $pagination = null;
-        try{
-            $empresa = $model->load($id);
-            if(!($empresa  instanceof ModelsEmpresa)){
-                throw new Exception("PAGINA NÃO ENCONTRADA",404);
-            }
-            $total =($id_vaga == 'all')?count($model->getCandidaturas($id)): count($model->getCandidaturasByVagas($id,$id_vaga));
-
-            $page = $queryParams['page']?? '1';
-            
-            $pagination = new Pagination($total,$page,1);
-
-            $candidaturas = ($id_vaga == 'all')? $model->getCandidaturas($id,$pagination->getLimit()): $model->getCandidaturasByVagas($id,$id_vaga,$pagination->getLimit());
-
-            $vagas = $empresa->getVagas($empresa->getId());
-        }catch(Exception $e)
-        {
-            $candidaturas = [];
-            $pagination = null;
-        }
-        return View::render("empresas::candidaturas",[
-            "candidaturas" => $candidaturas,
-            "empresa"      => $empresa,
-            "links"        => self::getPagination($pagination,$request),
-            "vagas"        => $vagas
-        ]);
+        
     }
 
     public static function filtrarCandidaturas($request,$id)
@@ -375,6 +350,49 @@ exit;
             "links"        => self::getPagination($pagination,$request,$id_vaga),
             "vagas"        => $vagas
         ]);
+    }
+
+    public static function getCandidaturaDetalhes($request,$id,$id_candidatura)
+    {
+        $model = new ModelsEmpresa();
+        $vagaModel = new Vaga();
+        $candidatoModel = new Candidato();
+        
+        try{
+            $empresa = $model->load($id);
+            if(!($empresa  instanceof ModelsEmpresa)){
+                throw new Exception("PAGINA NÃO ENCONTRADA",404);
+            }
+            $candidatura = $model->getCandidaturaOne($id_candidatura);
+            if(($candidatura  == null)){
+                throw new Exception("PAGINA NÃO ENCONTRADA - Candidatura Inválida",404);
+            }
+            $candidato = $candidatoModel->load($candidatura['id_candidato']);
+            if(($candidato  == null)){
+                throw new Exception("PAGINA NÃO ENCONTRADA - Candidato Não Encontrado",404);
+            }
+
+            $vaga = $vagaModel->load($candidatura['id_vaga']);
+            if(($vaga  == null)){
+                throw new Exception("PAGINA NÃO ENCONTRADA - Vaga Não Encontrada",404);
+            }
+
+            return View::render("empresas::show_candidatura",[
+                "candidatura" => $candidatura,
+                "empresa"     => $empresa,
+                "vaga"        => $vaga,
+                "candidato"   => $candidato
+            ]);
+
+            
+        }catch(Exception $e)
+        {
+            echo "<pre>";
+print_r($e->getMessage());
+echo "</pre>";
+exit;
+            throw new Exception("PAGINA NÃO ENCONTRADA",404);
+        }
     }
 
     public static function getStatus($request)

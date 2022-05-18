@@ -213,6 +213,27 @@ class Empresa{
         }       
     }
 
+    public function getCandidaturaOne($id_candidatura,$limit = null)
+    {
+        $limit = (strlen($limit))? " limit ".$limit:"";
+        $query = "  SELECT 
+                    CAND.id, CAND.id_candidato, CAND.estado, VA.id AS id_vaga,CA.nome,
+                    VA.titulo, VA.data_limite, EMP.id AS id_empresa, EMP.logotipo
+                    FROM candidatura CAND INNER JOIN vaga VA ON(CAND.id_vaga = VA.id)
+                    INNER JOIN empresa EMP ON(VA.id_empresa = EMP.id)
+                    INNER JOIN candidato CA ON(CAND.id_candidato = CA.id)
+                    WHERE CAND.id = :id ORDER BY CAND.id DESC ".$limit;
+
+        $stmt = Conexao::getInstance()->prepare($query);
+        $stmt->bindParam(":id",$id_candidatura);
+        $stmt->execute();
+        if($stmt->rowCount()>=1){
+            return ($stmt->fetch(\PDO::FETCH_ASSOC));
+        }else{
+            return null;
+        }       
+    }
+
     public function getCandidaturasByVagas($id,$id_vaga, $limit = null)
     {
         $limit = (strlen($limit))? " limit ".$limit:"";

@@ -441,6 +441,11 @@ $router->post("/empresas/{id}/candidaturas/filter",[
 ]);
 
 
+$router->get("/empresas/{id}/candidaturas/{id_candidatura}",[
+    function($request,$id,$id_candidatura){
+        return new Response(200,Empresa::getCandidaturaDetalhes($request,$id,$id_candidatura));
+    }
+]);
 
 
 

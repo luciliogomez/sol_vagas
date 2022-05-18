@@ -32,10 +32,12 @@
                 </div>
             </div>
             <div class="general-info flex-column-start">
-                <div class="warning">
-                    <p class="text-center "> Mantenha seu Perfil sempre actualizado!</p>
-                </div>
-                <div class="section resume">
+            <?php if($_SESSION['usuario'] == $candidato->getId()): ?>
+                        <div class="warning">
+                            <p class="text-center "> Mantenha seu Perfil sempre actualizado!</p>
+                        </div>
+                <?php endif; ?>
+                <div class="section resume mt-5">
                     <h3 class="title">RESUMO</h3>
                     <div class="section-content">
                         <p><?=$candidato->getResumo()?></p>
@@ -100,8 +102,9 @@
                         </div>
                     <?php endforeach; ?>
                     </div>
-
+                    <?php if($_SESSION['usuario'] == $candidato->getId()): ?>
                     <a href="<?=URL?>/candidatos/<?=$candidato->getId()?>/formacao/adicionar" class="btn">+</a>
+                    <?php endif; ?>
                 </div>
                 <!--  -->
                 <div class="section habilidades">
@@ -147,7 +150,9 @@
                             </div>
                         </div>
                         <?php endforeach;?>
-                        <a href="<?=URL?>/candidatos/<?=$candidato->getId()?>/experiencia/adicionar" class="btn">+</a>
+                        <?php if($_SESSION['usuario'] == $candidato->getId()): ?>
+                            <a href="<?=URL?>/candidatos/<?=$candidato->getId()?>/experiencia/adicionar" class="btn">+</a>
+                        <?php endif; ?>
                     </div>
                 
                     
@@ -181,7 +186,9 @@
                         <?php endforeach; ?>
 
                     </div>
+                    <?php if($_SESSION['usuario'] == $candidato->getId()): ?>
                     <a href="<?=URL?>/candidatos/<?=$candidato->getId()?>/cursos/adicionar" class="btn">+</a>
+                    <?php endif; ?>
                 </div>
             </div>
         </div>
