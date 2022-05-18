@@ -32,7 +32,7 @@
                 </div>
             </div>
             <div class="general-info flex-column-start">
-            <?php if($_SESSION['usuario'] == $candidato->getId()): ?>
+            <?php if($_SESSION['usuario']['id'] == $candidato->getId()): ?>
                         <div class="warning">
                             <p class="text-center "> Mantenha seu Perfil sempre actualizado!</p>
                         </div>
@@ -102,7 +102,7 @@
                         </div>
                     <?php endforeach; ?>
                     </div>
-                    <?php if($_SESSION['usuario'] == $candidato->getId()): ?>
+                    <?php if($_SESSION['usuario']['id'] == $candidato->getId()): ?>
                     <a href="<?=URL?>/candidatos/<?=$candidato->getId()?>/formacao/adicionar" class="btn">+</a>
                     <?php endif; ?>
                 </div>
@@ -150,7 +150,7 @@
                             </div>
                         </div>
                         <?php endforeach;?>
-                        <?php if($_SESSION['usuario'] == $candidato->getId()): ?>
+                        <?php if($_SESSION['usuario']['id'] == $candidato->getId()): ?>
                             <a href="<?=URL?>/candidatos/<?=$candidato->getId()?>/experiencia/adicionar" class="btn">+</a>
                         <?php endif; ?>
                     </div>
@@ -186,7 +186,7 @@
                         <?php endforeach; ?>
 
                     </div>
-                    <?php if($_SESSION['usuario'] == $candidato->getId()): ?>
+                    <?php if($_SESSION['usuario']['id'] == $candidato->getId()): ?>
                     <a href="<?=URL?>/candidatos/<?=$candidato->getId()?>/cursos/adicionar" class="btn">+</a>
                     <?php endif; ?>
                 </div>
