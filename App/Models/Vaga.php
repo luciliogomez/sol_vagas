@@ -306,28 +306,29 @@ class Vaga{
 
     public function update()
     {
-        $query = "UPDATE vaga SET titulo = :titulo,formato = :formato,
+        $query = "UPDATE vaga SET titulo = :titulo,area=:area,formato = :formato,
         modalidade = :modalidade,cidade = :cidade,salario_min = :salario_min,
         salario_max = :salario_max,descricao = :descricao,habilidades = :habilidades,
-        anos_de_experiencia = :anos_de_experiencia,educacao = :educacao,
+        ano_de_experiencia = :anos_de_experiencia,educacao = :educacao,
         data_limite = :data_limite,estado = :estado,id_empresa = :id_empresa 
         WHERE id = :id";
 
         $stmt = Conexao::getInstance()->prepare($query);
-        $stmt->bindParam(":titulo",$this->getTitulo());
-        $stmt->bindParam(":formato",$this->getFormato());
-        $stmt->bindParam(":modalidade",$this->getModalidade());
-        $stmt->bindParam(":cidade",$this->getCidade());
-        $stmt->bindParam(":salario_min",$this->getSalarioMin());
-        $stmt->bindParam(":salario_max",$this->getSalarioMax());
-        $stmt->bindParam(":descricao",$this->getDescricao());
-        $stmt->bindParam(":habilidades",$this->getHabilidades());
-        $stmt->bindParam(":anos_de_experiencia",$this->getAnos());
-        $stmt->bindParam(":educacao",$this->getEducacao());
-        $stmt->bindParam(":data_limite",$this->getDataLimite());
-        $stmt->bindParam(":estado",$this->getEstado());
-        $stmt->bindParam(":id_empresa",$this->getIdEmpresa());
-        $stmt->bindParam(":id",$this->getId());
+        $stmt->bindParam(":titulo",$this->titulo);
+        $stmt->bindParam(":formato",$this->formato);
+        $stmt->bindParam(":modalidade",$this->modalidade);
+        $stmt->bindParam(":cidade",$this->cidade);
+        $stmt->bindParam(":area",$this->area);
+        $stmt->bindParam(":salario_min",$this->salario_min);
+        $stmt->bindParam(":salario_max",$this->salario_max);
+        $stmt->bindParam(":descricao",$this->descricao);
+        $stmt->bindParam(":habilidades",$this->habilidades);
+        $stmt->bindParam(":anos_de_experiencia",$this->ano_de_experiencia);
+        $stmt->bindParam(":educacao",$this->educacao);
+        $stmt->bindParam(":data_limite",$this->data_limite);
+        $stmt->bindParam(":estado",$this->estado);
+        $stmt->bindParam(":id_empresa",$this->id_empresa);
+        $stmt->bindParam(":id",$this->id);
         
         $stmt->execute();
         if($stmt->rowCount()>=1){

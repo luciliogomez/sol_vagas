@@ -487,6 +487,19 @@ $router->post("/empresas/{id}/vagas/nova",[
 ]);
 
 
+$router->get("/empresas/{id}/vagas/{id_vaga}/editar",[
+    function($request,$id,$id_vaga){
+        return new Response(200,Empresa::getEditarVaga($request,$id,$id_vaga));
+    }
+]);
+
+
+$router->post("/empresas/{id}/vagas/{id_vaga}/editar",[
+    function($request,$id,$id_vaga){
+        return new Response(200,Empresa::setEditarVaga($request,$id,$id_vaga));
+    }
+]);
+
 
 
 

@@ -566,6 +566,105 @@ exit;
         }
     
     }
+
+
+
+    public static function getEditarVaga($request,$id)
+    {
+        $model = new ModelsEmpresa();
+        $vagaModel = new Vaga();
+
+        try{
+            $empresa = $model->load($id);
+            if(!($empresa instanceof ModelsEmpresa)){
+                throw new Exception("PAGINA NAO ENCONTRADA",404);
+            }
+            $vaga = $vagaModel->load($id);
+            if(!($vaga instanceof Vaga)){
+                throw new Exception("PAGINA NAO ENCONTRADA",404);
+            }
+            return View::render("vagas::edit",[
+                "vaga" => $vaga,
+                'status' => self::getStatus($request)
+            ]);
+
+        }catch(Exception $ex)
+        {   
+            throw new Exception("PAGINA NAO ENCONTRADA",404);
+        }
+
+    }
+
+    public static function setEditarVaga($request,$id,$id_vaga)
+    {
+        $postVars = $request->getPostVars(); 
+        $vagaModel = new Vaga();
+
+        $vaga = $vagaModel->load($id);
+        if(!($vaga instanceof Vaga)){
+            throw new Exception("PAGINA NAO ENCONTRADA",404);
+        }
+
+        if( empty($postVars['titulo']) || empty($postVars['cidade']) 
+            || empty($postVars['fim']) 
+            || empty($postVars['descricao'] ) ||  empty($postVars['habilidades'] )   
+        ){
+            return View::render("vagas::edit",[
+                "vaga" => $vaga,
+                'status' => Alert::getError("Preencha os campos obrigatórios"),
+                
+            ]);
+        }
+
+        $titulo =   filter_var($postVars['titulo'],FILTER_SANITIZE_SPECIAL_CHARS);
+        $cidade =   filter_var($postVars['cidade'],FILTER_SANITIZE_SPECIAL_CHARS);
+        $anos =   filter_var($postVars['anos'],FILTER_SANITIZE_SPECIAL_CHARS);
+        $descricao =   filter_var($postVars['descricao'],FILTER_SANITIZE_SPECIAL_CHARS);
+        $habilidades =   filter_var($postVars['habilidades'],FILTER_SANITIZE_SPECIAL_CHARS);
+        $fim=   filter_var($postVars['fim'],FILTER_SANITIZE_SPECIAL_CHARS);
+        $area=   filter_var($postVars['area'],FILTER_SANITIZE_SPECIAL_CHARS);
+        $formato =  filter_var($postVars['formato'],FILTER_SANITIZE_EMAIL);
+        $modalidade = filter_var($postVars['modalidade'],FILTER_SANITIZE_SPECIAL_CHARS);
+        $salario_min= filter_var($postVars['salario_min'],FILTER_SANITIZE_SPECIAL_CHARS);
+        $salario_max =  doubleval(filter_var($postVars['salario_max'],FILTER_SANITIZE_SPECIAL_CHARS));
+        $id_empresa = $postVars['id_empresa'];
+        $nivel = filter_var($postVars['nivel'],FILTER_SANITIZE_EMAIL);
+        $estado = $postVars['estado'];
+
+        
+        $vaga->setTitulo($titulo);
+        $vaga->setCidade($cidade);
+        $vaga->setAnos($anos);
+        $vaga->setDescricao($descricao);
+        $vaga->setHabilidades($habilidades);
+        $vaga->setLimite($fim);
+        $vaga->setFormato($formato);
+        $vaga->setModalidade($modalidade);
+        $vaga->setSalarioMin($salario_min);
+        $vaga->setSalarioMax($salario_max);
+        $vaga->setIdEmpresa($id_empresa);
+        $vaga->setArea($area);
+        $vaga->setEducacao($nivel);
+        $vaga->setEstado($estado);
+        
+        try{
+            if(($vaga->update())){
+                $request->getRouter()->redirect("/empresas/{$id}/vagas/{$id_vaga}/editar?status=updated");
+            }else{
+                $request->getRouter()->redirect("/empresas/{$id}/vagas/{$id_vaga}/editar?status=error");
+            }
+
+        }catch(Exception $ex)
+        {   echo "<pre>";
+            print_r($ex->getMessage());
+            echo "</pre>";
+            exit;
+            $request->getRouter()->redirect("/empresas/{$id}/vagas/{$id_vaga}/editar?status=error");
+        }
+    }
+
+
+
     public static function getStatus($request)
     {
         $queryParams = $request->getQueryParams();
