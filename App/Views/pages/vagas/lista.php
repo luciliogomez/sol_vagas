@@ -71,7 +71,11 @@
             <article class="flex-row-start">
                 <div class="start">
                     <figure>
-                        <img src="img/c1.png" alt="">
+                        <?php if(empty($vaga->getLogotipo())):?>
+                            <i class="fa fa-building-o" ></i>
+                        <?php else:?>
+                            <img src="<?=URL."/uploads/".$vaga->getLogotipo()?>" alt="">
+                        <?php endif;?>
                     </figure>
                 </div>
                 <div class="middle">

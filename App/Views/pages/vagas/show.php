@@ -7,7 +7,11 @@
             <article class="flex-row-start">
                 <div class="start">
                     <figure>
-                        <img src="img/c1.png" alt="">
+                        <?php if(empty($vaga->getLogotipo())):?>
+                            <i class="fa fa-building-o" ></i>
+                        <?php else:?>
+                            <img src="<?=URL."/uploads/".$vaga->getLogotipo()?>" alt="">
+                        <?php endif;?>
                     </figure>
                 </div>
                 <div class="middle">
@@ -33,14 +37,17 @@
                         </div>
                     </div>
                 </div>
-
+                
                 <div class="end flex-column-center">
+                <?php if($_SESSION['usuario']['tipo'] == "candidatos"):?>
                     <?php if($candidatei_me): ?>
                         <a href="#"  class="btn red">Candidatei-me</a>
                     <?php else:?>
                         <a href="<?=URL?>/vagas/<?=$vaga->getId()?>/aplicar" class="btn">Candidatar-se</a>    
                     <?php endif;?>
+                <?php endif; ?>
                 </div>
+                
 
             </article>
             <h3>Decrição</h3>
@@ -65,11 +72,13 @@
                 </p>
             </div>
             <div>
+            <?php if($_SESSION['usuario']['tipo'] == "candidatos"):?>
                     <?php if($candidatei_me): ?>
                         <a href="#"  class="btn red">Candidatei-me</a>
                     <?php else:?>
                         <a href="<?=URL?>/vagas/<?=$vaga->getId()?>/aplicar" class="btn">Candidatar-se</a>    
                     <?php endif;?>
+                <?php endif;?>
             </div>
     </div>
     

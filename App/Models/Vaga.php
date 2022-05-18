@@ -21,6 +21,9 @@ class Vaga{
     private $cidade;
     private $id_empresa;
     private $empresa;
+    private $logotipo;
+
+    
 
     public function setId($id)
     {
@@ -94,7 +97,10 @@ class Vaga{
     {
         return $this->descricao;
     }
-
+    public function getLogotipo()
+    {
+        return $this->logotipo;
+    }
     public function getArea()
     {
         return $this->area;
@@ -182,7 +188,7 @@ class Vaga{
     public function load($id)
     {
         $query = "SELECT V.id,V.titulo,V.formato,V.modalidade,V.area,V.cidade,V.salario_min,V.salario_max,
-        V.descricao,V.habilidades,V.ano_de_experiencia,V.educacao,V.data_limite,V.estado,V.id_empresa,E.nome as empresa FROM `vaga` V
+        V.descricao,V.habilidades,V.ano_de_experiencia,V.educacao,V.data_limite,V.estado,V.id_empresa,E.nome as empresa, E.logotipo FROM `vaga` V
         INNER JOIN empresa E ON (V.id_empresa = E.id) WHERE V.id = :id";
 
         $stmt = Conexao::getInstance()->prepare($query);
@@ -211,7 +217,7 @@ class Vaga{
 
         
         $query = "SELECT V.id,V.titulo,V.formato,V.modalidade,V.cidade,V.salario_min,V.salario_max,
-        V.descricao,V.habilidades,V.ano_de_experiencia,V.educacao,V.data_limite,V.estado,V.id_empresa,E.nome as empresa FROM `vaga` V
+        V.descricao,V.habilidades,V.ano_de_experiencia,V.educacao,V.data_limite,V.estado,V.id_empresa,E.nome as empresa,E.logotipo FROM `vaga` V
         INNER JOIN empresa E ON (V.id_empresa = E.id) 
         WHERE V.titulo like :search
         AND V.area like :area

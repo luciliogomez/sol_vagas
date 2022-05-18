@@ -500,7 +500,7 @@ exit;
         
 
         if( empty($postVars['titulo']) || empty($postVars['cidade']) 
-            || empty($postVars['anos'])|| empty($postVars['fim']) 
+            || empty($postVars['fim']) 
             || empty($postVars['descricao'] ) ||  empty($postVars['habilidades'] )   
         ){
             return View::render("vagas::novo",[
