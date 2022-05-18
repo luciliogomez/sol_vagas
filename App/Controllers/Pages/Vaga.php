@@ -119,7 +119,7 @@ class Vaga extends PagesBaseController{
             if($vaga instanceof ModelsVaga){
                 return View::render("vagas::show",[
                     "vaga" => $vaga,
-                    "candidatei_me" => ($vagasModel->isCandidato($_SESSION['usuario']['id'],$id))
+                    "candidatei_me" =>(isset($_SESSION['usuario']) && $_SESSION['usuario']['tipo']=="candidatos")?($vagasModel->isCandidato($_SESSION['usuario']['id'],$id)):null
                 ]);    
             }else{
                 return View::render("error::error",[

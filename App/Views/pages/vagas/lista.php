@@ -99,7 +99,11 @@
                 </div>
 
                 <div class="end flex-column-center">
-                    <p> Oferta aberta até </br> <span><?=$vaga->getDataLimite()?></span></p>
+                    <?php if($vaga->getEstado() == '1'): ?>
+                        <p> Oferta aberta até </br> <span><?=$vaga->getDataLimite()?></span></p>
+                    <?php else: ?>
+                        <p class="fechado">Fechado</p>
+                    <?php endif; ?>
                 </div>
 
             </article>

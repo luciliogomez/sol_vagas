@@ -39,7 +39,9 @@
                 </div>
                 
                 <div class="end flex-column-center">
-                <?php if($_SESSION['usuario']['tipo'] == "candidatos"):?>
+                <?php if($vaga->getEstado() == '0'):?>
+                    <p class="fechado">Vaga Fechada</span></p>
+                <?php elseif( (isset($_SESSION['usuario']['tipo']) && $_SESSION['usuario']['tipo'] == "candidatos") || (!isset($_SESSION['usuario']['tipo']))) :?>
                     <?php if($candidatei_me): ?>
                         <a href="#"  class="btn red">Candidatei-me</a>
                     <?php else:?>
@@ -71,8 +73,10 @@
                     Português
                 </p>
             </div>
-            <div>
-            <?php if($_SESSION['usuario']['tipo'] == "candidatos"):?>
+            <div class="end flex-column-start">
+            <?php if($vaga->getEstado() == '0'):?>
+                    <p class="fechado ">Vaga Fechada</span></p>
+            <?php elseif( (isset($_SESSION['usuario']['tipo']) && $_SESSION['usuario']['tipo'] == "candidatos") || (!isset($_SESSION['usuario']['tipo']))) :?>
                     <?php if($candidatei_me): ?>
                         <a href="#"  class="btn red">Candidatei-me</a>
                     <?php else:?>

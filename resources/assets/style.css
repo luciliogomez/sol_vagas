@@ -859,10 +859,10 @@ footer .footer-bottom a {
     color: green;
 }
 
- .vaga-horizontal article .end p.fechado{
-    color: rgb(226, 10, 10);
+p.fechado{
+    color: rgb(226, 10, 10) !important;
     text-align: center;
-    padding: 5%;
+    padding: 10px;
     border-radius: 15px;
     border: 1px solid rgb(226, 10, 10);
 }

@@ -132,6 +132,7 @@ $router->post("/candidatos/login",[
 //[GET]
 $router->get("/candidatos/{id}/dashboard",[
     "middlewares" => [
+        "require-login",
         "candidato-access"
     ],
     function($request,$id){
@@ -144,6 +145,7 @@ $router->get("/candidatos/{id}/dashboard",[
 //[GET]
 $router->get("/candidatos/{id}/perfil",[
     "middlewares" => [
+        "require-login"
     ],
     function($request,$id){
         return new Response(200,Candidato::getPerfil($request,$id));
@@ -164,6 +166,7 @@ $router->get("/candidatos/{id}/perfil/editar",[
 
 $router->post("/candidatos/{id}/perfil/editar",[
     "middlewares" => [
+        "require-login",
         "admin-access",
         "candidato-access"
     ],
@@ -175,6 +178,7 @@ $router->post("/candidatos/{id}/perfil/editar",[
 
 $router->get("/candidatos/{id}/formacao/adicionar",[
     "middlewares" => [
+        "require-login",
         "admin-access",
         "candidato-access"
     ],
@@ -185,6 +189,7 @@ $router->get("/candidatos/{id}/formacao/adicionar",[
 
 $router->post("/candidatos/{id}/formacao/adicionar",[
     "middlewares" => [
+        "require-login",
         "admin-access",
         "candidato-access"
     ],
@@ -197,6 +202,7 @@ $router->post("/candidatos/{id}/formacao/adicionar",[
 
 $router->get("/candidatos/{id}/formacao/{id_formacao}/editar",[
     "middlewares" => [
+        "require-login",
         "admin-access",
         "candidato-access"
     ],
@@ -207,6 +213,7 @@ $router->get("/candidatos/{id}/formacao/{id_formacao}/editar",[
 
 $router->post("/candidatos/{id}/formacao/{id_formacao}/editar",[
     "middlewares" => [
+        "require-login",
         "admin-access",
         "candidato-access"
     ],
@@ -219,6 +226,7 @@ $router->post("/candidatos/{id}/formacao/{id_formacao}/editar",[
 
 $router->get("/candidatos/{id}/formacao/{id_formacao}/eliminar",[
     "middlewares" => [
+        "require-login",
         "admin-access",
         "candidato-access"
     ],
@@ -231,6 +239,7 @@ $router->get("/candidatos/{id}/formacao/{id_formacao}/eliminar",[
 
 $router->get("/candidatos/{id}/cursos/adicionar",[
     "middlewares" => [
+        "require-login",
         "admin-access",
         "candidato-access"
     ],
@@ -241,6 +250,7 @@ $router->get("/candidatos/{id}/cursos/adicionar",[
 
 $router->post("/candidatos/{id}/cursos/adicionar",[
     "middlewares" => [
+        "require-login",
         "admin-access",
         "candidato-access"
     ],
@@ -253,6 +263,7 @@ $router->post("/candidatos/{id}/cursos/adicionar",[
 
 $router->get("/candidatos/{id}/curso/{id_curso}/editar",[
     "middlewares" => [
+        "require-login",
         "admin-access",
         "candidato-access"
     ],
@@ -263,6 +274,7 @@ $router->get("/candidatos/{id}/curso/{id_curso}/editar",[
 
 $router->post("/candidatos/{id}/curso/{id_curso}/editar",[
     "middlewares" => [
+        "require-login",
         "admin-access",
         "candidato-access"
     ],
@@ -275,6 +287,7 @@ $router->post("/candidatos/{id}/curso/{id_curso}/editar",[
 
 $router->get("/candidatos/{id}/curso/{id_curso}/eliminar",[
     "middlewares" => [
+        "require-login",
         "admin-access",
         "candidato-access"
     ],
@@ -288,6 +301,7 @@ $router->get("/candidatos/{id}/curso/{id_curso}/eliminar",[
 
 $router->get("/candidatos/{id}/experiencia/adicionar",[
     "middlewares" => [
+        "require-login",
         "admin-access",
         "candidato-access"
     ],
@@ -298,6 +312,7 @@ $router->get("/candidatos/{id}/experiencia/adicionar",[
 
 $router->post("/candidatos/{id}/experiencia/adicionar",[
     "middlewares" => [
+        "require-login",
         "admin-access",
         "candidato-access"
     ],
@@ -309,6 +324,7 @@ $router->post("/candidatos/{id}/experiencia/adicionar",[
 
 $router->get("/candidatos/{id}/experiencia/{id_experiencia}/editar",[
     "middlewares" => [
+        "require-login",
         "admin-access",
         "candidato-access"
     ],
@@ -319,6 +335,7 @@ $router->get("/candidatos/{id}/experiencia/{id_experiencia}/editar",[
 
 $router->post("/candidatos/{id}/experiencia/{id_experiencia}/editar",[
     "middlewares" => [
+        "require-login",
         "admin-access",
         "candidato-access"
     ],
@@ -331,6 +348,7 @@ $router->post("/candidatos/{id}/experiencia/{id_experiencia}/editar",[
 
 $router->get("/candidatos/{id}/experiencia/{id_experiencia}/eliminar",[
     "middlewares" => [
+        "require-login",
         "admin-access",
         "candidato-access"
     ],
@@ -346,6 +364,7 @@ $router->get("/candidatos/{id}/experiencia/{id_experiencia}/eliminar",[
 //[GET]
 $router->get("/candidatos/{id}/candidaturas",[
     "middlewares" => [
+        "require-login",
         "candidato-access",
         "candidato-private-access"
     ],

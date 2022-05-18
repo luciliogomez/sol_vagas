@@ -14,7 +14,11 @@
                 <article class="flex-row-start">
                     <div class="start">
                         <figure>
-                            <img src="img/c1.png" alt="">
+                        <?php if(empty($candidatura['logotipo'])):?>
+                            <i class="fa fa-building-o" ></i>
+                        <?php else:?>
+                            <img src="<?=URL."/uploads/".$candidatura['logotipo']?>" alt="">
+                        <?php endif;?>
                         </figure>
                     </div>
                     <div class="middle">
