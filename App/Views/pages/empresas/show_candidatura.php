@@ -36,7 +36,7 @@
                         <h3 class="w-100 mb-5 text-center">STATUS DA CANDIDATURA</h3>
                         <?php if($candidatura['estado'] == "pendente"): ?>
                             <span class="mb-10 w-100 btn btn-medium no-border green">PENDENTE <i class="fa fa-flag"></i> </span>
-                            <a href="#" class="w-100 btn btn-medium text-size-small-1">Marcar Entrevista</a>
+                            <a href="<?=URL?>/empresas/<?=$vaga->getIdEmpresa()?>/candidaturas/<?=$candidatura['id']?>/entrevista" class="w-100 btn btn-medium text-size-small-1">Marcar Entrevista</a>
                         <?php endif; ?>
                     </div>
                 </div>

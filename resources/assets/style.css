@@ -66,6 +66,10 @@ body,html{
     align-items: center;
 }
 
+.flex-wrap{
+    flex-wrap: wrap;
+}
+
 .flex-row-end{
     display: flex;
     justify-content: flex-end;
@@ -229,6 +233,7 @@ body,html{
             input[type='email'],
             input[type='password'],
             input[type='date'],
+            input[type='time'],
             input[type='number'],
             select,
             textarea{

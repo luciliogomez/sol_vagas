@@ -460,9 +460,21 @@ $router->post("/empresas/{id}/candidaturas/filter",[
 ]);
 
 
-$router->get("/empresas/{id}/candidaturas/{id_candidatura}",[
+$router->get("/empresas/{id}/candidaturas/{id_candidatura}/show",[
     function($request,$id,$id_candidatura){
         return new Response(200,Empresa::getCandidaturaDetalhes($request,$id,$id_candidatura));
+    }
+]);
+
+$router->get("/empresas/{id}/candidaturas/{id_candidatura}/entrevista",[
+    function($request,$id,$id_candidatura){
+        return new Response(200,Empresa::getMarcarEntrevista($request,$id,$id_candidatura));
+    }
+]);
+
+$router->post("/empresas/{id}/candidaturas/{id_candidatura}/entrevista",[
+    function($request,$id,$id_candidatura){
+        return new Response(200,Empresa::setMarcarEntrevista($request,$id,$id_candidatura));
     }
 ]);
 

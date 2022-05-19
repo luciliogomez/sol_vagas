@@ -49,7 +49,7 @@
                            <div class="w-20"> <h3><?=$candidatura['titulo']?></h3></div>
                            <div class="w-20"> <h3><?=$candidatura['data_limite']?></h3></div>
                            <div class="w-20"> <h3><?=$candidatura['estado']?></h3></div>
-                           <div class="w-20"> <a href="<?=URL?>/empresas/<?=$empresa->getId()?>/candidaturas/<?=$candidatura['id']?>" class="btn ">Ver Candidatura</a> </div>
+                           <div class="w-20"> <a href="<?=URL?>/empresas/<?=$empresa->getId()?>/candidaturas/<?=$candidatura['id']?>/show" class="btn ">Ver Candidatura</a> </div>
                        </div>
                        <?php endforeach; ?>
                         <div class="">

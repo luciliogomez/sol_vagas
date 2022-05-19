@@ -353,7 +353,7 @@ exit;
     }
 
     public static function getCandidaturaDetalhes($request,$id,$id_candidatura)
-    {
+    { 
         $model = new ModelsEmpresa();
         $vagaModel = new Vaga();
         $candidatoModel = new Candidato();
@@ -393,6 +393,141 @@ echo "</pre>";
 exit;
             throw new Exception("PAGINA NÃO ENCONTRADA",404);
         }
+    }
+
+    public static function getMarcarEntrevista($request,$id,$id_candidatura)
+    {
+        $model = new ModelsEmpresa();
+        $vagaModel = new Vaga();
+        $candidatoModel = new Candidato();
+     
+        try{
+            $empresa = $model->load($id);
+            if(!($empresa  instanceof ModelsEmpresa)){
+                throw new Exception("PAGINA NÃO ENCONTRADA",404);
+            }
+            $candidatura = $model->getCandidaturaOne($id_candidatura);
+            if(($candidatura  == null)){
+                throw new Exception("PAGINA NÃO ENCONTRADA - Candidatura Inválida",404);
+            }
+            $candidato = $candidatoModel->load($candidatura['id_candidato']);
+            if(($candidato  == null)){
+                throw new Exception("PAGINA NÃO ENCONTRADA - Candidato Não Encontrado",404);
+            }
+
+            $vaga = $vagaModel->load($candidatura['id_vaga']);
+            if(($vaga  == null)){
+                throw new Exception("PAGINA NÃO ENCONTRADA - Vaga Não Encontrada",404);
+            }
+
+            return View::render("empresas::entrevista",[
+                "candidatura" => $candidatura,
+                "empresa"     => $empresa,
+                "vaga"        => $vaga,
+                "candidato"   => $candidato,
+                "status"      => ''
+            ]);
+
+            
+        }catch(Exception $e)
+        {
+            echo "<pre>";
+print_r($e->getMessage());
+echo "</pre>";
+exit;
+            throw new Exception("PAGINA NÃO ENCONTRADA",404);
+        }
+    }
+    public static function setMarcarEntrevista($request,$id,$id_candidatura)
+    {
+        $model = new ModelsEmpresa();
+        $vagaModel = new Vaga();
+        $candidatoModel = new Candidato();
+        $postVars= $request->getPostVars();
+
+        $data = $postVars['data'];
+        $hora = $postVars['hora'];
+        $modalidade = $postVars['modalidade'];
+        $endereco = $postVars['endereco'];
+        $corpo = $postVars['corpo'];
+    
+        try{
+            $empresa = $model->load($id);
+            if(!($empresa  instanceof ModelsEmpresa)){
+                throw new Exception("PAGINA NÃO ENCONTRADA",404);
+            }
+            $candidatura = $model->getCandidaturaOne($id_candidatura);
+            if(($candidatura  == null)){
+                throw new Exception("PAGINA NÃO ENCONTRADA - Candidatura Inválida",404);
+            }
+            $candidato = $candidatoModel->load($candidatura['id_candidato']);
+            if(($candidato  == null)){
+                throw new Exception("PAGINA NÃO ENCONTRADA - Candidato Não Encontrado",404);
+            }
+
+            $vaga = $vagaModel->load($candidatura['id_vaga']);
+            if(($vaga  == null)){
+                throw new Exception("PAGINA NÃO ENCONTRADA - Vaga Não Encontrada",404);
+            }
+            if(empty($corpo) || empty($data) || empty($hora)){
+                return View::render("empresas::entrevista",[
+                    "candidatura" => $candidatura,
+                    "empresa"     => $empresa,
+                    "vaga"        => $vaga,
+                    "candidato"   => $candidato,
+                    "status"      => Alert::getError('Preencha os campos obrigatórios'),
+                    "data"        => $data,
+                    "hora"        => $hora,
+                    "corpo"       => $corpo,
+                    "modalidade"  => $modalidade,
+                    "endereco"    => $endereco
+                ]);
+            }
+
+            if($modalidade == 1 &&  empty($endereco)){
+                return View::render("empresas::entrevista",[
+                    "candidatura" => $candidatura,
+                    "empresa"     => $empresa,
+                    "vaga"        => $vaga,
+                    "candidato"   => $candidato,
+                    "data"        => $data,
+                    "hora"        => $hora,
+                    "corpo"       => $corpo,
+                    "modalidade"  => $modalidade,
+                    "endereco"    => $endereco,
+                    "status"      => Alert::getError('Precisa indicar o Endereço para uma entrevista presencial')
+                ]);
+            }
+
+            return self::enviarConvite($data,$hora,$modalidade,$endereco,$corpo,$vaga);
+
+            
+        }catch(Exception $e)
+        {
+            echo "<pre>";
+print_r($e->getMessage());
+echo "</pre>";
+exit;
+            throw new Exception("PAGINA NÃO ENCONTRADA",404);
+        }
+    }
+
+    public static function enviarConvite($data,$hora,$modalidade,$endereco,$corpo,$vaga)
+    {
+        $texto = " 
+        <p> Você foi selecionado para entrevista. <br/></p>
+        <div class='mt-1 mb-2 br-4 blue pa-1 rad-3 w-50 text-size-small-1'>
+        <p class='mb-1'> Vaga: <span class='text-white'>{$vaga->getTitulo()}</span> <br/></p>
+        <p class='mb-1'> Empresa: <span class='text-white'>{$vaga->getEmpresa()}</span> <br/></p>
+        <p class='mb-1'> Data da Entrevista: <span class='text-white'>{$data}</span> <br/></p>
+        <p class='mb-1'> Modalidade: <span class='text-white'>{$modalidade}</span> <br/></p>
+        <p class='mb-1'> Hora: <span class='text-white'>{$hora}</span> <br/></p>". (!empty($endereco)?"<p> Endereço: <span>{$endereco}</span> <br/></p>":""). 
+        "</div>
+        <p class='text-size-small-1 text-center'>{$corpo}</p>";
+        return View::render("empresas::convite",[
+            "texto" => $texto,
+            "vaga"  => $vaga
+        ]);
     }
 
     public static function getVagas($request,$id)
