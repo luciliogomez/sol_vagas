@@ -524,7 +524,7 @@ exit;
     {
         $limit = (strlen($limit))? " limit ".$limit:"";
         $query = "  SELECT 
-                    CAND.id, CAND.id_candidato,VA.id as id_vaga,VA.titulo,VA.data_limite,
+                    CAND.id, CAND.id_candidato,CAND.estado,VA.id as id_vaga,VA.titulo,VA.data_limite,VA.estado as vaga_estado
                     EMP.id,EMP.nome,EMP.logotipo
                     FROM candidatura CAND inner join vaga VA ON(CAND.id_vaga=VA.id)
                     inner join empresa EMP ON(VA.id_empresa = EMP.id)

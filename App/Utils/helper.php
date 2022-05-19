@@ -21,6 +21,15 @@
             default: return '';
         }
     }
+    function trnslt_estado_vaga($estado)
+    { 
+        switch($estado)
+        {
+            case '0': return "Fechada";
+            case '1': return "Aberta";
+            default: return 'no';
+        }
+    }
 
     function uploaded_foto()
     {

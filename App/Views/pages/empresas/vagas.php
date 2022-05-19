@@ -49,7 +49,7 @@
                            <div class="w-20"> <h3><?=$vaga['titulo']?></h3></div>
                            <div class="w-20"> <h3><?=$vaga['modalidade']?></h3></div>
                            <div class="w-20"> <h3><?=$vaga['data_limite']?></h3></div>
-                           <div class="w-20"> <h3><?=$vaga['estado']?></h3></div>
+                           <div class="w-20"> <h3><?=trnslt_estado_vaga($vaga['estado'])?></h3></div>
                            <div class="w-20"> 
                                 <a href="<?=URL?>/vagas/<?=$vaga['id']?>/ver" class="btn ">
                                     <i class="fa fa-eye"></i>

@@ -6,9 +6,13 @@
 
 
     <!-- CONTENT -->
+    
     <div class=" flex-row-space-between mt-2 container">
             
             <div class=" flex-column-start w-100">
+                <div class="mb-2">
+                    <a href="<?=URL?>/empresas/<?=$empresa->getId()?>/candidaturas" class="btn mb-2"><-</a> 
+                </div>
                 <h3 class="text-size-normal mb-1">Candidatura</h3>
                 <div class="mb-1 w-100 flex-row-space-between">
                     <a href="<?=URL?>/vagas/<?=$vaga->getId()?>/ver" class="vaga-horizontal w-60">
@@ -27,7 +31,12 @@
                                 <h5 class="empresa"><i class="fa fa-building-o"></i> <?=$vaga->getEmpresa()?></h5>
                             </div>
                             <div class="end flex-column-center">
-                                <p> Oferta aberta até </br> <span><?=$vaga->getDataLimite()?></span></p>
+                                <?php if($vaga->isClosed()):?>
+                                    <p class="fechado">Vaga Fechada</p>
+                                <?php else:?>
+                                    <p> Oferta aberta até </br> <span><?=$vaga->getDataLimite()?></span></p>
+                                <?php endif;?>
+                                
                             </div>
                         
                         </article>

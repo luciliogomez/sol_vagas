@@ -32,8 +32,8 @@
                             <h4>$<?=$vaga->getSalarioMin()?></h4>
                         </div>
                         <div class="flex-column-center">
-                            <span><i class="fa fa-info-circle"></i> Estado</span>
-                            <h4><?=$vaga->getEstado()?></h4>
+                            <span><i class="fa fa-info-circle"></i> Data Limite</span>
+                            <h4><?=$vaga->getDataLimite()?></h4>
                         </div>
                     </div>
                 </div>

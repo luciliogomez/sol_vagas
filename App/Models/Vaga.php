@@ -373,4 +373,9 @@ class Vaga{
         }       
     }
 
+    public function isClosed()
+    {
+        return ($this->estado == 0);
+    }
+
 }
