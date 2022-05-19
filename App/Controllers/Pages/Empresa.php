@@ -528,7 +528,7 @@ exit;
 
         $mail = new Email();
         if($mail->sendEmail($candidato->getEmail(),"CONVITE PARA ENTREVISTA",$texto) 
-        && $empresa->marcarEmtrevista($candidatura['id'])){
+        && $empresa->marcarEntrevista($candidatura['id'])){
             return View::render("empresas::convite",[
                 "vaga"  => $vaga,
                 "id_empresa" => $empresa->getId(),

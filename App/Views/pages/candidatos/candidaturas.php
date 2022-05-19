@@ -23,10 +23,15 @@
                     </div>
                     <div class="middle">
                         <h4 class="titulo"><?=$candidatura['titulo']?></h4>
-                        <h5 class="empresa"><i class="fa fa-building-o"></i> <?=$candidatura['nome']?></h5>
+                        <h5 class="empresa mb-2"><i class="fa fa-building-o"></i> <?=$candidatura['nome']?></h5>
+                        <h6 class="text-size-small-1 text-dark-grey">Status: <?=$candidatura['estado']?></h6>
                     </div>
                     <div class="end flex-column-center">
+                    <?php if($candidatura['vaga_estado']==0):?>
+                        <p class="fechado">Vaga Fechada</span></p>
+                    <?php else:?>
                         <p> Oferta aberta até </br> <span><?=$candidatura['data_limite']?></span></p>
+                    <?php endif;?>
                     </div>
                 
                 </article>
