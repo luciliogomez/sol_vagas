@@ -12,6 +12,10 @@ class ComposerStaticInitc0587b1e0392c95f700dc8b2f940efd7
             'WilliamCosta\\DotEnv\\' => 20,
             'WilliamCosta\\DatabaseManager\\' => 29,
         ),
+        'P' => 
+        array (
+            'PHPMailer\\PHPMailer\\' => 20,
+        ),
         'L' => 
         array (
             'League\\Plates\\' => 14,
@@ -30,6 +34,10 @@ class ComposerStaticInitc0587b1e0392c95f700dc8b2f940efd7
         'WilliamCosta\\DatabaseManager\\' => 
         array (
             0 => __DIR__ . '/..' . '/william-costa/database-manager/src',
+        ),
+        'PHPMailer\\PHPMailer\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/phpmailer/phpmailer/src',
         ),
         'League\\Plates\\' => 
         array (

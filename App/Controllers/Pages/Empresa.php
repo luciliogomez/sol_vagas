@@ -8,6 +8,7 @@ use App\Controllers\Pages\PagesBaseController;
 use App\Models\Candidato;
 use App\Models\Empresa as ModelsEmpresa;
 use App\Models\Vaga;
+use App\Utils\Email;
 use Exception;
 
 class Empresa extends PagesBaseController{
@@ -499,7 +500,7 @@ exit;
                 ]);
             }
 
-            return self::enviarConvite($data,$hora,$modalidade,$endereco,$corpo,$vaga);
+            return self::enviarConvite($data,$hora,$modalidade,$endereco,$corpo,$vaga,$candidato,$empresa,$candidatura);
 
             
         }catch(Exception $e)
@@ -512,22 +513,35 @@ exit;
         }
     }
 
-    public static function enviarConvite($data,$hora,$modalidade,$endereco,$corpo,$vaga)
+    public static function enviarConvite($data,$hora,$modalidade,$endereco,$corpo,$vaga,$candidato,$empresa,$candidatura)
     {
         $texto = " 
-        <p> Você foi selecionado para entrevista. <br/></p>
-        <div class='mt-1 mb-2 br-4 blue pa-1 rad-3 w-50 text-size-small-1'>
-        <p class='mb-1'> Vaga: <span class='text-white'>{$vaga->getTitulo()}</span> <br/></p>
-        <p class='mb-1'> Empresa: <span class='text-white'>{$vaga->getEmpresa()}</span> <br/></p>
-        <p class='mb-1'> Data da Entrevista: <span class='text-white'>{$data}</span> <br/></p>
-        <p class='mb-1'> Modalidade: <span class='text-white'>{$modalidade}</span> <br/></p>
-        <p class='mb-1'> Hora: <span class='text-white'>{$hora}</span> <br/></p>". (!empty($endereco)?"<p> Endereço: <span>{$endereco}</span> <br/></p>":""). 
+        <p style = 'font-size: 1.2em; '> Você foi selecionado para entrevista. <br/></p>
+        <div style = 'background-color: dodgerblue;margin-top:1%;margin-bottom:2%;padding:1%;border-radius:3px;width:50%;font-size: 1em;' class='mt-1 mb-2 br-4 blue pa-1 rad-3 w-50 text-size-small-1'>
+        <p style = 'margin-bottom:5px;color:black;'> Vaga: <span style = 'color:white;'>{$vaga->getTitulo()}</span> <br/></p>
+        <p style = 'margin-bottom:5px;color:black;'> Empresa: <span style = 'color:white;'>{$vaga->getEmpresa()}</span> <br/></p>
+        <p style = 'margin-bottom:5px;color:black;'> Data da Entrevista: <span style = 'color:white;'>{$data}</span> <br/></p>
+        <p style = 'margin-bottom:5px;color:black;'> Modalidade: <span style = 'color:white;'>{$modalidade}</span> <br/></p>
+        <p style = 'margin-bottom:5px;color:black;'> Hora: <span style = 'color:white;''>{$hora}</span> <br/></p>". (!empty($endereco)?"<p> Endereço: <span>{$endereco}</span> <br/></p>":""). 
         "</div>
-        <p class='text-size-small-1 text-center'>{$corpo}</p>";
-        return View::render("empresas::convite",[
-            "texto" => $texto,
-            "vaga"  => $vaga
-        ]);
+        <p style = 'font-size: 1.3em; text-align:justify;'>{$corpo}</p>";
+
+        $mail = new Email();
+        if($mail->sendEmail("luciliodetales@gmail.com","CONVITE PARA ENTREVISTA",$texto)){
+            return View::render("empresas::convite",[
+                "vaga"  => $vaga,
+                "id_empresa" => $empresa->getId(),
+                "id_candidatura" => $candidatura['id'],
+                "status" => Alert::getSucess("CONVITE ENVIADO")
+            ]);
+        }else{
+            return View::render("empresas::convite",[
+                "vaga"  => $vaga,
+                "id_empresa" => $empresa->getId(),
+                "id_candidatura" => $candidatura['id'],
+                "status" => Alert::getError("FALHA AO ENVIAR CONVITE : {$mail->error}")
+            ]);
+        }
     }
 
     public static function getVagas($request,$id)

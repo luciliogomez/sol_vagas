@@ -8,6 +8,7 @@ $baseDir = dirname($vendorDir);
 return array(
     'WilliamCosta\\DotEnv\\' => array($vendorDir . '/william-costa/dot-env/src'),
     'WilliamCosta\\DatabaseManager\\' => array($vendorDir . '/william-costa/database-manager/src'),
+    'PHPMailer\\PHPMailer\\' => array($vendorDir . '/phpmailer/phpmailer/src'),
     'League\\Plates\\' => array($vendorDir . '/league/plates/src'),
     'App\\' => array($baseDir . '/App'),
 );
