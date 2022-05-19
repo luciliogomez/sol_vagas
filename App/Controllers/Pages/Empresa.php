@@ -527,7 +527,8 @@ exit;
         <p style = 'font-size: 1.3em; text-align:justify;'>{$corpo}</p>";
 
         $mail = new Email();
-        if($mail->sendEmail("luciliodetales@gmail.com","CONVITE PARA ENTREVISTA",$texto)){
+        if($mail->sendEmail($candidato->getEmail(),"CONVITE PARA ENTREVISTA",$texto) 
+        && $empresa->marcarEmtrevista($candidatura['id'])){
             return View::render("empresas::convite",[
                 "vaga"  => $vaga,
                 "id_empresa" => $empresa->getId(),
@@ -544,6 +545,122 @@ exit;
         }
     }
 
+
+    public static function getAprovarCandidato($request,$id,$id_candidatura)
+    {
+        $model = new ModelsEmpresa();
+        $vagaModel = new Vaga();
+        $candidatoModel = new Candidato();
+     
+        try{
+            $empresa = $model->load($id);
+            if(!($empresa  instanceof ModelsEmpresa)){
+                throw new Exception("PAGINA NÃO ENCONTRADA",404);
+            }
+            $candidatura = $model->getCandidaturaOne($id_candidatura);
+            if(($candidatura  == null)){
+                throw new Exception("PAGINA NÃO ENCONTRADA - Candidatura Inválida",404);
+            }
+            $candidato = $candidatoModel->load($candidatura['id_candidato']);
+            if(($candidato  == null)){
+                throw new Exception("PAGINA NÃO ENCONTRADA - Candidato Não Encontrado",404);
+            }
+
+            $vaga = $vagaModel->load($candidatura['id_vaga']);
+            if(($vaga  == null)){
+                throw new Exception("PAGINA NÃO ENCONTRADA - Vaga Não Encontrada",404);
+            }
+
+            return View::render("empresas::aprovar_candidato",[
+                "vaga"        => $vaga,
+                "candidato"   => $candidato,
+                "status"      => ''
+            ]);
+
+            
+        }catch(Exception $e)
+        {
+            echo "<pre>";
+print_r($e->getMessage());
+echo "</pre>";
+exit;
+            throw new Exception("PAGINA NÃO ENCONTRADA",404);
+        }
+    }
+    public static function setAprovarCandidato($request,$id,$id_candidatura)
+    {
+        $postVars = $request->getPostVars();
+        $mensagem = $postVars['mensagem'];
+
+        $model = new ModelsEmpresa();
+        $vagaModel = new Vaga();
+        $candidatoModel = new Candidato();
+     
+        try{
+            $empresa = $model->load($id);
+            if(!($empresa  instanceof ModelsEmpresa)){
+                throw new Exception("PAGINA NÃO ENCONTRADA",404);
+            }
+            $candidatura = $model->getCandidaturaOne($id_candidatura);
+            if(($candidatura  == null)){
+                throw new Exception("PAGINA NÃO ENCONTRADA - Candidatura Inválida",404);
+            }
+            $candidato = $candidatoModel->load($candidatura['id_candidato']);
+            if(($candidato  == null)){
+                throw new Exception("PAGINA NÃO ENCONTRADA - Candidato Não Encontrado",404);
+            }
+
+            $vaga = $vagaModel->load($candidatura['id_vaga']);
+            if(($vaga  == null)){
+                throw new Exception("PAGINA NÃO ENCONTRADA - Vaga Não Encontrada",404);
+            }
+
+            return self::aprovarCandidato($request,$id_candidatura,$mensagem,$candidato,$vaga,$empresa);
+
+
+            
+        }catch(Exception $e)
+        {
+            echo "<pre>";
+print_r($e->getMessage());
+echo "</pre>";
+exit;
+            throw new Exception("PAGINA NÃO ENCONTRADA",404);
+        }
+    }
+
+    public static function aprovarCandidato($request,$id_candidatura,$mensagem,$candidato,$vaga,$empresa)
+    {
+        $texto = " 
+        <p style = 'font-size: 1.3em; '> PARABÉNS! SUA CANDIDATURA FOI APROVADA. <br/></p>
+        <div style = 'background-color: dodgerblue;margin-top:1%;margin-bottom:2%;padding:1%;border-radius:3px;width:50%;font-size: 1em;' class='mt-1 mb-2 br-4 blue pa-1 rad-3 w-50 text-size-small-1'>
+        <p style = 'margin-bottom:5px;color:black;'>Você foi aprovado para a vaga de <span style = 'color:white;'>{$vaga->getTitulo()}</span> <br/>
+        na Empresa  <span style = 'color:white;'>{$vaga->getEmpresa()}</span> <br/></p>
+        </div>
+        <p style = 'font-size: 1.3em; text-align:justify;'>{$mensagem}</p>";
+            $email = new Email();
+            try{
+
+                if($empresa->aprovarCandidatura($id_candidatura)){
+                    $email->sendEmail($candidato->getEmail(),"CANDIDATURA APROVADA",$texto);
+                    $request->getRouter()->redirect("/empresas/{$empresa->getId()}/candidaturas/{$id_candidatura}/show");
+                }else{
+                    return View::render("empresas::aprovar_candidato",[
+                        "vaga"        => $vaga,
+                        "candidato"   => $candidato,
+                        "status"      => Alert::getError("Falha ao Aprovar Candidatura")
+                    ]);
+                }
+            }
+            catch(Exception $ex)
+            {
+                return View::render("empresas::aprovar_candidato",[
+                    "vaga"        => $vaga,
+                    "candidato"   => $candidato,
+                    "status"      => Alert::getError("Falha ao Aprovar Candidatura")
+                ]);
+            }
+    }
     public static function getVagas($request,$id)
     {
         $model = new ModelsEmpresa();
@@ -718,7 +835,7 @@ exit;
 
 
 
-    public static function getEditarVaga($request,$id)
+    public static function getEditarVaga($request,$id,$id_vaga)
     {
         $model = new ModelsEmpresa();
         $vagaModel = new Vaga();
@@ -728,7 +845,7 @@ exit;
             if(!($empresa instanceof ModelsEmpresa)){
                 throw new Exception("PAGINA NAO ENCONTRADA",404);
             }
-            $vaga = $vagaModel->load($id);
+            $vaga = $vagaModel->load($id_vaga);
             if(!($vaga instanceof Vaga)){
                 throw new Exception("PAGINA NAO ENCONTRADA",404);
             }
@@ -749,7 +866,7 @@ exit;
         $postVars = $request->getPostVars(); 
         $vagaModel = new Vaga();
 
-        $vaga = $vagaModel->load($id);
+        $vaga = $vagaModel->load($id_vaga);
         if(!($vaga instanceof Vaga)){
             throw new Exception("PAGINA NAO ENCONTRADA",404);
         }

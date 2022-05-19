@@ -37,7 +37,12 @@
                         <?php if($candidatura['estado'] == "pendente"): ?>
                             <span class="mb-10 w-100 btn btn-medium no-border green">PENDENTE <i class="fa fa-flag"></i> </span>
                             <a href="<?=URL?>/empresas/<?=$vaga->getIdEmpresa()?>/candidaturas/<?=$candidatura['id']?>/entrevista" class="w-100 btn btn-medium text-size-small-1">Marcar Entrevista</a>
-                        <?php endif; ?>
+                        <?php elseif($candidatura['estado'] == "entrevista"): ?>
+                            <span class="mb-10 w-100 btn btn-medium no-border green">ENTREVISTA <i class="fa fa-flag"></i> </span>
+                            <a href="<?=URL?>/empresas/<?=$vaga->getIdEmpresa()?>/candidaturas/<?=$candidatura['id']?>/aprovar" class="w-100 btn btn-medium text-size-small-1">Aprovar Candidato</a>
+                        <?php elseif($candidatura['estado'] == "aprovado"): ?>
+                            <span class="mb-10 w-100 btn btn-medium no-border green">CANDIDATO APROVADO <i class="fa fa-flag"></i> </span>
+                       <?php endif; ?>
                     </div>
                 </div>
 

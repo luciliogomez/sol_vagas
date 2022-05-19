@@ -288,5 +288,34 @@ class Empresa{
             return [];
         }       
     }
+    public function aprovarCandidatura($id)
+    {
+        $query = "  UPDATE candidatura SET estado = 'aprovado'
+                    WHERE id = :id ";
+
+        $stmt = Conexao::getInstance()->prepare($query);
+        $stmt->bindParam(":id",$id);
+        $stmt->execute();
+        if($stmt->rowCount()>=1){
+            return true;
+        }else{
+            return false;
+        }     
+    }
+
+    public function marcarEntrevista($id)
+    {
+        $query = "  UPDATE candidatura SET estado = 'entrevista'
+                    WHERE id = :id ";
+
+        $stmt = Conexao::getInstance()->prepare($query);
+        $stmt->bindParam(":id",$id);
+        $stmt->execute();
+        if($stmt->rowCount()>=1){
+            return true;
+        }else{
+            return false;
+        }     
+    }
 
 }

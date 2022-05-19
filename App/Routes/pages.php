@@ -472,6 +472,16 @@ $router->get("/empresas/{id}/candidaturas/{id_candidatura}/entrevista",[
     }
 ]);
 
+$router->get("/empresas/{id}/candidaturas/{id_candidatura}/aprovar",[
+    function($request,$id,$id_candidatura){
+        return new Response(200,Empresa::getAprovarCandidato($request,$id,$id_candidatura));
+    }
+]);
+$router->post("/empresas/{id}/candidaturas/{id_candidatura}/aprovar",[
+    function($request,$id,$id_candidatura){
+        return new Response(200,Empresa::setAprovarCandidato($request,$id,$id_candidatura));
+    }
+]);
 $router->post("/empresas/{id}/candidaturas/{id_candidatura}/entrevista",[
     function($request,$id,$id_candidatura){
         return new Response(200,Empresa::setMarcarEntrevista($request,$id,$id_candidatura));
