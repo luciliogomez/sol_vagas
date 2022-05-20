@@ -43,7 +43,10 @@ MiddlewareQueue::setMap([
     "candidato-access" => App\Http\Middlewares\CandidatoAccess::class,
     "require-logout" => App\Http\Middlewares\RequireLogout::class,
     "require-login" => App\Http\Middlewares\RequireLogin::class,
-    "candidato-private-access" => App\Http\Middlewares\CandidatoPrivateAccess::class
+    "candidato-private-access" => App\Http\Middlewares\CandidatoPrivateAccess::class,
+    "empresa-require-login" => App\Http\Middlewares\EmpresaRequireLogin::class,
+    "empresa-access" => App\Http\Middlewares\EmpresaAccess::class,
+    "empresa-private-access" => App\Http\Middlewares\EmpresaPrivateAccess::class
 ]);
 
 

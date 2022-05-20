@@ -7,7 +7,7 @@ class Email{
 
     const HOST = 'smtp.gmail.com';
     const USER = 'geral.solvagas@gmail.com';
-    const PASS = '1A2E3I4O5U#';
+    const PASS = 'aucqqmeqhnzgbkix';
     const SECURE= PHPMailer::ENCRYPTION_STARTTLS;
     const PORT = 587;
     const CHARSET = 'UTF-8';

@@ -410,24 +410,44 @@ $router->post("/empresas/cadastro",[
 
 
 $router->get("/empresas/{id}/dashboard",[
+    "middlewares"=>[
+        "empresa-require-login",
+        "empresa-access",
+        "empresa-private-access"
+    ],
     function($request,$id){
         return new Response(200,Empresa::getDashboard($request,$id));
     }
 ]);
 
 $router->get("/empresas/{id}/perfil",[
+    "middlewares"=>[
+        "empresa-require-login",
+        "empresa-access",
+        "empresa-private-access"
+    ],
     function($request,$id){
         return new Response(200,Empresa::getPerfil($request,$id));
     }
 ]);
 
 $router->get("/empresas/{id}/perfil/editar",[
+    "middlewares"=>[
+        "empresa-require-login",
+        "empresa-access",
+        "empresa-private-access"
+    ],
     function($request,$id){
         return new Response(200,Empresa::getEditPerfil($request,$id));
     }
 ]);
 
 $router->post("/empresas/{id}/perfil/editar",[
+    "middlewares"=>[
+        "empresa-require-login",
+        "empresa-access",
+        "empresa-private-access"
+    ],
     function($request,$id){
         return new Response(200,Empresa::setEditPerfil($request,$id));
     }
@@ -435,25 +455,46 @@ $router->post("/empresas/{id}/perfil/editar",[
 
 
 $router->get("/empresas/{id}/candidaturas",[
+    "middlewares"=>[
+        "empresa-require-login",
+        "empresa-access",
+        "empresa-private-access"
+    ],
     function($request,$id){
+        
         return new Response(200,Empresa::getCandidaturas($request,$id));
     }
 ]);
 
 
 $router->post("/empresas/{id}/candidaturas",[
+    "middlewares"=>[
+        "empresa-require-login",
+        "empresa-access",
+        "empresa-private-access"
+    ],
     function($request,$id){
         return new Response(200,Empresa::getFilteredCandidaturas($request,$id));
     }
 ]);
 
 $router->get("/empresas/{id}/candidaturas/filter",[
+    "middlewares"=>[
+        "empresa-require-login",
+        "empresa-access",
+        "empresa-private-access"
+    ],
     function($request,$id){
         return new Response(200,Empresa::filtrarCandidaturas($request,$id));
     }
 ]);
 
 $router->post("/empresas/{id}/candidaturas/filter",[
+    "middlewares"=>[
+        "empresa-require-login",
+        "empresa-access",
+        "empresa-private-access"
+    ],
     function($request,$id){
         return new Response(200,Empresa::getFilteredCandidaturas($request,$id));
     }
@@ -461,34 +502,64 @@ $router->post("/empresas/{id}/candidaturas/filter",[
 
 
 $router->get("/empresas/{id}/candidaturas/{id_candidatura}/show",[
+    "middlewares"=>[
+        "empresa-require-login",
+        "empresa-access",
+        "empresa-private-access"
+    ],
     function($request,$id,$id_candidatura){
         return new Response(200,Empresa::getCandidaturaDetalhes($request,$id,$id_candidatura));
     }
 ]);
 
 $router->get("/empresas/{id}/candidaturas/{id_candidatura}/entrevista",[
+    "middlewares"=>[
+        "empresa-require-login",
+        "empresa-access",
+        "empresa-private-access"
+    ],
     function($request,$id,$id_candidatura){
         return new Response(200,Empresa::getMarcarEntrevista($request,$id,$id_candidatura));
     }
 ]);
 
 $router->get("/empresas/{id}/candidaturas/{id_candidatura}/aprovar",[
+    "middlewares"=>[
+        "empresa-require-login",
+        "empresa-access",
+        "empresa-private-access"
+    ],
     function($request,$id,$id_candidatura){
         return new Response(200,Empresa::getAprovarCandidato($request,$id,$id_candidatura));
     }
 ]);
 $router->post("/empresas/{id}/candidaturas/{id_candidatura}/aprovar",[
+    "middlewares"=>[
+        "empresa-require-login",
+        "empresa-access",
+        "empresa-private-access"
+    ],
     function($request,$id,$id_candidatura){
         return new Response(200,Empresa::setAprovarCandidato($request,$id,$id_candidatura));
     }
 ]);
 $router->post("/empresas/{id}/candidaturas/{id_candidatura}/entrevista",[
+    "middlewares"=>[
+        "empresa-require-login",
+        "empresa-access",
+        "empresa-private-access"
+    ],
     function($request,$id,$id_candidatura){
         return new Response(200,Empresa::setMarcarEntrevista($request,$id,$id_candidatura));
     }
 ]);
 
 $router->get("/empresas/{id}/vagas",[
+    "middlewares"=>[
+        "empresa-require-login",
+        "empresa-access",
+        "empresa-private-access"
+    ],
     function($request,$id){
         return new Response(200,Empresa::getVagas($request,$id));
     }
@@ -496,6 +567,11 @@ $router->get("/empresas/{id}/vagas",[
 
 
 $router->post("/empresas/{id}/vagas",[
+    "middlewares"=>[
+        "empresa-require-login",
+        "empresa-access",
+        "empresa-private-access"
+    ],
     function($request,$id){
         return new Response(200,Empresa::getFilteredVagas($request,$id));
     }
@@ -503,11 +579,21 @@ $router->post("/empresas/{id}/vagas",[
 
 
 $router->get("/empresas/{id}/vagas/filter",[
+    "middlewares"=>[
+        "empresa-require-login",
+        "empresa-access",
+        "empresa-private-access"
+    ],
     function($request,$id){
         return new Response(200,Empresa::filtrarVagas($request,$id));
     }
 ]);
 $router->post("/empresas/{id}/vagas/filter",[
+    "middlewares"=>[
+        "empresa-require-login",
+        "empresa-access",
+        "empresa-private-access"
+    ],
     function($request,$id){
         return new Response(200,Empresa::getFilteredVagas($request,$id));
     }
@@ -515,6 +601,11 @@ $router->post("/empresas/{id}/vagas/filter",[
 
 
 $router->get("/empresas/{id}/vagas/nova",[
+    "middlewares"=>[
+        "empresa-require-login",
+        "empresa-access",
+        "empresa-private-access"
+    ],
     function($request,$id){
         return new Response(200,Empresa::getPublicarVaga($request,$id));
     }
@@ -522,6 +613,11 @@ $router->get("/empresas/{id}/vagas/nova",[
 
 
 $router->post("/empresas/{id}/vagas/nova",[
+    "middlewares"=>[
+        "empresa-require-login",
+        "empresa-access",
+        "empresa-private-access"
+    ],
     function($request,$id){
         return new Response(200,Empresa::setPublicarVaga($request,$id));
     }
@@ -529,6 +625,11 @@ $router->post("/empresas/{id}/vagas/nova",[
 
 
 $router->get("/empresas/{id}/vagas/{id_vaga}/editar",[
+    "middlewares"=>[
+        "empresa-require-login",
+        "empresa-access",
+        "empresa-private-access"
+    ],
     function($request,$id,$id_vaga){
         return new Response(200,Empresa::getEditarVaga($request,$id,$id_vaga));
     }
@@ -536,6 +637,11 @@ $router->get("/empresas/{id}/vagas/{id_vaga}/editar",[
 
 
 $router->post("/empresas/{id}/vagas/{id_vaga}/editar",[
+    "middlewares"=>[
+        "empresa-require-login",
+        "empresa-access",
+        "empresa-private-access"
+    ],
     function($request,$id,$id_vaga){
         return new Response(200,Empresa::setEditarVaga($request,$id,$id_vaga));
     }
