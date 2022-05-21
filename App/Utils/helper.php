@@ -73,4 +73,9 @@
         return null;
     }
 
+    function delete_file($filename)
+    {
+        return unlink(UPLOADS."/".$filename);
+    }
+
 ?>

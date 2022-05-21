@@ -260,7 +260,11 @@ class Candidato extends PagesBaseController{
         
         try{
             if(($model->update())){
+                if(uploaded_foto()){
+                    delete_file($postVars['old_foto']);
+                }
                 $request->getRouter()->redirect("/candidatos/{$id}/perfil/editar?status=updated");
+                
             }else{
                 $request->getRouter()->redirect("/candidatos/{$id}/perfil/editar?status=error");
             }
