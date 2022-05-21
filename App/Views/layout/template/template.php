@@ -12,7 +12,7 @@
     <header class="container flex-row-space-between">
         <div class="logo flex-row-start">
             <span><i class="fa fa-clock-o"></i></span>
-            <h3>Solvagas</h3>
+            <h3><a href="<?=URL?>" class="text-black">Solvagas</a></h3>
         </div>
         <nav >
             <ul class="flex-row-end">
@@ -43,7 +43,7 @@
                 <figure>
                     <div class="logo flex-row-start">
                         <span style="color: white;"><i class="fa fa-clock-o"></i></span>
-                        <h3 style="color: white;">Solvagas</h3>
+                        <h3><a href="<?=URL?>" class="text-white">Solvagas</a></h3>
                     </div>
                 </figure>
                 <p>&copy; Solvagas. Todos direitos reservados.</p>

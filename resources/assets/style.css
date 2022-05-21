@@ -146,6 +146,10 @@ body,html{
     color: rgb(10, 76, 143);
 }
 
+.text-black{
+    color: black
+}
+
 .dark-blue{
     background-color: rgb(10, 76, 143);
 }
@@ -436,8 +440,11 @@ header{
     font-size: 3em;
 }
 .logo h3{
-    font-size: 2em;
-    font-family: 'Courier New', Courier, monospace;
+    font-size: 2em !important;
+    font-family: 'Courier New', Courier, monospace !important;
+}
+.logo h3 a{
+    font-family: 'Courier New', Courier, monospace !important;
 }
 
 header nav{

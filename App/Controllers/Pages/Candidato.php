@@ -72,11 +72,7 @@ class Candidato extends PagesBaseController{
 
         }catch(Exception $ex)
         {
-            echo "<pre>";
-print_r($ex->getMessage());
-echo "</pre>";
-exit;
-            throw new Exception("PAGINA NÃO ENCONTRADA",404);
+           throw new Exception("PAGINA NÃO ENCONTRADA",404);
         }
         return View::render("candidatos::cadastro",[
             "status" => self::getStatus($request),
@@ -270,10 +266,7 @@ exit;
             }
 
         }catch(Exception $ex)
-        {   echo "<pre>";
-            print_r($ex->getMessage());
-            echo "</pre>";
-            exit;
+        {   
             $request->getRouter()->redirect("/candidatos/{$id}/perfil/editar?status=error");
         }
     }
@@ -341,10 +334,7 @@ exit;
 
         }catch(Exception $ex)
         {   
-            echo "<pre>";
-            print_r($ex->getMessage());
-            echo "</pre>";
-            exit;
+            
             throw new Exception("PAGINA NAO ENCONTRADA",404);
         }
 
@@ -417,10 +407,7 @@ exit;
 
         }catch(Exception $ex)
         {   
-            echo "<pre>";
-            print_r($ex->getMessage());
-            echo "</pre>";
-            exit;
+            
             throw new Exception("PAGINA NAO ENCONTRADA",404);
         }
 
@@ -528,10 +515,7 @@ exit;
 
         }catch(Exception $ex)
         {   
-            echo "<pre>";
-            print_r($ex->getMessage());
-            echo "</pre>";
-            exit;
+            
             throw new Exception("PAGINA NAO ENCONTRADA",404);
         }
 
@@ -604,10 +588,6 @@ exit;
             if($candidato->updateCurso($nome,$escola,$certificado,$fim,$id_curso)){
                 $request->getRouter()->redirect("/candidatos/{$id}/curso/{$id_curso}/editar?status=updated");
             }else{
-                echo "<pre>";
-            print_r($certificado);
-            echo "</pre>";
-            exit;
                 return View::render("candidatos::edit_curso",[
                     "id" => $id,
                     "nome" => $nome,
@@ -619,10 +599,6 @@ exit;
             }
         }catch(Exception $ex)
         {   
-            echo "<pre>";
-            print_r($ex->getMessage());
-            echo "</pre>";
-            exit;
             throw new Exception("PAGINA NAO ENCONTRADA",404);
         }
 
@@ -654,10 +630,7 @@ exit;
             }
 
         }catch(Exception $ex)
-        {   echo "<pre>";
-            print_r($ex->getMessage());
-            echo "</pre>";
-            exit;
+        {   
             throw new Exception("PAGINA NAO ENCONTRADA",404);
         }
     }
@@ -723,10 +696,7 @@ exit;
 
         }catch(Exception $ex)
         {   
-            echo "<pre>";
-            print_r($ex->getMessage());
-            echo "</pre>";
-            exit;
+           
             throw new Exception("PAGINA NAO ENCONTRADA",404);
         }
 
@@ -803,10 +773,7 @@ exit;
 
         }catch(Exception $ex)
         {   
-            echo "<pre>";
-            print_r($ex->getMessage());
-            echo "</pre>";
-            exit;
+            
             throw new Exception("PAGINA NAO ENCONTRADA",404);
         }
 

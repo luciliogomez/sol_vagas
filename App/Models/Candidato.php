@@ -275,10 +275,7 @@ class Candidato{
             return true;
         
         }else{
-            echo "<pre>";
-print_r($stmt->rowCount());
-echo "</pre>";
-exit;
+            
             return false;
         }
     }

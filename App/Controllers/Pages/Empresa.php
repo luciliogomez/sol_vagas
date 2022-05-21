@@ -67,10 +67,7 @@ class Empresa extends PagesBaseController{
 
 
         }catch(Exception $ex)
-        {echo "<pre>";
-            print_r($ex->getMessage());
-            echo "</pre>";
-            exit;
+        {
                 return View::render("empresas::login",[
                     "status" => Alert::getError("Ocorreu um erro. Tente novamente Mais tarde."),
                     "email"  => $postVars['email'],
@@ -135,10 +132,7 @@ class Empresa extends PagesBaseController{
 
         }catch(Exception $ex)
         {
-            echo "<pre>";
-print_r($ex->getMessage());
-echo "</pre>";
-exit;
+            
             throw new Exception("PAGINA NÃO ENCONTRADA",404);
         }
     }
@@ -262,10 +256,7 @@ exit;
             }
 
         }catch(Exception $ex)
-        {   echo "<pre>";
-            print_r($ex->getMessage());
-            echo "</pre>";
-            exit;
+        {   
             $request->getRouter()->redirect("/empresas/{$id}/perfil/editar?status=error");
         }
     }
@@ -388,10 +379,6 @@ exit;
             
         }catch(Exception $e)
         {
-            echo "<pre>";
-print_r($e->getMessage());
-echo "</pre>";
-exit;
             throw new Exception("PAGINA NÃO ENCONTRADA",404);
         }
     }
@@ -432,10 +419,6 @@ exit;
             
         }catch(Exception $e)
         {
-            echo "<pre>";
-print_r($e->getMessage());
-echo "</pre>";
-exit;
             throw new Exception("PAGINA NÃO ENCONTRADA",404);
         }
     }
@@ -505,10 +488,6 @@ exit;
             
         }catch(Exception $e)
         {
-            echo "<pre>";
-print_r($e->getMessage());
-echo "</pre>";
-exit;
             throw new Exception("PAGINA NÃO ENCONTRADA",404);
         }
     }
@@ -580,10 +559,6 @@ exit;
             
         }catch(Exception $e)
         {
-            echo "<pre>";
-print_r($e->getMessage());
-echo "</pre>";
-exit;
             throw new Exception("PAGINA NÃO ENCONTRADA",404);
         }
     }
@@ -621,10 +596,6 @@ exit;
             
         }catch(Exception $e)
         {
-            echo "<pre>";
-print_r($e->getMessage());
-echo "</pre>";
-exit;
             throw new Exception("PAGINA NÃO ENCONTRADA",404);
         }
     }
@@ -824,10 +795,7 @@ exit;
             }
 
         }catch(Exception $ex)
-        {   echo "<pre>";
-            print_r($ex->getMessage());
-            echo "</pre>";
-            exit;
+        {   
             $request->getRouter()->redirect("/empresas/{$id}/vagas/nova?status=error");
         }
     
@@ -921,10 +889,7 @@ exit;
             }
 
         }catch(Exception $ex)
-        {   echo "<pre>";
-            print_r($ex->getMessage());
-            echo "</pre>";
-            exit;
+        {   
             $request->getRouter()->redirect("/empresas/{$id}/vagas/{$id_vaga}/editar?status=error");
         }
     }
