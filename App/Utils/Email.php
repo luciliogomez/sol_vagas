@@ -11,7 +11,7 @@ class Email{
     const PORT = 587;
     const CHARSET = 'UTF-8';
 
-    const FROM_NAME  = 'Solvagas';
+    const FROM_NAME  = 'SOLVAGAS';
 
     public $error;
     private $user;
