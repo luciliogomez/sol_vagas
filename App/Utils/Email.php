@@ -6,17 +6,22 @@ use PHPMailer\PHPMailer\Exception as PHPMailerException;
 class Email{
 
     const HOST = 'smtp.gmail.com';
-    const USER = 'geral.solvagas@gmail.com';
-    const PASS = 'aucqqmeqhnzgbkix';
+
     const SECURE= PHPMailer::ENCRYPTION_STARTTLS;
     const PORT = 587;
     const CHARSET = 'UTF-8';
 
-    const FROM_EMAIL = 'geral.solvagas@gmail.com';
-    const FROM_NAME  = 'SOLVAGAS';
+    const FROM_NAME  = 'Solvagas';
 
     public $error;
+    private $user;
+    private $password;
 
+    public function __construct()
+    {
+        $this->user = getenv("USER_EMAIL");
+        $this->password = getenv("USER_EMAIL_PASSWORD");
+    }
 
     public function getError()
     {
@@ -31,16 +36,17 @@ class Email{
         try{
             // CREDENCIAIS DE ACESSO AO SMTP
             $obMail->isSMTP(true);
+            //$obMail->SMTPDebug = 4;
             $obMail->Host = self::HOST;
             $obMail->SMTPAuth = true;
-            $obMail->Username = self::USER;
-            $obMail->Password = self::PASS;
+            $obMail->Username = $this->user;
+            $obMail->Password = $this->password;
             $obMail->SMTPSecure = self::SECURE;
             $obMail->Port = self::PORT;
             $obMail->CharSet = self::CHARSET;
 
             // REMETENTE
-            $obMail->setFrom(self::FROM_EMAIL,self::FROM_NAME);
+            $obMail->setFrom($this->user,self::FROM_NAME);
 
             // DESTINATARIO
             $addresses = is_array($addresses)? $addresses : [$addresses];

@@ -3,21 +3,23 @@
 use App\Http\Middlewares\AdminAccess;
 use App\Utils\View;
 use App\Http\Middlewares\Queue as MiddlewareQueue;
+use WilliamCosta\DotEnv\Environment;
 
+Environment::load(__DIR__."/../../");
 // BASE URL
-define("URL","http://localhost/solvagas");
+define("URL",getenv("URL"));
 
-define('BASE_DIR',"/opt/lampp/htdocs/solvagas" );
+define('BASE_DIR',getenv("BASE_DIR") );
 
 define("ASSETS",URL."/resources/assets");
 
 define("UPLOADS",BASE_DIR."/uploads");
 
 //DATABASE CONFIGURATIONS
-define("HOST","localhost");
-define("USERNAME","root");
-define("PASSWORD","");
-define("DBNAME","job");
+define("HOST",getenv("HOST"));
+define("USERNAME",getenv("USERNAME"));
+define("PASSWORD",getenv("PASSWORD"));
+define("DBNAME",getenv("DBNAME"));
 
 
 // SETING  VIEW CONFIGURATIONS
